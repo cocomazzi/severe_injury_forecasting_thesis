@@ -1,0 +1,871 @@
+\begin{thebibliography}{}
+
+\bibitem [\protect \citeauthoryear {%
+Baltagi%
+}{%
+Baltagi%
+}{%
+{\protect \APACyear {2013}}%
+}]{%
+elliott_chapter_2013}
+\APACinsertmetastar {%
+elliott_chapter_2013}%
+\begin{APACrefauthors}%
+Baltagi, B\BPBI H.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2013}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Chapter 18 - {Panel} {Data} {Forecasting}} {Chapter 18 -
+  {Panel} {Data} {Forecasting}}.{\BBCQ}
+\newblock
+\BIn{} G.~Elliott\ \BBA {} A.~Timmermann\ (\BEDS), \APACrefbtitle {Handbook of
+  {Economic} {Forecasting}} {Handbook of {Economic} {Forecasting}}\ (\BVOL~2,
+  \BPGS\ 995--1024).
+\newblock
+\APACaddressPublisher{}{Elsevier}.
+\newblock
+\begin{APACrefURL}
+  \url{https://www.sciencedirect.com/science/article/pii/B978044462731500018X}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{ISSN: 1574-0706}
+\newblock
+\begin{APACrefDOI} \doi{https://doi.org/10.1016/B978-0-444-62731-5.00018-X}
+  \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Bojer%
+}{%
+Bojer%
+}{%
+{\protect \APACyear {2022}}%
+}]{%
+bojer_understanding_2022}
+\APACinsertmetastar {%
+bojer_understanding_2022}%
+\begin{APACrefauthors}%
+Bojer, C\BPBI S.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2022}{{\APACmonth{10}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Understanding machine learning-based forecasting
+  methods: {A} decomposition framework and research opportunities}
+  {Understanding machine learning-based forecasting methods: {A} decomposition
+  framework and research opportunities}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{International Journal of
+  Forecasting}{38}{4}{1555--1561}.
+\newblock
+\begin{APACrefURL}
+  [{2025-11-17}]\url{https://linkinghub.elsevier.com/retrieve/pii/S0169207021001771}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.ijforecast.2021.11.003} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Cerqua%
+, Giannantoni%
+, Letta%
+\BCBL {}\ \BBA {} Pinto%
+}{%
+Cerqua%
+, Giannantoni%
+\BCBL {}\ \protect \BOthers {.}}{%
+{\protect \APACyear {2024}}%
+}]{%
+cerqua_dead_2024}
+\APACinsertmetastar {%
+cerqua_dead_2024}%
+\begin{APACrefauthors}%
+Cerqua, A.%
+, Giannantoni, C.%
+, Letta, M.%
+\BCBL {}\ \BBA {} Pinto, G.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2024}{{\APACmonth{12}}}{}.
+\newblock
+\APACrefbtitle {'{Dead} {Man} {Working}': {A} {Place}-based {Approach} to
+  {Workplace} {Fatalities}} {'{Dead} {Man} {Working}': {A} {Place}-based
+  {Approach} to {Workplace} {Fatalities}}\ [{SSRN} {Scholarly} {Paper}].
+\newblock
+\APACaddressPublisher{Rochester, NY}{Social Science Research Network}.
+\newblock
+\begin{APACrefURL} [{2025-09-08}]\url{https://papers.ssrn.com/abstract=5040905}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.2139/ssrn.5040905} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Cerqua%
+, Letta%
+\BCBL {}\ \BBA {} Pinto%
+}{%
+Cerqua%
+, Letta%
+\BCBL {}\ \BBA {} Pinto%
+}{%
+{\protect \APACyear {2024}}%
+}]{%
+cerqua_misuse_2024}
+\APACinsertmetastar {%
+cerqua_misuse_2024}%
+\begin{APACrefauthors}%
+Cerqua, A.%
+, Letta, M.%
+\BCBL {}\ \BBA {} Pinto, G.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2024}{}{}.
+\newblock
+\APACrefbtitle {On the ({Mis}){Use} of {Machine} {Learning} with {Panel}
+  {Data}.} {On the ({Mis}){Use} of {Machine} {Learning} with {Panel} {Data}.}
+\newblock
+\APACaddressPublisher{}{SSRN}.
+\newblock
+\begin{APACrefURL} [{2025-11-07}]\url{https://www.ssrn.com/abstract=5014594}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.2139/ssrn.5014594} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Chen%
+}{%
+Chen%
+}{%
+{\protect \APACyear {2021}}%
+}]{%
+chen_introduction_2021}
+\APACinsertmetastar {%
+chen_introduction_2021}%
+\begin{APACrefauthors}%
+Chen, J\BPBI M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2021}{{\APACmonth{02}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {An {Introduction} to {Machine} {Learning} for {Panel}
+  {Data}} {An {Introduction} to {Machine} {Learning} for {Panel}
+  {Data}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{International Advances in Economic
+  Research}{27}{1}{1--16}.
+\newblock
+\begin{APACrefURL}
+  [{2025-11-07}]\url{https://doi.org/10.1007/s11294-021-09815-6}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1007/s11294-021-09815-6} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Gomes%
+, Parasram%
+, Collins%
+\BCBL {}\ \BBA {} Socias-Morales%
+}{%
+Gomes%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2023}}%
+}]{%
+gomes_time_2023}
+\APACinsertmetastar {%
+gomes_time_2023}%
+\begin{APACrefauthors}%
+Gomes, H.%
+, Parasram, V.%
+, Collins, J.%
+\BCBL {}\ \BBA {} Socias-Morales, C.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2023}{{\APACmonth{09}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Time series, seasonality and trend evaluation of
+  7 years (2015–2021) of {OSHA} severe injury data} {Time series,
+  seasonality and trend evaluation of 7 years (2015–2021) of {OSHA} severe
+  injury data}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Safety Research}{86}{}{30--38}.
+\newblock
+\begin{APACrefURL}
+  [{2025-09-14}]\url{https://www.sciencedirect.com/science/article/pii/S0022437523000798}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.jsr.2023.06.005} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Hall%
+\ \BBA {} Rasheed%
+}{%
+Hall%
+\ \BBA {} Rasheed%
+}{%
+{\protect \APACyear {2025}}%
+}]{%
+hall_survey_2025}
+\APACinsertmetastar {%
+hall_survey_2025}%
+\begin{APACrefauthors}%
+Hall, T.%
+\BCBT {}\ \BBA {} Rasheed, K.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2025}{{\APACmonth{01}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A {Survey} of {Machine} {Learning} {Methods} for {Time}
+  {Series} {Prediction}} {A {Survey} of {Machine} {Learning} {Methods} for
+  {Time} {Series} {Prediction}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Applied Sciences}{15}{11}{5957}.
+\newblock
+\begin{APACrefURL}
+  [{2025-11-17}]\url{https://www.mdpi.com/2076-3417/15/11/5957}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{Publisher: Multidisciplinary Digital Publishing Institute}
+\newblock
+\begin{APACrefDOI} \doi{10.3390/app15115957} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Han%
+, Zhou%
+, Sun%
+\BCBL {}\ \BBA {} Li%
+}{%
+Han%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2025}}%
+}]{%
+han_optimized_2025}
+\APACinsertmetastar {%
+han_optimized_2025}%
+\begin{APACrefauthors}%
+Han, C.%
+, Zhou, Y.%
+, Sun, J.%
+\BCBL {}\ \BBA {} Li, Z.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2025}{{\APACmonth{11}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {An optimized ridge regression for forecasting time
+  series with a fixed period} {An optimized ridge regression for forecasting
+  time series with a fixed period}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Pattern Recognition Letters}{197}{}{274--281}.
+\newblock
+\begin{APACrefURL}
+  [{2025-12-22}]\url{https://www.sciencedirect.com/science/article/pii/S0167865525002971}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.patrec.2025.08.017} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Hasan Khalleefah~Hassan%
+\ \BBA {} Khalifa%
+}{%
+Hasan Khalleefah~Hassan%
+\ \BBA {} Khalifa%
+}{%
+{\protect \APACyear {2025}}%
+}]{%
+hasan_khalleefah_hassan_work_2025}
+\APACinsertmetastar {%
+hasan_khalleefah_hassan_work_2025}%
+\begin{APACrefauthors}%
+Hasan Khalleefah~Hassan, M.%
+\BCBT {}\ \BBA {} Khalifa, W\BPBI M\BPBI S.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2025}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Work {Place} {Safety}: {Machine} {Learning} {Techniques}
+  for {Assessing} {Workplace} {Incident} {Severity}} {Work {Place} {Safety}:
+  {Machine} {Learning} {Techniques} for {Assessing} {Workplace} {Incident}
+  {Severity}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{IEEE Access}{13}{}{34211--34226}.
+\newblock
+\begin{APACrefURL}
+  [{2025-09-10}]\url{https://ieeexplore.ieee.org/abstract/document/10891569}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1109/ACCESS.2025.3543136} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Hewamalage%
+, Bergmeir%
+\BCBL {}\ \BBA {} Bandara%
+}{%
+Hewamalage%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2022}}%
+}]{%
+hewamalage_global_2022}
+\APACinsertmetastar {%
+hewamalage_global_2022}%
+\begin{APACrefauthors}%
+Hewamalage, H.%
+, Bergmeir, C.%
+\BCBL {}\ \BBA {} Bandara, K.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2022}{{\APACmonth{04}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Global models for time series forecasting: {A}
+  {Simulation} study} {Global models for time series forecasting: {A}
+  {Simulation} study}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Pattern Recognition}{124}{}{108441}.
+\newblock
+\begin{APACrefURL}
+  [{2025-11-07}]\url{https://www.sciencedirect.com/science/article/pii/S0031320321006178}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.patcog.2021.108441} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Hyndman%
+\ \BBA {} Athanasopoulos%
+}{%
+Hyndman%
+\ \BBA {} Athanasopoulos%
+}{%
+{\protect \APACyear {2018}}%
+}]{%
+hyndman_forecasting_2018}
+\APACinsertmetastar {%
+hyndman_forecasting_2018}%
+\begin{APACrefauthors}%
+Hyndman, R\BPBI J.%
+\BCBT {}\ \BBA {} Athanasopoulos, G.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2018}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Forecasting: {Principles} and {Practice}} {Forecasting:
+  {Principles} and {Practice}}.{\BBCQ}
+\newblock
+\begin{APACrefURL}
+  [{2025-11-29}]\url{https://research.monash.edu/en/publications/forecasting-principles-and-practice-2/}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{Publisher: OTexts}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Johnson%
+, Levine%
+\BCBL {}\ \BBA {} Toffel%
+}{%
+Johnson%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2023}}%
+}]{%
+johnson_improving_2023}
+\APACinsertmetastar {%
+johnson_improving_2023}%
+\begin{APACrefauthors}%
+Johnson, M\BPBI S.%
+, Levine, D\BPBI I.%
+\BCBL {}\ \BBA {} Toffel, M\BPBI W.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2023}{{\APACmonth{10}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Improving {Regulatory} {Effectiveness} through {Better}
+  {Targeting}: {Evidence} from {OSHA}} {Improving {Regulatory} {Effectiveness}
+  through {Better} {Targeting}: {Evidence} from {OSHA}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{American Economic Journal: Applied
+  Economics}{15}{4}{30--67}.
+\newblock
+\begin{APACrefURL}
+  [{2025-11-06}]\url{https://pubs.aeaweb.org/doi/10.1257/app.20200659}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1257/app.20200659} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Khairuddin%
+\ \protect \BOthers {.}}{%
+Khairuddin%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2022}}%
+}]{%
+khairuddin_occupational_2022}
+\APACinsertmetastar {%
+khairuddin_occupational_2022}%
+\begin{APACrefauthors}%
+Khairuddin, M\BPBI Z\BPBI F.%
+, Lu~Hui, P.%
+, Hasikin, K.%
+, Abd~Razak, N\BPBI A.%
+, Lai, K\BPBI W.%
+, Mohd~Saudi, A\BPBI S.%
+\BCBL {}\ \BBA {} Ibrahim, S\BPBI S.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2022}{{\APACmonth{10}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Occupational {Injury} {Risk} {Mitigation}: {Machine}
+  {Learning} {Approach} and {Feature} {Optimization} for {Smart} {Workplace}
+  {Surveillance}} {Occupational {Injury} {Risk} {Mitigation}: {Machine}
+  {Learning} {Approach} and {Feature} {Optimization} for {Smart} {Workplace}
+  {Surveillance}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{International Journal of Environmental Research and
+  Public Health}{19}{21}{13962}.
+\newblock
+\begin{APACrefURL}
+  [{2025-09-08}]\url{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9653932/}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.3390/ijerph192113962} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Kontopoulou%
+, Panagopoulos%
+, Kakkos%
+\BCBL {}\ \BBA {} Matsopoulos%
+}{%
+Kontopoulou%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2023}}%
+}]{%
+kontopoulou_review_2023}
+\APACinsertmetastar {%
+kontopoulou_review_2023}%
+\begin{APACrefauthors}%
+Kontopoulou, V\BPBI I.%
+, Panagopoulos, A\BPBI D.%
+, Kakkos, I.%
+\BCBL {}\ \BBA {} Matsopoulos, G\BPBI K.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2023}{{\APACmonth{08}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A {Review} of {ARIMA} vs. {Machine} {Learning}
+  {Approaches} for {Time} {Series} {Forecasting} in {Data} {Driven} {Networks}}
+  {A {Review} of {ARIMA} vs. {Machine} {Learning} {Approaches} for {Time}
+  {Series} {Forecasting} in {Data} {Driven} {Networks}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Future Internet}{15}{8}{255}.
+\newblock
+\begin{APACrefURL} [{2025-11-29}]\url{https://www.mdpi.com/1999-5903/15/8/255}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{Publisher: Multidisciplinary Digital Publishing Institute}
+\newblock
+\begin{APACrefDOI} \doi{10.3390/fi15080255} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Makridakis%
+, Spiliotis%
+\BCBL {}\ \BBA {} Assimakopoulos%
+}{%
+Makridakis%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2022}}%
+}]{%
+makridakis_m5_2022}
+\APACinsertmetastar {%
+makridakis_m5_2022}%
+\begin{APACrefauthors}%
+Makridakis, S.%
+, Spiliotis, E.%
+\BCBL {}\ \BBA {} Assimakopoulos, V.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2022}{{\APACmonth{10}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {M5 accuracy competition: {Results}, findings, and
+  conclusions} {M5 accuracy competition: {Results}, findings, and
+  conclusions}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{International Journal of
+  Forecasting}{38}{4}{1346--1364}.
+\newblock
+\begin{APACrefURL}
+  [{2025-11-29}]\url{https://www.sciencedirect.com/science/article/pii/S0169207021001874}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.ijforecast.2021.11.013} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Masini%
+, Medeiros%
+\BCBL {}\ \BBA {} Mendes%
+}{%
+Masini%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2023}}%
+}]{%
+masini_machine_2023}
+\APACinsertmetastar {%
+masini_machine_2023}%
+\begin{APACrefauthors}%
+Masini, R\BPBI P.%
+, Medeiros, M\BPBI C.%
+\BCBL {}\ \BBA {} Mendes, E\BPBI F.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2023}{{\APACmonth{02}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Machine learning advances for time series forecasting}
+  {Machine learning advances for time series forecasting}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Economic Surveys}{37}{1}{76--111}.
+\newblock
+\begin{APACrefURL}
+  [{2025-11-07}]\url{https://onlinelibrary.wiley.com/doi/10.1111/joes.12429}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1111/joes.12429} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Michaels%
+\ \BBA {} Wagner%
+}{%
+Michaels%
+\ \BBA {} Wagner%
+}{%
+{\protect \APACyear {2025}}%
+}]{%
+michaels_osha_2025}
+\APACinsertmetastar {%
+michaels_osha_2025}%
+\begin{APACrefauthors}%
+Michaels, D.%
+\BCBT {}\ \BBA {} Wagner, G\BPBI R.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2025}{{\APACmonth{04}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {{OSHA} {Injury} {Data}: {An} {Opportunity} for
+  {Improving} {Work} {Injury} {Prevention}} {{OSHA} {Injury} {Data}: {An}
+  {Opportunity} for {Improving} {Work} {Injury} {Prevention}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{American Journal of Public Health}{115}{4}{588--595}.
+\newblock
+\begin{APACrefURL}
+  [{2025-09-04}]\url{https://ajph.aphapublications.org/doi/full/10.2105/AJPH.2024.307934}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{Publisher: American Public Health Association}
+\newblock
+\begin{APACrefDOI} \doi{10.2105/AJPH.2024.307934} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Montero-Manso%
+\ \BBA {} Hyndman%
+}{%
+Montero-Manso%
+\ \BBA {} Hyndman%
+}{%
+{\protect \APACyear {2021}}%
+}]{%
+montero-manso_principles_2021}
+\APACinsertmetastar {%
+montero-manso_principles_2021}%
+\begin{APACrefauthors}%
+Montero-Manso, P.%
+\BCBT {}\ \BBA {} Hyndman, R\BPBI J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2021}{{\APACmonth{03}}}{}.
+\newblock
+\APACrefbtitle {Principles and {Algorithms} for {Forecasting} {Groups} of
+  {Time} {Series}: {Locality} and {Globality}.} {Principles and {Algorithms}
+  for {Forecasting} {Groups} of {Time} {Series}: {Locality} and {Globality}.}
+\newblock
+\APACaddressPublisher{}{arXiv}.
+\newblock
+\begin{APACrefURL} [{2025-11-05}]\url{http://arxiv.org/abs/2008.00444}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{arXiv:2008.00444 [cs]}
+\newblock
+\begin{APACrefDOI} \doi{10.48550/arXiv.2008.00444} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Organization%
+}{%
+Organization%
+}{%
+{\protect \APACyear {2020}}%
+}]{%
+international_labour_organization_safety_2020}
+\APACinsertmetastar {%
+international_labour_organization_safety_2020}%
+\begin{APACrefauthors}%
+Organization, I\BPBI L.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2020}{}{}.
+\newblock
+\APACrefbtitle {Safety + health for all : an {ILO} {Flagship} {Programme} : key
+  facts and figures (2016-2020) - {International} {Labour} {Organization}.}
+  {Safety + health for all : an {ILO} {Flagship} {Programme} : key facts and
+  figures (2016-2020) - {International} {Labour} {Organization}.}
+\newblock
+\begin{APACrefURL}
+  [{2025-11-29}]\url{https://labordoc.ilo.org/discovery/fulldisplay/alma995108293102676/41ILO_INST:41ILO_V2}
+  \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Qu%
+, Timmermann%
+\BCBL {}\ \BBA {} Zhu%
+}{%
+Qu%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2024}}%
+}]{%
+qu_comparing_2024}
+\APACinsertmetastar {%
+qu_comparing_2024}%
+\begin{APACrefauthors}%
+Qu, R.%
+, Timmermann, A.%
+\BCBL {}\ \BBA {} Zhu, Y.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2024}{{\APACmonth{07}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Comparing forecasting performance with panel data}
+  {Comparing forecasting performance with panel data}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{International Journal of Forecasting}{40}{3}{918--941}.
+\newblock
+\begin{APACrefURL}
+  [{2025-11-08}]\url{https://www.sciencedirect.com/science/article/pii/S0169207023000766}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.ijforecast.2023.08.001} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Rahman%
+, Hossain%
+\BCBL {}\ \BBA {} Sikder%
+}{%
+Rahman%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2024}}%
+}]{%
+rahman_machine_2024}
+\APACinsertmetastar {%
+rahman_machine_2024}%
+\begin{APACrefauthors}%
+Rahman, M\BPBI M.%
+, Hossain, A.%
+\BCBL {}\ \BBA {} Sikder, M\BPBI A.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2024}{{\APACmonth{05}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Machine {Learning} {Applications} in {Industry}
+  {Safety}: {Analysis} and {Prediction} of {Industrial} {Accidents}} {Machine
+  {Learning} {Applications} in {Industry} {Safety}: {Analysis} and {Prediction}
+  of {Industrial} {Accidents}}.{\BBCQ}
+\newblock
+\BIn{} \APACrefbtitle {2024 {International} {Conference} on {Smart} {Systems}
+  for applications in {Electrical} {Sciences} ({ICSSES})} {2024 {International}
+  {Conference} on {Smart} {Systems} for applications in {Electrical} {Sciences}
+  ({ICSSES})}\ (\BPGS\ 1--6).
+\newblock
+\begin{APACrefURL}
+  [{2025-11-07}]\url{https://ieeexplore.ieee.org/document/10561314}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1109/ICSSES62373.2024.10561314} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Reich%
+\ \protect \BOthers {.}}{%
+Reich%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2019}}%
+}]{%
+reich_collaborative_2019}
+\APACinsertmetastar {%
+reich_collaborative_2019}%
+\begin{APACrefauthors}%
+Reich, N\BPBI G.%
+, Brooks, L\BPBI C.%
+, Fox, S\BPBI J.%
+, Kandula, S.%
+, McGowan, C\BPBI J.%
+, Moore, E.%
+\BDBL {}Shaman, J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2019}{{\APACmonth{02}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A collaborative multiyear, multimodel assessment of
+  seasonal influenza forecasting in the {United} {States}} {A collaborative
+  multiyear, multimodel assessment of seasonal influenza forecasting in the
+  {United} {States}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Proceedings of the National Academy of Sciences of the
+  United States of America}{116}{8}{3146--3154}.
+\newblock
+\begin{APACrefURL}
+  [{2025-11-29}]\url{https://pmc.ncbi.nlm.nih.gov/articles/PMC6386665/}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1073/pnas.1812594116} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Rostami-Tabar%
+, Goltsos%
+\BCBL {}\ \BBA {} Wang%
+}{%
+Rostami-Tabar%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2023}}%
+}]{%
+rostami-tabar_forecasting_2023}
+\APACinsertmetastar {%
+rostami-tabar_forecasting_2023}%
+\begin{APACrefauthors}%
+Rostami-Tabar, B.%
+, Goltsos, T\BPBI E.%
+\BCBL {}\ \BBA {} Wang, S.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2023}{{\APACmonth{02}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Forecasting for lead-time period by temporal
+  aggregation: {Whether} to combine and how} {Forecasting for lead-time period
+  by temporal aggregation: {Whether} to combine and how}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Computers in Industry}{145}{}{103803}.
+\newblock
+\begin{APACrefURL}
+  [{2025-12-20}]\url{https://www.sciencedirect.com/science/article/pii/S0166361522001993}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.compind.2022.103803} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Taieb%
+, Bontempi%
+, Atiya%
+\BCBL {}\ \BBA {} Sorjamaa%
+}{%
+Taieb%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2011}}%
+}]{%
+taieb_review_2011}
+\APACinsertmetastar {%
+taieb_review_2011}%
+\begin{APACrefauthors}%
+Taieb, S\BPBI B.%
+, Bontempi, G.%
+, Atiya, A.%
+\BCBL {}\ \BBA {} Sorjamaa, A.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2011}{{\APACmonth{08}}}{}.
+\newblock
+\APACrefbtitle {A review and comparison of strategies for multi-step ahead time
+  series forecasting based on the {NN5} forecasting competition.} {A review and
+  comparison of strategies for multi-step ahead time series forecasting based
+  on the {NN5} forecasting competition.}
+\newblock
+\APACaddressPublisher{}{arXiv}.
+\newblock
+\begin{APACrefURL} [{2025-11-13}]\url{http://arxiv.org/abs/1108.3259}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{arXiv:1108.3259 [stat]}
+\newblock
+\begin{APACrefDOI} \doi{10.48550/arXiv.1108.3259} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Vivian%
+, Bauder%
+\BCBL {}\ \BBA {} Khoshgoftaar%
+}{%
+Vivian%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2025}}%
+}]{%
+vivian_comprehensive_2025}
+\APACinsertmetastar {%
+vivian_comprehensive_2025}%
+\begin{APACrefauthors}%
+Vivian, G\BPBI A.%
+, Bauder, R\BPBI A.%
+\BCBL {}\ \BBA {} Khoshgoftaar, T\BPBI M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2025}{{\APACmonth{07}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A comprehensive survey on machine learning for workplace
+  injury analysis: risk prediction, return to work strategies, and demographic
+  insights} {A comprehensive survey on machine learning for workplace injury
+  analysis: risk prediction, return to work strategies, and demographic
+  insights}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Big Data}{12}{1}{167}.
+\newblock
+\begin{APACrefURL}
+  [{2025-09-01}]\url{https://doi.org/10.1186/s40537-025-01229-z}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1186/s40537-025-01229-z} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\end{thebibliography}

@@ -1,0 +1,4 @@
+# Ignore old notebooks
+notebooks/03_baseline_models.ipynb
+notebooks/sktime.ipynb
+catboost_info/
