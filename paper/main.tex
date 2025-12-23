@@ -96,30 +96,32 @@ While most studies have focused on classification tasks, the area of time series
 
 \subsection{Research strategy}
 
-As outlined in subsection \ref{subs:context}, knowing \textit{when} an intervention may be required is crucial for increasing the likelihood of alleviating workers' exposure to severe injuries. If meaningful patterns in historical data can be reliably captured by forecasting algorithms, stakeholders can make more informed decisions about how to prioritize preventive resources, and about which types of data need continuous monitoring. As different temporal granularities can impact the accuracy of the generated forecasts \citep{rostami-tabar_forecasting_2023}, the first question we aim to explore is to what extent different levels of temporal resolution can help smooth out an intermitting time series at the original lead time. Moreover, this question gains a further dimension when the data is organised according to a grouping factor, such as having time series across multiple states \citep{qu_comparing_2024}. The model choice will take into account the explainability of the models.
-\vspace{1em}
-\hspace{2em}\textbf{RQ1}: \textit{How does the forecasting performance of a set of classical statistical models (Holt-Winter method, ARIMA, and SARIMA) and ML models (divided into tho main families: linear and tree-based ensemble models) at two temporal aggregations (monthly vs. weekly) in one-step-ahead forecasting of severe injuries risk across a twelve-month horizon, as evaluated by RMSE and MAE?}
+As outlined in subsection \ref{subs:context}, knowing \textit{when} an intervention may be required is crucial for increasing the likelihood of alleviating workers' exposure to severe injuries. If meaningful patterns in historical data can be reliably captured by forecasting algorithms, stakeholders can make more informed decisions about how to prioritize preventive resources, and about which types of data need continuous monitoring. As different temporal granularities can impact the accuracy of the generated forecasts \citep{rostami-tabar_forecasting_2023}, the first question we aim to explore is to what extent different levels of temporal resolution can help smooth out an intermitting time series at the original lead time. Moreover, this question gains a further dimension when the data is organised according to a grouping factor, such as having time series across multiple states \citep{qu_comparing_2024}. The model choice will take into account the explainability of the models.  
 
 \vspace{1em}
-This question addresses to what extent the temporal resolution affects the model performance when data are aggregated at a national level, yeilding a single time series. Weekly aggregation increases the number of observations but it may introduce noise and variability, while monthly aggregation may produce coarser predictions. Understanding this trade-off is essential for designing reliable predictive pipelines. 
-This question serves as a general baseline to uncover trend and seasonality patterns and to test whether
+\hspace{2em}\textbf{RQ1}: \textit{How does the forecasting performance of a set of classical statistical models (Holt-Winter method, ARIMA, and SARIMA) and ML models (divided into two main families: linear and tree-based ensemble models) at two temporal aggregations (monthly vs. weekly) in one-step-ahead forecasting of severe injuries risk across a twelve-month horizon, as evaluated by RMSE and MAE?}
+
+\vspace{1em}
+This question addresses to what extent the temporal resolution affects the model performance when data are aggregated at a national level, yeilding a single time series. Weekly aggregation increases the number of observations but it may introduce noise and variability, while monthly aggregation may produce coarser predictions. Understanding this trade-off is essential for designing reliable predictive pipelines (cit.). 
 
 Given the absence of a comparable supervised regression setting in prior work on occupational injury forecasting, we will train different families of regressors based on the exploratory initial step and on the main findings from related datasets. The choice for linear models with penalty terms (Ridge, Lasso, ElasticNet) allows us to assess how regularization can affect feature selection in a strongly seasonal data structure across a balanced panel \citep{han_optimized_2025}. Among tree-based ensemble models, CatBoost is deemed particularly suited for our panel data, as it can handle categorical features \citep{hall_survey_2025}. XGBoost and LightGBM appears to consistently be the most accurate models in recent forecasting benchmarks and machine-learning competitions \citep{makridakis_m5_2022}. The sample size and a low-dimensional feature matrix allowed us to compare a wide variety of models with negligible computational cost.
 
 \vspace{1em}
-\hspace{2em}\textbf{RQ2:} \textit{How does the predictive accuracy of the best-performing model change when estimated as a Global Forecasting Model (across all states jointly) rather than as a Local Forecasting Model (state-specific), for both monthly and weekly temporal resolutions?}
+\hspace{2em}\textbf{RQ2:} \textit{How does the predictive accuracy change when estimated as a Global Forecasting Model (across all states jointly) rather than as a Local Forecasting Model (state-specific), for both monthly and weekly temporal resolutions?}
 \vspace{1em}
 
 With this question we aim to evaluate whether pooling information across states enhances the predictive performance relative to modeling each state independently. A global model may exploit shared temporal knowledge and increase the available sample size, while a local model may better capture state-specific patterns.
 
 \vspace{1em}
-\hspace{2em}\textit{SQ2.1: How does a SARIMAX benchmark compare to the best-performing Local Forecasting Model on the same monthly forecast horizon, as evaluated by RMSE and MAE on the target hospitalization?}
+\hspace{2em}\textit{SQ2.1: How does introducing an exogenous variable, namely the industry code, affect the forecasts of the ML models?}
+
 
 \vspace{1em}
-Traditional statistical models such as SARIMAX can not estimate parameters globally across a panel. Therefore, SARIMAX serves as an appropriate baseline for comparison against local machine-learning models.
+
+To answer this question, we will explore feature importances.
 
 \vspace{1em}
-\hspace{2em}\textbf{RQ3:}\textit{ Which combinations of lookback windows and forecast horizons minimize out-of-sample forecast errors (RMSE and MAE)?}
+\hspace{2em}\textbf{RQ3:}\textit{CV for sensitivity analysis}
 
 \vspace{1em}
 Since design choices can affect the forecasting accuracy, we investigate a range of configurations to identify which one yields the most accurate predictions.
@@ -150,7 +152,7 @@ The work most closely aligned with our research is \citet{cerqua_dead_2024}. The
 
 \subsection{Studies on OSHA's SIR dataset}
 
-A notable study examining the temporal aspects of occupational injury data is \citet{gomes_time_2023}. The authors analysed the Severe Injury Report (SIR) dataset provided by the Occupational Safety and Health Administration (OSHA), using time series decomposition models to uncover seasonal effects and general trends. Moreover, they evaluated industry and injury-type breakdowns, revealing that manufacturing and construction are the most affected industries. Importantly, they identified systematic temporal patterns in the occupational injuries, such as the predominance of injuries on weekdays compared to weekends, and a higher injury incidence in the summer months. While their analysis provided valuable descriptive insights into the temporal features of the SIR data, it did not extend to predictive or regression-based modeling.
+A notable study examining the temporal aspects of occupational injury data is \citet{gomes_time_2023}. The authors analysed the Severe Injury Report (SIR) dataset provided by the Occupational Safety and Health Administration (OSHA), using time series decomposition models to uncover seasonal effects and general trends. Moreover, they evaluated industry and injury-type breakdowns, revealing that manufacturing and construction are the most affected industries. Importantly, they identified systematic temporal patterns in the occupational injuries, such as the predominance of injuries on weekdays compared to weekends, and a higher injury incidence in the summer months. While their analysis provided valuable descriptive insights into the temporal features of the SIR data, it did not extend to predictive or regression-based modeling. We will use these findings to inform model selection
 
 On the classification side, \citet{khairuddin_occupational_2022} trained five machine learning models on the same SIR dataset to predict hospitalization and amputation outcomes, finding that Random Forest achieved the highest performance on metrics such as accuracy and F1-score. Building on this work, \citet{hasan_khalleefah_hassan_work_2025} evaluated a different set of machine learning models, and reported that the AdaBoost Classifier showed the best performance on accuracy and F1-score. As both studies aimed to categorize past events, their results and model selection can not serve as a benchmark for our work, but only as a point of reference. In fact, a regression-based forecasting approach applied to SIR data is still absent from the current literature.
 
@@ -190,7 +192,7 @@ In fact, under the direct approach, a separate model is independently trained to
 
 As a further motivation, the data complexity of the SIR data set is estimated to be sufficiently low to run separate models at a reasonable computation time. One of the drawbacks of the direct approach is the computational burden, since a separate model has to be fitted for every forecast horizon.
 For RQ1 and RQ2, the models are evaluated on a direct one-step-ahead forecast over the entire train set (12 months) to ensure methodological consistency.
-
+experimental setup is missing: models configuration; train-test split; possibly, cv strategy,
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/workflow.jpg}
