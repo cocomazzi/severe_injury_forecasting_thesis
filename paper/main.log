@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.22)  23 DEC 2025 13:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.22)  24 DEC 2025 16:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -953,127 +953,131 @@ Package microtype Info: Character `029' is missing
 [7]
 
 [8]
-<figures/workflow.jpg, id=230, 566.86781pt x 821.31844pt>
+<figures/workflow.jpg, id=245, 566.86781pt x 821.31844pt>
 File: figures/workflow.jpg Graphic file (type jpg)
 <use figures/workflow.jpg>
-Package pdftex.def Info: figures/workflow.jpg  used on input line 198.
+Package pdftex.def Info: figures/workflow.jpg  used on input line 197.
 (pdftex.def)             Requested size: 340.57838pt x 493.4716pt.
 
 
 [9]
 
-[10 <./figures/workflow.jpg>]
+[10]
+
+[11 <./figures/workflow.jpg>]
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 206.
+(Font)              scaled to size 5.21004pt on input line 205.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
-(Font)              scaled to size 5.21004pt on input line 206.
+(Font)              scaled to size 5.21004pt on input line 205.
 LaTeX Font Info:    Trying to load font information for T1+fvm on input line 20
-6.
+5.
 
 (C:\Users\esper\AppData\Local\Programs\MiKTeX\tex/latex/bera\t1fvm.fd
 File: t1fvm.fd 2004/09/07 scalable font definitions for T1/fvm.
 )
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 7.65005pt on input line 206.
+(Font)              scaled to size 7.65005pt on input line 205.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `fvm' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
 
-[11
+[12
 
 ]
-<figures/target_distribution.png, id=254, 859.2903pt x 354.123pt>
+<figures/target_distribution.png, id=274, 859.2903pt x 354.123pt>
 File: figures/target_distribution.png Graphic file (type png)
 <use figures/target_distribution.png>
 Package pdftex.def Info: figures/target_distribution.png  used on input line 23
-2.
+1.
 (pdftex.def)             Requested size: 340.57838pt x 140.35524pt.
 
 
-[12]
+[13]
 LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 9.30756pt on input line 256.
+(Font)              scaled to size 9.30756pt on input line 255.
 
-Underfull \hbox (badness 3815) in paragraph at lines 260--261
+Underfull \hbox (badness 3815) in paragraph at lines 259--260
 []\T1/fvm/m/n/10.95 Year\T1/pplj/m/n/10.95 (+20) , \T1/fvm/m/n/10.95 Month\T1/p
 plj/m/n/10.95 (+20) , \T1/fvm/m/n/10.95 Quarter\T1/pplj/m/n/10.95 (+20) , \T1/f
 vm/m/n/10.95 DaysInMonth\T1/pplj/m/n/10.95 (+20) ; Fourier terms:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 264--265
+Underfull \hbox (badness 10000) in paragraph at lines 263--264
 []\T1/fvm/m/n/10.95 HospRisk_lag1\T1/pplj/m/n/10.95 (+20) , \T1/fvm/m/n/10.95 H
 ospRisk_lag3\T1/pplj/m/n/10.95 (+20) , \T1/fvm/m/n/10.95 HospRisk_lag6\T1/pplj/
 m/n/10.95 (+20) ,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 264--265
+Underfull \hbox (badness 10000) in paragraph at lines 263--264
 \T1/fvm/m/n/10.95 HospRisk_lag12\T1/pplj/m/n/10.95 (+20) ; \T1/fvm/m/n/10.95 Am
 pRisk_lag1\T1/pplj/m/n/10.95 (+20) , \T1/fvm/m/n/10.95 AmpRisk_lag3\T1/pplj/m/n
 /10.95 (+20) ,
  []
 
 
-Overfull \hbox (63.83385pt too wide) in paragraph at lines 250--280
+Overfull \hbox (63.83385pt too wide) in paragraph at lines 249--279
  [][] 
  []
 
 
 
-[13 <./figures/target_distribution.png>]
-
-[14]
-Overfull \hbox (59.63799pt too wide) in paragraph at lines 301--323
- [][] 
- []
-
-
+[14 <./figures/target_distribution.png>]
 
 [15]
-Overfull \hbox (59.63799pt too wide) in paragraph at lines 345--367
+Overfull \hbox (59.63799pt too wide) in paragraph at lines 300--322
  [][] 
  []
 
-<figures/monthly_RMSE_train_test.png, id=278, 557.2017pt x 268.1217pt>
-File: figures/monthly_RMSE_train_test.png Graphic file (type png)
-<use figures/monthly_RMSE_train_test.png>
-Package pdftex.def Info: figures/monthly_RMSE_train_test.png  used on input lin
-e 374.
-(pdftex.def)             Requested size: 340.57838pt x 163.88538pt.
-<figures/weekly_RMSE_train_test.png, id=279, 548.5293pt x 268.1217pt>
-File: figures/weekly_RMSE_train_test.png Graphic file (type png)
-<use figures/weekly_RMSE_train_test.png>
-Package pdftex.def Info: figures/weekly_RMSE_train_test.png  used on input line
- 382.
-(pdftex.def)             Requested size: 340.57838pt x 166.48329pt.
 
 
 [16]
+Overfull \hbox (59.63799pt too wide) in paragraph at lines 344--366
+ [][] 
+ []
 
-[17 <./figures/monthly_RMSE_train_test.png> <./figures/weekly_RMSE_train_test.p
+<figures/monthly_RMSE_train_test.png, id=298, 557.2017pt x 268.1217pt>
+File: figures/monthly_RMSE_train_test.png Graphic file (type png)
+<use figures/monthly_RMSE_train_test.png>
+Package pdftex.def Info: figures/monthly_RMSE_train_test.png  used on input lin
+e 373.
+(pdftex.def)             Requested size: 340.57838pt x 163.88538pt.
+<figures/weekly_RMSE_train_test.png, id=299, 548.5293pt x 268.1217pt>
+File: figures/weekly_RMSE_train_test.png Graphic file (type png)
+<use figures/weekly_RMSE_train_test.png>
+Package pdftex.def Info: figures/weekly_RMSE_train_test.png  used on input line
+ 381.
+(pdftex.def)             Requested size: 340.57838pt x 166.48329pt.
+
+
+[17]
+
+[18 <./figures/monthly_RMSE_train_test.png> <./figures/weekly_RMSE_train_test.p
 ng>] (main.bbl
+LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
+(Font)              scaled to size 6.80005pt on input line 73.
+LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
+(Font)              scaled to size 5.10004pt on input line 73.
 
-[18]
-Underfull \hbox (badness 10000) in paragraph at lines 361--377
+
+[19]
+Underfull \hbox (badness 10000) in paragraph at lines 442--458
 \T1/fvm/m/n/10.95 en / publications / forecasting [] -principles [] -and [] -pr
 actice [] -2 /$[][]
  []
 
 
 
-[19]
-LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 6.80005pt on input line 650.
-LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
-(Font)              scaled to size 5.10004pt on input line 650.
+[20]
 
+[21]
 
-[20])
+[22])
 
-[21] (main.aux)
+[23] (main.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
@@ -1086,13 +1090,13 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 18AABC7E2EBA6DE3AF282EC4A61CE55B;3978.
  ) 
 Here is how much of TeX's memory you used:
- 19429 strings out of 468130
- 341684 string characters out of 5430633
- 838205 words of memory out of 5000000
- 47032 multiletter control sequences out of 15000+600000
- 792211 words of font info for 616 fonts, out of 8000000 for 9000
+ 19459 strings out of 468130
+ 342380 string characters out of 5430633
+ 839447 words of memory out of 5000000
+ 47052 multiletter control sequences out of 15000+600000
+ 794175 words of font info for 619 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 123i,23n,121p,1272b,676s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 123i,23n,121p,1300b,690s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/esper/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmr10.pfb><C:/Users/esper/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsf
 onts/cm/cmsy10.pfb><C:/Users/esper/AppData/Local/Programs/MiKTeX/fonts/type1/pu
@@ -1104,9 +1108,9 @@ nts/type1/bera/fvmr8a.pfb><C:/Users/esper/AppData/Local/Programs/MiKTeX/fonts/t
 ype1/urw/palatino/uplb8a.pfb><C:/Users/esper/AppData/Local/Programs/MiKTeX/font
 s/type1/urw/palatino/uplr8a.pfb><C:/Users/esper/AppData/Local/Programs/MiKTeX/f
 onts/type1/urw/palatino/uplri8a.pfb>
-Output written on main.pdf (23 pages, 530140 bytes).
+Output written on main.pdf (25 pages, 539391 bytes).
 PDF statistics:
- 417 PDF objects out of 1000 (max. 8388607)
- 79 named destinations out of 1000 (max. 500000)
- 172234 words of extra memory for PDF output out of 184870 (max. 10000000)
+ 452 PDF objects out of 1000 (max. 8388607)
+ 85 named destinations out of 1000 (max. 500000)
+ 174282 words of extra memory for PDF output out of 184870 (max. 10000000)
 

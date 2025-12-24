@@ -20,45 +20,45 @@ ptr=1, stack=
 
 ---the literal stack isn't empty for entry hyndman_forecasting_2018
 while executing---line 5079 of file apacite.bst
-You've used 25 entries,
+You've used 29 entries,
             6951 wiz_defined-function locations,
-            1484 strings with 18470 characters,
-and the built_in function-call counts, 56203 in all, are:
-= -- 6724
-> -- 461
-< -- 2954
-+ -- 3081
-- -- 50
-* -- 3975
-:= -- 10668
-add.period$ -- 107
-call.type$ -- 25
-change.case$ -- 467
+            1524 strings with 20164 characters,
+and the built_in function-call counts, 66425 in all, are:
+= -- 7933
+> -- 550
+< -- 3498
++ -- 3641
+- -- 58
+* -- 4721
+:= -- 12627
+add.period$ -- 124
+call.type$ -- 29
+change.case$ -- 540
 chr.to.int$ -- 0
-cite$ -- 51
-duplicate$ -- 1527
-empty$ -- 2123
-format.name$ -- 794
-if$ -- 10257
+cite$ -- 59
+duplicate$ -- 1822
+empty$ -- 2499
+format.name$ -- 943
+if$ -- 12095
 int.to.chr$ -- 0
-int.to.str$ -- 75
+int.to.str$ -- 87
 missing$ -- 0
-newline$ -- 757
-num.names$ -- 202
-pop$ -- 930
+newline$ -- 884
+num.names$ -- 238
+pop$ -- 998
 preamble$ -- 1
-purify$ -- 140
+purify$ -- 160
 quote$ -- 0
-skip$ -- 3124
+skip$ -- 3775
 stack$ -- 0
-substring$ -- 3322
-swap$ -- 882
-text.length$ -- 102
+substring$ -- 3946
+swap$ -- 1066
+text.length$ -- 127
 text.prefix$ -- 0
 top$ -- 1
-type$ -- 2128
+type$ -- 2512
 warning$ -- 1
-while$ -- 320
+while$ -- 380
 width$ -- 0
-write$ -- 954
+write$ -- 1110
 (There was 1 error message)

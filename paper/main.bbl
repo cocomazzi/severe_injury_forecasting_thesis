@@ -37,6 +37,48 @@ Baltagi, B\BPBI H.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Barhrhouj%
+, Ananou%
+\BCBL {}\ \BBA {} Ouladsine%
+}{%
+Barhrhouj%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2025}}%
+}]{%
+julian_assessing_2025}
+\APACinsertmetastar {%
+julian_assessing_2025}%
+\begin{APACrefauthors}%
+Barhrhouj, A.%
+, Ananou, B.%
+\BCBL {}\ \BBA {} Ouladsine, M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2025}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Assessing the {Impact} of {Temporal} {Data}
+  {Aggregation} on the {Reliability} of {Predictive} {Machine} {Learning}
+  {Models}} {Assessing the {Impact} of {Temporal} {Data} {Aggregation} on the
+  {Reliability} of {Predictive} {Machine} {Learning} {Models}}.{\BBCQ}
+\newblock
+\BIn{} V.~Julian\ \BOthers {.}\ (\BEDS), \APACrefbtitle {Intelligent {Data}
+  {Engineering} and {Automated} {Learning} – {IDEAL} 2024} {Intelligent
+  {Data} {Engineering} and {Automated} {Learning} – {IDEAL} 2024}\ (\BVOL\
+  15346, \BPGS\ 481--492).
+\newblock
+\APACaddressPublisher{Cham}{Springer Nature Switzerland}.
+\newblock
+\begin{APACrefURL}
+  [{2025-12-22}]\url{https://link.springer.com/10.1007/978-3-031-77731-8_43}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{Series Title: Lecture Notes in Computer Science}
+\newblock
+\begin{APACrefDOI} \doi{10.1007/978-3-031-77731-8_43} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Bojer%
 }{%
 Bojer%
@@ -343,6 +385,45 @@ Hewamalage, H.%
   \end{APACrefURL}
 \newblock
 \begin{APACrefDOI} \doi{10.1016/j.patcog.2021.108441} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Howe%
+\ \protect \BOthers {.}}{%
+Howe%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2024}}%
+}]{%
+howe_physical_2024}
+\APACinsertmetastar {%
+howe_physical_2024}%
+\begin{APACrefauthors}%
+Howe, A\BPBI S.%
+, Tan, J.%
+, Yuen, B.%
+, Saini, H.%
+, Saade-Cleves, N.%
+, Obeidat, D.%
+\BDBL {}Nowrouzi-Kia, B.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2024}{{\APACmonth{08}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Physical and {Psychosocial} {Correlates} of
+  {Occupational} {Physical} {Injury} in the {Global} {Construction} {Industry}:
+  {A} {Scoping} {Review}} {Physical and {Psychosocial} {Correlates} of
+  {Occupational} {Physical} {Injury} in the {Global} {Construction} {Industry}:
+  {A} {Scoping} {Review}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Environmental Health
+  Insights}{18}{}{11786302241270371}.
+\newblock
+\begin{APACrefURL}
+  [{2025-12-24}]\url{https://pmc.ncbi.nlm.nih.gov/articles/PMC11345736/}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1177/11786302241270371} \end{APACrefDOI}
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
@@ -685,44 +766,6 @@ Qu, R.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
-Rahman%
-, Hossain%
-\BCBL {}\ \BBA {} Sikder%
-}{%
-Rahman%
-\ \protect \BOthers {.}}{%
-{\protect \APACyear {2024}}%
-}]{%
-rahman_machine_2024}
-\APACinsertmetastar {%
-rahman_machine_2024}%
-\begin{APACrefauthors}%
-Rahman, M\BPBI M.%
-, Hossain, A.%
-\BCBL {}\ \BBA {} Sikder, M\BPBI A.%
-\end{APACrefauthors}%
-\unskip\
-\newblock
-\APACrefYearMonthDay{2024}{{\APACmonth{05}}}{}.
-\newblock
-{\BBOQ}\APACrefatitle {Machine {Learning} {Applications} in {Industry}
-  {Safety}: {Analysis} and {Prediction} of {Industrial} {Accidents}} {Machine
-  {Learning} {Applications} in {Industry} {Safety}: {Analysis} and {Prediction}
-  of {Industrial} {Accidents}}.{\BBCQ}
-\newblock
-\BIn{} \APACrefbtitle {2024 {International} {Conference} on {Smart} {Systems}
-  for applications in {Electrical} {Sciences} ({ICSSES})} {2024 {International}
-  {Conference} on {Smart} {Systems} for applications in {Electrical} {Sciences}
-  ({ICSSES})}\ (\BPGS\ 1--6).
-\newblock
-\begin{APACrefURL}
-  [{2025-11-07}]\url{https://ieeexplore.ieee.org/document/10561314}
-  \end{APACrefURL}
-\newblock
-\begin{APACrefDOI} \doi{10.1109/ICSSES62373.2024.10561314} \end{APACrefDOI}
-\PrintBackRefs{\CurrentBib}
-
-\bibitem [\protect \citeauthoryear {%
 Reich%
 \ \protect \BOthers {.}}{%
 Reich%
@@ -795,6 +838,43 @@ Rostami-Tabar, B.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Spiliotis%
+}{%
+Spiliotis%
+}{%
+{\protect \APACyear {2023}}%
+}]{%
+spiliotis_time_2023}
+\APACinsertmetastar {%
+spiliotis_time_2023}%
+\begin{APACrefauthors}%
+Spiliotis, E.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2023}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Time {Series} {Forecasting} with {Statistical},
+  {Machine} {Learning}, and {Deep} {Learning} {Methods}: {Past}, {Present}, and
+  {Future}} {Time {Series} {Forecasting} with {Statistical}, {Machine}
+  {Learning}, and {Deep} {Learning} {Methods}: {Past}, {Present}, and
+  {Future}}.{\BBCQ}
+\newblock
+\BIn{} M.~Hamoudia, S.~Makridakis\BCBL {}\ \BBA {} E.~Spiliotis\ (\BEDS),
+  \APACrefbtitle {Forecasting with {Artificial} {Intelligence}: {Theory} and
+  {Applications}} {Forecasting with {Artificial} {Intelligence}: {Theory} and
+  {Applications}}\ (\BPGS\ 49--75).
+\newblock
+\APACaddressPublisher{Cham}{Springer Nature Switzerland}.
+\newblock
+\begin{APACrefURL}
+  [{2025-12-24}]\url{https://doi.org/10.1007/978-3-031-35879-1_3}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1007/978-3-031-35879-1_3} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Taieb%
 , Bontempi%
 , Atiya%
@@ -830,6 +910,77 @@ Taieb, S\BPBI B.%
 \APACrefnote{arXiv:1108.3259 [stat]}
 \newblock
 \begin{APACrefDOI} \doi{10.48550/arXiv.1108.3259} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Vassiley%
+, Barratt%
+, Dayaram%
+\BCBL {}\ \BBA {} Burgess%
+}{%
+Vassiley%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2025}}%
+}]{%
+vassiley_psychosocial_2025}
+\APACinsertmetastar {%
+vassiley_psychosocial_2025}%
+\begin{APACrefauthors}%
+Vassiley, A.%
+, Barratt, T.%
+, Dayaram, K.%
+\BCBL {}\ \BBA {} Burgess, J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2025}{{\APACmonth{04}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Psychosocial workplace hazards and industrial relations:
+  {An} introduction} {Psychosocial workplace hazards and industrial relations:
+  {An} introduction}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Industrial Relations}{67}{2}{177--201}.
+\newblock
+\begin{APACrefURL}
+  [{2025-12-24}]\url{https://doi.org/10.1177/00221856251326664}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{Publisher: SAGE Publications Ltd}
+\newblock
+\begin{APACrefDOI} \doi{10.1177/00221856251326664} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Vitrano%
+\ \BBA {} Micheli%
+}{%
+Vitrano%
+\ \BBA {} Micheli%
+}{%
+{\protect \APACyear {2024}}%
+}]{%
+vitrano_effectiveness_2024}
+\APACinsertmetastar {%
+vitrano_effectiveness_2024}%
+\begin{APACrefauthors}%
+Vitrano, G.%
+\BCBT {}\ \BBA {} Micheli, G\BPBI J\BPBI L.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2024}{{\APACmonth{05}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Effectiveness of {Occupational} {Safety} and {Health}
+  interventions: a long way to go} {Effectiveness of {Occupational} {Safety}
+  and {Health} interventions: a long way to go}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Frontiers in Public Health}{12}{}{1292692}.
+\newblock
+\begin{APACrefURL}
+  [{2025-12-24}]\url{https://pmc.ncbi.nlm.nih.gov/articles/PMC11111875/}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.3389/fpubh.2024.1292692} \end{APACrefDOI}
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
