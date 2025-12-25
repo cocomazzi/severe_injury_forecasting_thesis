@@ -1,1 +1,12 @@
-# TO DO
+catboost==1.2.8
+ipython==9.4.0
+lightgbm==4.6.0
+matplotlib==3.10.8
+numpy==2.4.0
+pandas==2.3.3
+Requests==2.32.5
+scikit_learn==1.8.0
+scipy==1.16.3
+seaborn==0.13.2
+statsmodels==0.14.6
+xgboost==3.1.2
