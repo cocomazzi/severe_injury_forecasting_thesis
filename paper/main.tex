@@ -281,117 +281,13 @@ Exogenous variables
 
 \section{Results}
 
-This section presents the results from our experiments, following the research questions order.
-We will proceed by displaying the results for Hospitalization Risk, first including all the autoregressive features and second, to answer sub-question 1.2, without the differentiations.
-We will compare monthly and weekly results.
 
-Forecasts for the monthly global model are based on 2859 train points and 358 test points, whereas forecasts for the weekly global model are based on 10658 train points and 1354 test points. 
-
-Unfortunately, during the construction of the autoregressive features for framing the time series as a supervised regression task, we incorrectly define our model in a way that invalidates the forecasting results reported in this section. In the current model the feature matrix included both lagged values (e.g., $y_{t-1}$, $y_{t-12}$) and differentations (e.g., $\Delta y_{t}$, $\Delta_{12} y_{t}$). Because differenced values are functions of the original lags, the model was able to see the target variable. This created perfect multicollinearity in the design matrix (VIF $\rightarrow \infty$), leading to unrealistically low RMSE values. We will revise how to construct the autogressive feature to prevent any other data leakage.
-
-\subsection{Hospitalization risk at monthly resolution with all autoregressive features}
-The performance of the candidate models was tested on a one-step-ahead twelve-month forecast horizon, using the same autoregressive matrix. As we do not have a benchmark from other studies, we compared the results against a persistence model, where the last observation in a time series is carried forward to predict all future timesteps. 
-
-\begin{table}[ht]
-\centering
-\small
-\textbf{Monthly Hospitalization Risk}\\[4pt]
-\begin{tabular}{lcccccc}
-\toprule
-\textbf{Model} &
-\textbf{RMSE$_{\text{train}}$} &
-\textbf{MAE$_{\text{train}}$} &
-\textbf{MASE$_{\text{train}}$} &
-\textbf{\textbf{RMSE$_{\text{test}}$}} &
-\textbf{\textbf{MAE$_{\text{test}}$}} &
-\textbf{\textbf{MASE$_{\text{test}}$}} \\
-\midrule
-Ridge      & 0.00158 & 0.00113 & 0.00464 & \textbf{0.00143} & \textbf{0.00102} & \textbf{0.00417} \\
-CatBoost   & 0.02818 & 0.02056 & 0.08448 & \textbf{0.03000} & \textbf{0.02155} & \textbf{0.08854} \\
-XGBoost    & 0.02191 & 0.01674 & 0.06879 & \textbf{0.03138} & \textbf{0.02312} & \textbf{0.09499} \\
-LightGBM   & 0.02883 & 0.01966 & 0.08076 & \textbf{0.03319} & \textbf{0.02509} & \textbf{0.10307} \\
-MLP        & 0.04278 & 0.03373 & 0.13857 & \textbf{0.03954} & \textbf{0.03191} & \textbf{0.13109} \\
-PLS        & 0.13683 & 0.09853 & 0.40480 & \textbf{0.12267} & \textbf{0.08850} & \textbf{0.36360} \\
-AdaBoost   & 0.15088 & 0.12198 & 0.50115 & \textbf{0.16247} & \textbf{0.13025} & \textbf{0.53512} \\
-Lasso      & 0.37658 & 0.28726 & 1.18020 & \textbf{0.34740} & \textbf{0.27665} & \textbf{1.13663} \\
-ElasticNet & 0.37658 & 0.28726 & 1.18020 & \textbf{0.34740} & \textbf{0.27665} & \textbf{1.13663} \\
-Naive persistence & -- & -- & -- & \textbf{0.34967} & \textbf{0.24340} & \textbf{1.00000} \\
-\bottomrule
-\end{tabular}
-\caption{Train and test performance metrics for all evaluated models on \emph{monthly hospitalization risk}. Test-set metrics are highlighted in bold.}
-\label{tab:model_train_test_monthly}
-\end{table}
-
-\FloatBarrier
-
-The Ridge regressor shows consistent and pronounced advantage on all the other models, including the linear ones Lasso and ElasticNet. The Rdige prediction errors are an order of magnitude smaller than those of the next-best model, CatBoost. Tree-based models perform similarly, with test RMSE values between 0.030 and 0.033.
-
-A linear model such as Ridge tends to perform optimally on highly collinear features within a smooth time series. By inspecting the correlation among a subset of autoregressive features, we see that a first order differentiation is negatively correlated with a lag of one. A ridge regressor shrinks the coefficients by adding a weight decay regularization, which is defined as L2 norm. This forces the low-informative features to approximate zero, acting as a sort of feature selection. 
-
-In our case, it is evident that the ridge regressor relied on a small subset of highly correlated features, namely the differentiations and the lags, thereby capturing the trend of each single time series in the panel data. Conversely, the regularized linear regressors Lasso and ElasticNet, without any hyperparameter tuning, applied a too aggressive L1 weight decay, which can force coefficients to be zero, thereby completely removing the autoregressive features from the input matrix. 
-
-Tree-based models, by contrast, do not benefit from a small, highly-linear feature space. Their ability to capture nonlinearity is not effective where correlated autoregressive features reduce the diversity of tree splits. This is further confirmed by the low performance of a neural network, the Multi Layer Perceptron, which is best suited for a larger parameter space and greater variability.
-
-To evaluate how well the models generalize on the hold-out test set, we compared the RMSE on the train set against the test set. Whereas the ridge model further benefited from the test set observations, showing an effective way to generalize beyond the train set, tree-based models show some signs of overfitting. While the MLP achieved a slightly lower RMSE, its performance is still below that of the persistence model.
-
-
-
-\begin{table}[ht]
-\centering
-\small
-\textbf{Weekly Hospitalization Risk}\\[4pt]
-\begin{tabular}{lcccccc}
-\toprule
-\textbf{Model} &
-\textbf{RMSE$_{\text{train}}$} &
-\textbf{MAE$_{\text{train}}$} &
-\textbf{MASE$_{\text{train}}$} &
-\textbf{\textbf{RMSE$_{\text{test}}$}} &
-\textbf{\textbf{MAE$_{\text{test}}$}} &
-\textbf{\textbf{MASE$_{\text{test}}$}} \\
-\midrule
-Ridge      & 0.00097 & 0.00068 & 0.00661 & \textbf{0.00084} & \textbf{0.00059} & \textbf{0.00574} \\
-CatBoost   & 0.01090 & 0.00708 & 0.06871 & \textbf{0.00969} & \textbf{0.00649} & \textbf{0.06301} \\
-XGBoost    & 0.00957 & 0.00677 & 0.06570 & \textbf{0.01024} & \textbf{0.00691} & \textbf{0.06713} \\
-LightGBM   & 0.01140 & 0.00703 & 0.06828 & \textbf{0.01033} & \textbf{0.00672} & \textbf{0.06521} \\
-MLP        & 0.03016 & 0.02604 & 0.25281 & \textbf{0.02986} & \textbf{0.02577} & \textbf{0.25022} \\
-PLS        & 0.05691 & 0.04037 & 0.39201 & \textbf{0.05024} & \textbf{0.03560} & \textbf{0.34571} \\
-AdaBoost   & 0.06530 & 0.05256 & 0.51035 & \textbf{0.06994} & \textbf{0.05682} & \textbf{0.55173} \\
-Lasso      & 0.13654 & 0.09688 & 0.94071 & \textbf{0.12093} & \textbf{0.09264} & \textbf{0.89953} \\
-ElasticNet & 0.13654 & 0.09688 & 0.94071 & \textbf{0.12093} & \textbf{0.09264} & \textbf{0.89953} \\
-Naive persistence & -- & -- & -- & \textbf{0.14694} & \textbf{0.10298} & \textbf{1.00000} \\
-\bottomrule
-\end{tabular}
-\caption{Train and test performance metrics for all evaluated models on \emph{weekly hospitalization risk}. Test-set metrics are highlighted in bold.}
-\end{table}
-
-\FloatBarrier
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.95\textwidth]{figures/monthly_RMSE_train_test.png}
-    \caption{Monthly RMSE: Train vs Test}
-    \label{fig:monthly_rmse_train_test}
-\end{figure}
-
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.95\textwidth]{figures/weekly_RMSE_train_test.png}
-    \caption{Monthly RMSE: Train vs Test}
-    \label{fig:monthly_rmse_train_test}
-\end{figure}
 
 \section{Discussion}
 
 \subsection{Answering Research Questions}
 
-In this section, the results are placed in the broader context of occupational risk prevention. For each research question, we summarize our findings and assess whether they align with prior work. Since empirical benchmarks for forecasting occupational injury risk are scarce, we will primarly situate our findings within the theoretical and methodological literature on global versus local modelling strategies in panel time series forecasting.
 
-To answer research question 1, we evaluated nine different models belonging to three family models: linear ones (ridge, lasso, elasticnet, and PLS); tree-based ones (CatBoost, XGBoost, AdaBoost, and LightGBM), and one neural network (MLP). 
-Our findings confirm that a simple feature space can be better modelled by linear regressors. While most studies focus on classification tasks with diverse subsets of input features, our problem was simplified by having two target variables and a feature matrix mostly composed of autoregressive features. This simple set up showed that a ridge regressor can efficiently capture most of the variation in the time series by leveraging on long history data even when aggregated at a monthly level. However, when the ridge regressor is fitted locally, its accuracy does not significantly differ from the tree-based models fitted on the global forecasting panel. This is the key finding in our study, which aligns with previous research: by pooling panel data the models can better capture the time series than by fitting a single model to each time series.
-
-Among the tree-based models, AdaBoost has the higher RMSE, a finding that is consisten with the most recent literature. Once again, it is important to stress that our problem is intrinsically different, because it is a regression problem. Given the nature of the input data, we might have expected a SARIMAX model to performcompetitevely. However, the local strategy does not enable the model to customize its forecasts to each state time series.
 
 \subsection{Limitations and further research}
 
