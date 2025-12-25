@@ -1,0 +1,74 @@
+{
+  "Ridge": {
+    "class": "sklearn.linear_model.Ridge",
+    "hyperparameters": {
+      "alpha": 1.0,
+      "random_state": 0
+    }
+  },
+  "Lasso": {
+    "class": "sklearn.linear_model.Lasso",
+    "hyperparameters": {
+      "alpha": 0.001,
+      "max_iter": 10000,
+      "random_state": 0
+    }
+  },
+  "ElasticNet": {
+    "class": "sklearn.linear_model.ElasticNet",
+    "hyperparameters": {
+      "alpha": 0.001,
+      "l1_ratio": 0.5,
+      "max_iter": 10000,
+      "random_state": 0
+    }
+  },
+  "PLS": {
+    "class": "sklearn.cross_decomposition.PLSRegression",
+    "hyperparameters": {
+      "n_components": 10
+    }
+  },
+  "XGBoost": {
+    "class": "xgboost.XGBRegressor",
+    "hyperparameters": {
+      "n_estimators": 300,
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "subsample": 1.0,
+      "colsample_bytree": 1.0,
+      "reg_lambda": 1.0,
+      "objective": "reg:squarederror",
+      "random_state": 0,
+      "n_jobs": -1
+    }
+  },
+  "LightGBM": {
+    "class": "lightgbm.LGBMRegressor",
+    "hyperparameters": {
+      "n_estimators": 300,
+      "learning_rate": 0.05,
+      "max_depth": 3,
+      "num_leaves": 7,
+      "subsample": 1.0,
+      "colsample_bytree": 1.0,
+      "objective": "regression",
+      "reg_lambda": 0.0,
+      "random_state": 0,
+      "n_jobs": -1,
+      "verbose": -1
+    }
+  },
+  "CatBoost": {
+    "class": "catboost.CatBoostRegressor",
+    "hyperparameters": {
+      "iterations": 300,
+      "learning_rate": 0.05,
+      "depth": 3,
+      "l2_leaf_reg": 3.0,
+      "loss_function": "RMSE",
+      "random_state": 0,
+      "verbose": false
+    }
+  }
+}
