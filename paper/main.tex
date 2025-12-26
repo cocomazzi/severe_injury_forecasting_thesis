@@ -178,6 +178,7 @@ From the above review we can conclude that the SIR dataset has been used to gain
 
 
 \section{Methods} \label{sec:Method}
+NOTE: \textit{I basically removed all features in the dataset, with the exception of: date and state, and for sq2.1, i feature engineered the naics mix. The target is Hospitalization (repeating the same experiments for Amputation is tedious). All other input features are autoregressive features (we need these to frame the problem as a supervised regression for ML regressors) and calendar features. Maybe we could better use our dataset???}
 
 As discussed in subsection \ref{subs:Theory}, a crucial methodological consideration for panel time-series data is whether to fit a single function to all series or to repeatedly fit a function to each series. In panel data, grouping factors are referred to as \textit{cross-sectional units}. In this study, each state is observed over the same time span and shares the same features as the remaining units. Therefore, in the SIR dataset a single time series at a state level is a cross-sectional unit.
 
@@ -207,11 +208,13 @@ To ensure a fair comparison between states, we included only states operating un
 The dataset contains 98,801 entries, spanning from January 1, 2015 to February 28, 2025. Each entry represents a report submitted by an employer. A single report may mention multiple severe injuries (e.g. one hospitalization and one amputation), as employers are required to specify \textit{"the number of employees who suffered a fatality, in-patient hospitalization, amputation, or loss of an eye"}\footnote{\url{https://www.osha.gov/laws-regs/regulations/standardnumber/1904/1904.39}}. This means that the features used to construct the target series (Hospitalization and Amputation) are count variables, not binary encodings, and that we can not aggregate the data at the report level.
 The dataset provides 26 attributes, ranging from geographical information about the city, the address, and the state where the accident occurred, to details about the nature of the injury, the body part affected, the employer, and the business sector. Only variables required to construct state-level monthly injury counts and relative risks were retained.
 
+--- I DROPPED THIS PART: \textit{adjusting for population makes it actually harder to interpret the forecasts. For example, what does a 0.22 RMSE mean on the target Hospitalization per 100000 employees per month/week? I switched to counts of hospitalizations (e.g., a 3.5 RMSE means the model is off by 3.5 hospitalizations per month/week)}
+
 To make our model more transparent for decision makers, we derived two new target variables from the two attributes Hospitalization and Amputation. Since these two attributes represent only absolute numbers, they may vary depending on the worker population. More populated states will probably report a larger number of severe injuries than states with a small workforce. Even within the same state, workforce trends over time can enormously impact the number of accidents. As an example, the COVID period saw a dramatic shrinking of the workforce, possibly leading to a number of severe injuries much lower than in any other period. 
 
 To achieve interstate comparability, data from the Bureau of Labor Statistics (BLS) were fetched about seasonally adjusted, monthly employment at a state level. Employment is estimated on nonfarm, payroll jobs by the Current Employment Statistics (CES) survey. The covered time period spans from January 1, 2015 to December 31, 2024. Three states, namely American Samoa, Guam, and Northern Mariana Islands, were excluded from the panel since they are not covered by the BLS. After inspecting the testing set, one more U.S. territory, Virgin Islands, was excluded because of few data points.
 The ratio of both target features over the monthly employment was separatedly computed for each state. Therefore, the target to be predicted is not the absolute count of injuries per state, but the relative risk of getting either hospitalized or amputated per 100,000 state employees. 
-
+-----------------------------
 
 \subsection{Data Cleaning and Preparation}\label{subs:CleaningPreparation}
 
@@ -250,28 +253,24 @@ The exogenous variables are divided into four categories:
 \textbf{Category} & \textbf{Variables} \\
 \midrule
 
-Target variables 
-& \texttt{HospRisk}: monthly hospitalization risk per 100{,}000 employees; 
-  \texttt{AmpRisk}: monthly amputation risk per 100{,}000 employees. \\[4pt]
+Target variable 
+& \texttt{Hospitalization}: sum of hospitalizations for each state at a monthly frequency.\\[4pt]
 
 Calendar and seasonal features 
-& \texttt{Year}, \texttt{Month}, \texttt{Quarter}, \texttt{DaysInMonth}; 
-  Fourier terms: \texttt{Month\_sin}, \texttt{Month\_cos}. \\[4pt]
+& \texttt{Year}, \texttt{Month}, \texttt{Quarter}, \texttt{Week of the Year}.\\[4pt]
 
 Lagged features 
-& \texttt{HospRisk\_lag1}, \texttt{HospRisk\_lag3}, \texttt{HospRisk\_lag6}, \texttt{HospRisk\_lag12};
-  \texttt{AmpRisk\_lag1}, \texttt{AmpRisk\_lag3}, \texttt{AmpRisk\_lag6}, \texttt{AmpRisk\_lag12}. \\[4pt]
-
-Differenced features 
-& First differences: \texttt{HospRisk\_diff1}, \texttt{AmpRisk\_diff1};
-  seasonal (12-month) differences: \texttt{HospRisk\_diff12}, \texttt{AmpRisk\_diff12}. \\[4pt]
+& \texttt{lag1}, \texttt{lag2}, \texttt{lag3}, \texttt{lag6}, \texttt{lag12}.\\[4pt]
 
 Rolling features 
-& 3-month rolling means: \texttt{HospRisk\_roll3}, \texttt{AmpRisk\_roll3};
-  6-month rolling means: \texttt{HospRisk\_roll6}, \texttt{AmpRisk\_roll6}. \\[4pt]
+& 3-month rolling mean: \texttt{roll3},
+  6-month rolling mean: \texttt{roll6},
+  12-month rolling mean: \texttt{roll12},
+  3-, 6-, 12-month exponential weighted mean: \texttt{ewm3}, \texttt{ewm6}, \texttt{ewm12}.\\[4pt]
 
 Exogenous variables 
-& \texttt{State} (categorical identifier, one-hot encoded in the models) \\
+& \texttt{State} (categorical identifier, one-hot encoded in the models),
+top k NAICS 2-digit industry: \texttt{NAICSmix} \\
 
 \bottomrule
 \end{tabular}
