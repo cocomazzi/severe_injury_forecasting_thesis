@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Literal
 
+import numpy as np
 import pandas as pd
 
 def compute_naics_mix(
@@ -228,6 +229,8 @@ def build_panel_features(
         X["month"] = dt.month
         X["quarter"] = dt.quarter
         X["weekofyear"] = dt.isocalendar().week.astype(int)
+        X["month_sin"] = np.sin(2 * np.pi * dt.month / 12)
+        X["month_cos"] = np.cos(2 * np.pi * dt.month / 12)
 
     # ------------------------------------------------------------------
     # 2. Lag features
