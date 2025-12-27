@@ -246,126 +246,69 @@ def _infer_feature_group(feature_name: str) -> str:
 
 
 
+import numpy as np
+import pandas as pd
+from typing import Dict
+from sklearn.base import RegressorMixin
+from sklearn.pipeline import Pipeline
+from sklearn.cross_decomposition import PLSRegression
+
+
 def compute_feature_importances(
     models: Dict[str, RegressorMixin],
     X: pd.DataFrame,
     normalize: bool = True,
     use_abs: bool = True,
 ) -> pd.DataFrame:
-    """
-    Compute model-based feature importances for a set of fitted models.
-
-    Supports:
-      - Tree/boosting models with `feature_importances_`
-        (XGBRegressor, LGBMRegressor, CatBoostRegressor, etc.)
-      - Linear models with `coef_` (Ridge, Lasso, ElasticNet, PLSRegression),
-        where importance is based on |coef_j| * sd(X_j) to account for
-        feature scale.
-
-    Parameters
-    ----------
-    models : dict
-        {model_name: fitted_estimator}
-        The models must already be fitted on X.
-    X : pd.DataFrame
-        Feature matrix used for training (or aligned with the model).
-        Column order defines the feature order.
-    normalize : bool, default True
-        If True, normalizes importances for each model so that they sum to 1.
-    use_abs : bool, default True
-        If True, uses absolute value of linear coefficients before computing
-        importance (i.e. |coef|). This is usually what you want for
-        interpretability.
-
-    Returns
-    -------
-    importances : pd.DataFrame
-        DataFrame with index = feature names, columns = model names.
-        Each column gives the (optionally normalized) importance of each feature
-        for that model.
-    """
     feature_names = list(X.columns)
     n_features = len(feature_names)
-    X_values = X.to_numpy(dtype=float)
-
-    # std per feature (used for linear models)
-    std = X_values.std(axis=0, ddof=0)
-    # Avoid NaNs if some features are constant
-    std[std == 0.0] = 0.0
 
     imp_dict: Dict[str, np.ndarray] = {}
 
     for name, model in models.items():
-        importances: np.ndarray | None = None
+        est = model.steps[-1][1] if isinstance(model, Pipeline) else model
 
-        # ----------------------------------------------------------
-        # 1) Tree / boosting models with feature_importances_
-        # ----------------------------------------------------------
-        if hasattr(model, "feature_importances_"):
-            raw = np.asarray(model.feature_importances_, dtype=float)
-            if raw.shape[0] != n_features:
-                raise ValueError(
-                    f"Model '{name}' has feature_importances_ of length {raw.shape[0]}, "
-                    f"but X has {n_features} features."
-                )
-            importances = raw
+        # Tree / boosting
+        if hasattr(est, "feature_importances_"):
+            imp = np.asarray(est.feature_importances_, dtype=float)
 
-        # ----------------------------------------------------------
-        # 2) Linear / PLS models with coef_ (scale-aware)
-        # ----------------------------------------------------------
-        elif hasattr(model, "coef_"):
-            coef = np.asarray(model.coef_, dtype=float)
+        # Linear / PLS
+        elif hasattr(est, "coef_"):
+            coef = np.asarray(est.coef_, dtype=float)
 
-            # Handle shape (n_features,), (1, n_features), etc.
-            if coef.ndim == 1:
-                coef_vec = coef
-            elif coef.ndim == 2:
-                # If multi-target, average across targets
-                if coef.shape[0] == n_features or coef.shape[1] == n_features:
-                    coef_vec = coef.ravel()
-                else:
-                    coef_vec = np.mean(coef, axis=0)
+            if isinstance(est, PLSRegression):
+                # PLSRegression often stores coef_ as (n_features, n_targets)
+                # With single target, that’s (n_features, 1) → flatten to (n_features,)
+                coef_vec = coef[:, 0] if (coef.ndim == 2 and coef.shape[0] == n_features) else coef.ravel()
             else:
-                raise ValueError(
-                    f"Unexpected coef_ shape {coef.shape} for model '{name}'."
-                )
+                # Ridge/Lasso/ElasticNet: (n_features,) or (1, n_features) → flatten
+                coef_vec = coef.ravel()
 
             if coef_vec.shape[0] != n_features:
                 raise ValueError(
-                    f"Model '{name}' has coef_ of length {coef_vec.shape[0]}, "
-                    f"but X has {n_features} features."
+                    f"Model '{name}' coef_ length {coef_vec.shape[0]} != n_features {n_features}."
                 )
 
-            if use_abs:
-                coef_vec = np.abs(coef_vec)
-
-            # SCALE-AWARE: multiply by feature std to get standardized effect
-            raw = coef_vec * std
-            importances = raw
+            imp = np.abs(coef_vec) if use_abs else coef_vec
 
         else:
-            # Model does not expose a standard importance interface → skip
             continue
 
-        # ----------------------------------------------------------
-        # 3) Normalize if requested
-        # ----------------------------------------------------------
         if normalize:
-            total = np.sum(importances)
+            total = float(np.sum(imp))
             if total > 0:
-                importances = importances / total
+                imp = imp / total
 
-        imp_dict[name] = importances
+        imp_dict[name] = imp
 
     if not imp_dict:
         raise ValueError(
-            "No feature importances could be extracted from the provided models. "
-            "Make sure they expose either 'feature_importances_' or 'coef_'."
+            "No importances extracted. Models must expose feature_importances_ or coef_ "
+            "(or be a Pipeline ending with such a model)."
         )
 
-    imp_df = pd.DataFrame(imp_dict, index=feature_names)
+    return pd.DataFrame(imp_dict, index=feature_names)
 
-    return imp_df
 
 def aggregate_feature_importances_by_group(
     importances: pd.DataFrame,
