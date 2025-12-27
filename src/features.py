@@ -124,6 +124,50 @@ def compute_naics_mix(
 
     return mix
 
+FREQ_PRESETS = {
+    "MS": {
+        "lags": (1, 2, 3, 6, 12),
+        "rolling_windows": (3, 6, 12),
+        "ewm_spans": (3, 6, 12),
+        "add_month_cycle": True,
+        "add_week_cycle": False,
+        "include_weekofyear": False,  # optional (you can drop weekofyear entirely)
+    },
+    "W-MON": {
+        "lags": (1, 2, 4, 13, 26, 52),
+        "rolling_windows": (4, 13, 26, 52),
+        "ewm_spans": (4, 13, 26, 52),
+        "add_month_cycle": False,  # keep clean; can set True if you ever want both
+        "add_week_cycle": True,
+        "include_weekofyear": False,  # we’ll not keep raw weekofyear
+    },
+}
+
+
+
+def series_to_national_panel(
+    y: pd.Series,
+    target: str = "Hospitalized",
+    group_col: str = "State",
+    date_col: str = "Date",
+    group_value: str = "NATIONAL",
+) -> pd.DataFrame:
+    """
+    Convert a single national time series into the panel_df format expected by build_panel_features().
+    """
+    if not isinstance(y.index, pd.DatetimeIndex):
+        raise TypeError("y must have a DatetimeIndex.")
+    if y.name is None:
+        y = y.rename(target)
+
+    return pd.DataFrame(
+        {
+            group_col: group_value,
+            date_col: y.index,
+            target: y.to_numpy(dtype=float),
+        }
+    )
+
 def build_panel_features(
     panel_df: pd.DataFrame,
     target: str = "Hospitalized",
@@ -136,9 +180,10 @@ def build_panel_features(
     add_rolling: bool = True,
     add_ewm: bool = True,
     # autoregressive feature hyperparams
-    lags: Sequence[int] = (1, 2, 3, 6, 12),
-    rolling_windows: Sequence[int] = (3, 6, 12),
-    ewm_spans: Sequence[int] = (3, 6, 12),
+    lags: Sequence[int] | None = None,
+    rolling_windows: Sequence[int] | None = None,
+    ewm_spans: Sequence[int] | None = None,
+
     # categorical encodings
     state_encoding: Literal["none", "dummy"] = "none",
     naics_mix_cols: Sequence[str] | None = None,
@@ -220,6 +265,15 @@ def build_panel_features(
     # Feature container
     X = pd.DataFrame(index=df.index)
 
+    preset = FREQ_PRESETS.get(freq, FREQ_PRESETS["MS"])
+
+    if lags is None:
+        lags = preset["lags"]
+    if rolling_windows is None:
+        rolling_windows = preset["rolling_windows"]
+    if ewm_spans is None:
+        ewm_spans = preset["ewm_spans"]
+
     # ------------------------------------------------------------------
     # 1. Calendar features
     # ------------------------------------------------------------------
@@ -228,9 +282,18 @@ def build_panel_features(
         X["year"] = dt.year
         X["month"] = dt.month
         X["quarter"] = dt.quarter
-        X["weekofyear"] = dt.isocalendar().week.astype(int)
-        X["month_sin"] = np.sin(2 * np.pi * dt.month / 12)
-        X["month_cos"] = np.cos(2 * np.pi * dt.month / 12)
+
+        # Month cycle (monthly models)
+        if preset.get("add_month_cycle", True):
+            X["month_sin"] = np.sin(2 * np.pi * dt.month / 12)
+            X["month_cos"] = np.cos(2 * np.pi * dt.month / 12)
+
+        # Week-of-year cycle (weekly models)
+        if preset.get("add_week_cycle", False):
+            w = dt.isocalendar().week.astype(int).clip(upper=52)
+            X["week_sin"] = np.sin(2 * np.pi * w / 52)
+            X["week_cos"] = np.cos(2 * np.pi * w / 52)
+
 
     # ------------------------------------------------------------------
     # 2. Lag features
@@ -246,8 +309,12 @@ def build_panel_features(
     if add_rolling:
         for window in rolling_windows:
             col_name = f"{target}_rollmean{window}"
-            X[col_name] = df.groupby(group_col)[target].transform(
-                lambda s, w=window: s.shift(1).rolling(window=w, min_periods=w).mean()
+            s = df.groupby(group_col)[target].shift(1)
+            X[col_name] = (
+                s.groupby(df[group_col])
+                .rolling(window=window, min_periods=window)
+                .mean()
+                .reset_index(level=0, drop=True)
             )
 
     # ------------------------------------------------------------------
@@ -256,8 +323,12 @@ def build_panel_features(
     if add_ewm:
         for span in ewm_spans:
             col_name = f"{target}_ewm{span}"
-            X[col_name] = df.groupby(group_col)[target].transform(
-                lambda s, sp=span: s.ewm(span=sp, adjust=False).mean().shift(1)
+            s = df.groupby(group_col)[target].shift(1)
+            X[col_name] = (
+            s.groupby(df[group_col])
+            .ewm(span=span, adjust=False)
+            .mean()
+            .reset_index(level=0, drop=True)
             )
 
     # ------------------------------------------------------------------
