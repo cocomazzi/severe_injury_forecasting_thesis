@@ -1,4 +1,6 @@
 # Ignore old notebooks
 notebooks/03_baseline_models.ipynb
 notebooks/sktime.ipynb
+src/preprocessing.py
 catboost_info/
+results/national_old/
