@@ -70,10 +70,10 @@ def fetch_bls_employment(series_ids, start_year, end_year):
                 month = int(item["period"][1:])
                 value = float(item["value"])
                 date = f"{year}-{month:02d}-01"
-                records.append({"state": state, "date": date, "employees": value})
+                records.append({"State": state, "Date": date, "Employees": value})
 
     df = pd.DataFrame(records)
-    df = df.sort_values(["state", "date"]).reset_index(drop=True)
+    df = df.sort_values(["State", "Date"]).reset_index(drop=True)
     return df
 
 #monthly ML panel

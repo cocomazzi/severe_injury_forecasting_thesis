@@ -178,7 +178,6 @@ From the above review we can conclude that the SIR dataset has been used to gain
 
 
 \section{Methods} \label{sec:Method}
-NOTE: \textit{I basically removed all features in the dataset, with the exception of: date and state, and for sq2.1, i feature engineered the naics mix. The target is Hospitalization (repeating the same experiments for Amputation is tedious). All other input features are autoregressive features (we need these to frame the problem as a supervised regression for ML regressors) and calendar features. Maybe we could better use our dataset???}
 
 As discussed in subsection \ref{subs:Theory}, a crucial methodological consideration for panel time-series data is whether to fit a single function to all series or to repeatedly fit a function to each series. In panel data, grouping factors are referred to as \textit{cross-sectional units}. In this study, each state is observed over the same time span and shares the same features as the remaining units. Therefore, in the SIR dataset a single time series at a state level is a cross-sectional unit.
 
@@ -205,41 +204,91 @@ experimental setup is missing: models configuration; train-test split; possibly,
 The dataset is publicly available through the OSHA Severe Injury Dashbord \footnote{\url{https://www.osha.gov/severe-injury-reports}. The dataset was retrieved on August 28, 2025.}. OSHA collects reports about severe injuries occurred within U.S. states under its jurisdiction. There reports form the Severe Injury Reports (SIR) dataset. There are 34 states with a federal plan under OSHA jurisdiction, although the SIR dataset also contains reports from non-federal-plan states when the injured employees are federal workers. In addition, seven states have state plans covering only state and local government workers, while private-sector workers are covered by federal plans.
 To ensure a fair comparison between states, we included only states operating under a federal OSHA jurisdiction, together with the seven states mentioned above, as all reports from those states are collected from the private sector. 
 
-The dataset contains 98,801 entries, spanning from January 1, 2015 to February 28, 2025. Each entry represents a report submitted by an employer. A single report may mention multiple severe injuries (e.g. one hospitalization and one amputation), as employers are required to specify \textit{"the number of employees who suffered a fatality, in-patient hospitalization, amputation, or loss of an eye"}\footnote{\url{https://www.osha.gov/laws-regs/regulations/standardnumber/1904/1904.39}}. This means that the features used to construct the target series (Hospitalization and Amputation) are count variables, not binary encodings, and that we can not aggregate the data at the report level.
+The dataset contains 98,801 entries, spanning from January 1, 2015 to February 28, 2025. Each entry represents a report submitted by an employer. A single report may mention multiple severe injuries (e.g. one hospitalization and one amputation), as employers are required to specify \textit{"the number of employees who suffered a fatality, in-patient hospitalization, amputation, or loss of an eye"}\footnote{\url{https://www.osha.gov/laws-regs/regulations/standardnumber/1904/1904.39}}. This means that the feature used to construct the target series (Hospitalization) is a count variable, and that we can not aggregate the data at the report level.
+  
+To validate the target feature, we cross-tabulated Hospitalization and Amputation counts in Table~\ref{tab:hosp_amp_crosstab} and we performed a qualitative analysis of some edge cases. In particular, we studied the \textit{Final Narrative} feature for a sample of accidents where the employer reported both an amputation and a hospitalization. Even in these cases, the record involves only one employee; whereas accidents with multiple hospitalizations do refer to multiple employees. Even if this reporting inconsistency does not significantly impact the hospitalization size, we have to explicitly define our outcome variable as \textit{prevalence of reported inpatient hospitalization}.
+\begin{table}[htbp]
+\centering
+\caption{Cross-tabulation of hospitalization and amputation indicators}
+\label{tab:hosp_amp_crosstab}
+\begin{tabular}{lrrrrrrr}
+\toprule
+\textbf{Amputation} & \multicolumn{7}{c}{\textbf{Hospitalized}} \\
+\cmidrule(lr){2-8}
+ & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+\midrule
+0 & 41    & 70{,}152 & 550 & 11 & 2 & 2 & 2 \\
+1 & 18{,}448 & 7{,}154  & 6   & 0  & 1 & 0 & 0 \\
+2 & 6     & 5      & 6   & 0  & 0 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 The dataset provides 26 attributes, ranging from geographical information about the city, the address, and the state where the accident occurred, to details about the nature of the injury, the body part affected, the employer, and the business sector. Only variables required to construct state-level monthly injury counts and relative risks were retained.
 
---- I DROPPED THIS PART: \textit{adjusting for population makes it actually harder to interpret the forecasts. For example, what does a 0.22 RMSE mean on the target Hospitalization per 100000 employees per month/week? I switched to counts of hospitalizations (e.g., a 3.5 RMSE means the model is off by 3.5 hospitalizations per month/week)}
 
-To make our model more transparent for decision makers, we derived two new target variables from the two attributes Hospitalization and Amputation. Since these two attributes represent only absolute numbers, they may vary depending on the worker population. More populated states will probably report a larger number of severe injuries than states with a small workforce. Even within the same state, workforce trends over time can enormously impact the number of accidents. As an example, the COVID period saw a dramatic shrinking of the workforce, possibly leading to a number of severe injuries much lower than in any other period. 
+To make our model more transparent for decision makers, we derived two new target variables from the two attributes Hospitalization and Amputation. Since these two attributes represent only absolute numbers, they may vary depending on the worker population. More populated states will probably report a larger number of severe injuries than states with a small workforce. Even within the same state, workforce trends over time can enormously impact the number of accidents. As an example, the COVID period saw a dramatic shrinking of the workforce, possibly leading to a number of severe injuries much lower than in any other period. Moreover, as we aim to evaluate both a global and a local forecasting strategy, the range of the outcome variable should be on the same scale. For this reason, we normalize the raw count of hospitalization with the workforce for each state and for each month included in the dataset.
 
 To achieve interstate comparability, data from the Bureau of Labor Statistics (BLS) were fetched about seasonally adjusted, monthly employment at a state level. Employment is estimated on nonfarm, payroll jobs by the Current Employment Statistics (CES) survey. The covered time period spans from January 1, 2015 to December 31, 2024. Three states, namely American Samoa, Guam, and Northern Mariana Islands, were excluded from the panel since they are not covered by the BLS. After inspecting the testing set, one more U.S. territory, Virgin Islands, was excluded because of few data points.
 The ratio of both target features over the monthly employment was separatedly computed for each state. Therefore, the target to be predicted is not the absolute count of injuries per state, but the relative risk of getting either hospitalized or amputated per 100,000 state employees. 
 -----------------------------
 
 \subsection{Data Cleaning and Preparation}\label{subs:CleaningPreparation}
-
+To evalutate for forecastability, we computed the percentage of days with no reports over the total temporal range for each state (mean value across all states=0,62). Given the data sparsity at the daily level, we aggregated the data to a lower resolution.
 The main preparation step involved aggregating both hospitalization and amputation risks at the monthly level to ensure a consistent merge with the monthly state employment statistics from the Bureau of Labor Statistics (BLS). After merging the two datasets, some missing values originated from a mismatch between the SIR time period (ending in February 2025) and the BLS time period (ending in December 2024). These entries were removed from the panel.
 
 For the weekly forecasting task, the state employment data were upsampled from monthly to weekly frequency using a hybrid strategy. Missing weekly values were interpolated with the exception of the period from March to September 2020. During this interval, the COVID-19 pandemic caused an abrupt drop in employment that the interpolation method was not able to capture properly. For this particular period, each initial monthly value was forward-filled until the next observed monthly value. Upsampling monthly employment data to weekly frequency assumes relatively smooth workforce trends within each month.
 
 \subsection{Exploratory Data Analysis}\label{subs:EDA}
 
-A skewed data distribution of the target feature may lead to poor generalization, as the time series can be sensitive to extreme values. 
-
+A skewed data distribution of the target feature may lead to poor generalization, as the time series can be sensitive to extreme values. Figure~\ref{fig:target_distribution} shows the counts of hospitalization and amputation before adjusting for the workforce size. The hospitalization distribution is slightly positively skewed. 
 
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/target_distribution.png}
-    \caption{Distributions of targets}
+    \caption{Distributions of hospitalizations and amputations (raw counts)}
     \label{fig:target_distribution}
 \end{figure}
 
 \FloatBarrier
-Since both hospitalization and amputation risk show a right-skewed distribution, we initially standardized these features using a log transformation. To test whether this transformation improved predictive accuracy, we trained a Ridge regressor on the log-transformed targets and compared the performance to the model trained on targets on the original scale. As the accuracy deteriorated, it is likely that the transformation removed structural components that the regressor could have exploited. Since we normalized the targets by adjusting for the monthly employment population for each state, further standardization offered no additional benefit. 
 
-We also experimented with differencing the global mean time series – monthly aggregation across all states – before generating lagged features. In fact, after conducting an Augmented Dickey-Fuller test on each state-level series to check for stationarity, we found that some series are stationary, while others are not. Similar to the log transformation, the differentiation increased both RMSE and MAE on the one-step-ahead twelve-month forecast. Since modern machine-learning models do not strictly require stationarity assumptions, we preferred to inform the models using lagged values, rolling means, and differentiations of lagged values on the original scale.
+After adjusting for the workforce, the hospitalization risk distribution is shown in Figure~\ref{fig:hosprisk_distribution} and its normality was assessed with a Shapiro-Wilk test, which rejected the null hypothesis of normality (W = 0.96, p < 0.001).
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/distribution_hosprisk.png}
+    \caption{Distribution of hospitalizations adjusted for state workforce}
+    \label{fig:hosprisk_distribution}
+\end{figure}
+
+\FloatBarrier
+
+A common approach to normalize a skewed distribution is to apply a log transformation to the target feature. However, because our target is already normalized by workforce size and because the target naturally included zero values (days with no report at all), we do not apply further transformations to our target (cit. ealing with Logs and Zeros in Regression Models).
+
+To assess time serie components, we first visually inspect the mean monthly time series for hospitalization risk across all states in the panel. Figure~\ref{fig:monthly_mean_hosprisk} shows seasonal fluctuations, with regular upwards trends in the summer and a general decline after the COVID period.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/monthly_mean_hosprisk.png}
+    \caption{Monthly mean hospitalization risk}
+    \label{fig:monthly_mean_hosprisk}
+\end{figure}
+
+\FloatBarrier
+
+A visual inspection further confirms the seasonal components of the time series at a state level, with higher volatility when states with a lower workforce are interested by occasional spikes, as it is clear from Figure~\ref{fig:three_states_ts}, which shows three states selected according to their relative workforce size.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/three_states_ts.png}
+    \caption{Monthly hospitalization risk for Texas, Colorado, and Montana}
+    \label{fig:three_states_ts}
+\end{figure}
+
+\FloatBarrier
+
+A more formal test for temporal components is provided by a seasonal-trend decomposition (STL).
 
 \subsection{Feature Engineering}\label{subs:FeatureEngineering}
 
