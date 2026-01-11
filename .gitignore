@@ -1,4 +1,7 @@
 # Ignore old notebooks
 notebooks/03_baseline_models.ipynb
 notebooks/sktime.ipynb
+notebooks/03_national_b.ipynb
+notebooks/04_global_local.ipynb
+notebooks/05_CV_ht.ipynb
 catboost_info/

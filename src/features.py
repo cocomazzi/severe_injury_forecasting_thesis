@@ -124,6 +124,98 @@ def compute_naics_mix(
 
     return mix
 
+def compute_label_mix(
+    df: pd.DataFrame,
+    label_col: str,
+    date_col: str = "EventDate",
+    state_col: str = "State",
+    freq: str = "MS",
+    top_k: int = 10,
+    out_date_col: str = "Date",
+    prefix: str | None = None,
+    end_date: str | pd.Timestamp | None = None,   # <-- NEW
+) -> pd.DataFrame:
+    """
+    Compute share_<prefix>_<label> features per (state, period) based on ALL events.
+
+    Top-K label set is learned globally; if end_date is provided, top-K is
+    learned only from rows with date <= end_date (e.g., through 2023-12-31)
+    to avoid regime breaks / leakage. Shares are still computed for the full df.
+
+    Others + missing -> "Other".
+    """
+    if state_col not in df.columns:
+        raise KeyError(f"state_col '{state_col}' not found in df.")
+    if date_col not in df.columns:
+        raise KeyError(f"date_col '{date_col}' not found in df.")
+    if label_col not in df.columns:
+        raise KeyError(f"label_col '{label_col}' not found in df.")
+    if top_k <= 0:
+        raise ValueError("top_k must be a positive integer.")
+    if prefix is None:
+        prefix = label_col
+
+    data = df[[state_col, date_col, label_col]].copy()
+    data[date_col] = pd.to_datetime(data[date_col], errors="coerce")
+
+    # Aggregate timestamp aligned with panel frequency
+    if freq == "MS":
+        agg_date = data[date_col].dt.to_period("M").dt.to_timestamp()
+    else:
+        agg_date = data[date_col].dt.to_period(freq).dt.to_timestamp()
+    data[out_date_col] = agg_date
+
+    # --- learn top-K labels on restricted data (if end_date provided)
+    labels_all = data[label_col].astype("string").fillna("Other").str.strip()
+
+    if end_date is not None:
+        end_ts = pd.to_datetime(end_date)
+        labels_for_topk = labels_all[data[date_col].notna() & (data[date_col] <= end_ts)]
+    else:
+        labels_for_topk = labels_all
+
+    top_labels = (
+        labels_for_topk.value_counts(dropna=True)
+        .head(top_k)
+        .index
+        .tolist()
+    )
+
+    # Apply fixed category set to ALL rows
+    data["_label_reduced"] = labels_all.where(labels_all.isin(top_labels), other="Other")
+
+    # Counts per (state, period, label)
+    counts = (
+        data.groupby([state_col, out_date_col, "_label_reduced"], dropna=False)
+            .size()
+            .reset_index(name="n_events")
+    )
+
+    # Totals per (state, period)
+    totals = (
+        counts.groupby([state_col, out_date_col], dropna=False)["n_events"]
+              .sum()
+              .reset_index(name="total_events")
+    )
+
+    counts = counts.merge(totals, on=[state_col, out_date_col], how="left")
+    counts["share"] = counts["n_events"] / counts["total_events"].where(counts["total_events"] > 0, other=pd.NA)
+
+    counts["col_name"] = "share_" + prefix + "_" + counts["_label_reduced"].astype(str)
+
+    mix = (
+        counts.pivot_table(
+            index=[state_col, out_date_col],
+            columns="col_name",
+            values="share",
+            aggfunc="first",
+        )
+        .fillna(0.0)
+        .reset_index()
+    )
+    mix.columns.name = None
+    return mix
+
 FREQ_PRESETS = {
     "MS": {
         "lags": (1, 2, 3, 6, 12),
@@ -187,6 +279,7 @@ def build_panel_features(
     # categorical encodings
     state_encoding: Literal["none", "dummy"] = "none",
     naics_mix_cols: Sequence[str] | None = None,
+    label_mix_cols: Sequence[str] | None = None,
     dropna: bool = True,
 ) -> tuple[pd.DataFrame, pd.Series, pd.DataFrame]:
     """
@@ -353,6 +446,7 @@ def build_panel_features(
     # ------------------------------------------------------------------
     # 6. NAICS 2-digit dummy encoding
     # ------------------------------------------------------------------
+
     if naics_mix_cols is not None:
         for col in naics_mix_cols:
             if col not in df.columns:
@@ -360,8 +454,43 @@ def build_panel_features(
                     f"NAICS mix column '{col}' not found in panel_df. "
                     "Make sure to merge compute_naics_mix output first."
                 )
-            lag_col = f"{col}_lag1"
-            X[lag_col] = df.groupby(group_col)[col].shift(1)
+
+            # past-only series (exclude current t)
+            s = df.groupby(group_col)[col].shift(1)
+
+            # leakage-safe rolling mean over the previous 12 periods
+            X[f"{col}_rollmean12_lag1"] = (
+                s.groupby(df[group_col])
+                .rolling(window=12, min_periods=12)
+                .mean()
+                .reset_index(level=0, drop=True)
+            )
+
+            # optional: also keep the plain lag-1
+            # X[f"{col}_lag1"] = s
+
+
+    # ------------------------------------------------------------------
+    # 6b. Nature/Event mix shares 
+    # ------------------------------------------------------------------
+    if label_mix_cols is not None:
+        for col in label_mix_cols:
+            if col not in df.columns:
+                raise KeyError(
+                    f"Label mix column '{col}' not found in panel_df. "
+                    "Make sure to merge compute_label_mix output first."
+                )
+
+            s = df.groupby(group_col)[col].shift(1)
+
+            X[f"{col}_rollmean12_lag1"] = (
+                s.groupby(df[group_col])
+                .rolling(window=12, min_periods=12)
+                .mean()
+                .reset_index(level=0, drop=True)
+            )
+
+
     # ------------------------------------------------------------------
     # 7. Final checks and NA handling
     # ------------------------------------------------------------------
