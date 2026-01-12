@@ -212,9 +212,9 @@ The work most closely aligned with our research is \citet{cerqua_dead_2024}. The
 \subsection{Studies on OSHA's SIR dataset}\label{subs:OSHA}
 Data mining applications on the OSHA's SIR dataset are limited to four studies.
 
-On the descriptive side, a notable study examining the temporal aspects of occupational injury data is \citet{gomes_time_2023}. The authors analysed the Severe Injury Report (SIR) dataset provided by the Occupational Safety and Health Administration (OSHA), using time series decomposition models to uncover seasonal effects and general trends. Moreover, they evaluated industry and injury-type breakdowns, revealing that manufacturing and construction are the most affected industries.
+On the descriptive side, a notable study examining the temporal aspects of occupational injury data is \citet{gomes_time_2023}. The authors analysed the Severe Injury Report (SIR) dataset provided by the Occupational Safety and Health Administration (OSHA), using time series decomposition models to uncover seasonal effects and general trends. Moreover, they evaluated industry and injury-type breakdowns, revealing that manufacturing and construction are the most affected industries (see Figure~\ref{fig:NAICS_distribution}).
 
-Importantly, they identified systematic temporal patterns in the occupational injuries, such as the predominance of injuries on weekdays compared to weekends, and a higher injury incidence in the summer months. However, \citet{williams_traumatic_2024} did not find a statistically significant difference between cold and warm seasons (p = 0.09). Their study introduced population adjustments for normalizing injury counts by industry employment size, using 2-digit NAICS codes to compute injuries per 100,000 workers. 
+Importantly, they identified systematic temporal patterns in the occupational injuries, such as the predominance of injuries on weekdays compared to weekends, and a higher injury incidence in the summer months (see Figures~\ref{weekday_injuries_2024}, \ref{monthly_injuries_2024}). However, \citet{williams_traumatic_2024} did not find a statistically significant difference between cold and warm seasons (p = 0.09). Their study introduced population adjustments for normalizing injury counts by industry employment size, using 2-digit NAICS codes to compute injuries per 100,000 workers. 
 
 We adopt a similar adjustment for the number of hospitalization, accounting only for state workforce size. In this way, we predict the incidence of new hospitalized employees over a specific time and at the stale level.  While both studies provided valuable descriptive insights into the temporal features of the SIR data, they did not extend to predictive or regression-based modeling. 
 
@@ -911,6 +911,36 @@ xgboost & 3.1.2 \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\section{Additional visualizations}
+\label{app:viz}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.99\textwidth]{figures/NAICS_distribution.png}
+    \caption{2-digit NAICS industry distribution.}
+    \label{fig:NAICS_distribution}
+\end{figure}
+
+\FloatBarrier
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.99\textwidth]{figures/weekday_injuries_2024.png}
+    \caption{Weekday hospitalizations in 2024, raw counts.}
+    \label{fig:weekday_injuries}
+\end{figure}
+
+\FloatBarrier
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.99\textwidth]{figures/monthly_injuries_2024.png}
+    \caption{Monthly hospitalizations in 2024, raw counts.}
+    \label{fig:monthly_injuries}
+\end{figure}
+
+\FloatBarrier
 
 
 \end{document}

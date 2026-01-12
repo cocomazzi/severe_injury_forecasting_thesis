@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.22)  11 JAN 2026 17:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.22)  12 JAN 2026 16:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -843,7 +843,7 @@ Package epstopdf Info: Source file: <logo.eps>
 o.pdf logo.eps>
 (epstopdf)             \includegraphics on input line 8.
 Package epstopdf Info: Output file is already uptodate.
-<logo-eps-converted-to.pdf, id=119, 339.2675pt x 86.3225pt>
+<logo-eps-converted-to.pdf, id=123, 339.2675pt x 86.3225pt>
 File: logo-eps-converted-to.pdf Graphic file (type pdf)
 <use logo-eps-converted-to.pdf>
 Package pdftex.def Info: logo-eps-converted-to.pdf  used on input line 8.
@@ -1095,7 +1095,7 @@ Overfull \hbox (1.85649pt too wide) in paragraph at lines 170--202
 [12]
 
 [13]
-<figures/workflow_thesis.jpg, id=381, 1874.00125pt x 2149.02875pt>
+<figures/workflow_thesis.jpg, id=387, 1874.00125pt x 2149.02875pt>
 File: figures/workflow_thesis.jpg Graphic file (type jpg)
 <use figures/workflow_thesis.jpg>
 Package pdftex.def Info: figures/workflow_thesis.jpg  used on input line 284.
@@ -1124,13 +1124,13 @@ Package microtype Info: Loading generic protrusion settings for font family
 [15]
 
 [16]
-<figures/target_distribution.png, id=406, 856.3995pt x 351.714pt>
+<figures/target_distribution.png, id=412, 856.3995pt x 351.714pt>
 File: figures/target_distribution.png Graphic file (type png)
 <use figures/target_distribution.png>
 Package pdftex.def Info: figures/target_distribution.png  used on input line 34
 0.
 (pdftex.def)             Requested size: 340.57838pt x 139.87273pt.
-<figures/distribution_hosprisk.png, id=409, 423.38174pt x 279.444pt>
+<figures/distribution_hosprisk.png, id=415, 423.38174pt x 279.444pt>
 File: figures/distribution_hosprisk.png Graphic file (type png)
 <use figures/distribution_hosprisk.png>
 Package pdftex.def Info: figures/distribution_hosprisk.png  used on input line 
@@ -1139,13 +1139,13 @@ Package pdftex.def Info: figures/distribution_hosprisk.png  used on input line
 
 
 [17 <./figures/target_distribution.png> <./figures/distribution_hosprisk.png>]
-<figures/monthly_mean_hosprisk.png, id=422, 857.604pt x 423.984pt>
+<figures/monthly_mean_hosprisk.png, id=428, 857.604pt x 423.984pt>
 File: figures/monthly_mean_hosprisk.png Graphic file (type png)
 <use figures/monthly_mean_hosprisk.png>
 Package pdftex.def Info: figures/monthly_mean_hosprisk.png  used on input line 
 364.
 (pdftex.def)             Requested size: 340.57838pt x 168.37433pt.
-<figures/three_states_ts.png, id=424, 855.195pt x 223.43475pt>
+<figures/three_states_ts.png, id=430, 855.195pt x 223.43475pt>
 File: figures/three_states_ts.png Graphic file (type png)
 <use figures/three_states_ts.png>
 Package pdftex.def Info: figures/three_states_ts.png  used on input line 375.
@@ -1156,7 +1156,7 @@ Overfull \hbox (1.20027pt too wide) in paragraph at lines 382--383
 ro-vided by the seasonal-
  []
 
-<figures/stl_decomposition_hosprisk_monthly_national.png, id=426, 713.064pt x 5
+<figures/stl_decomposition_hosprisk_monthly_national.png, id=432, 713.064pt x 5
 69.12625pt>
 File: figures/stl_decomposition_hosprisk_monthly_national.png Graphic file (typ
 e png)
@@ -1188,7 +1188,7 @@ Overfull \hbox (6.92833pt too wide) in paragraph at lines 401--429
 
 
 [19 <./figures/stl_decomposition_hosprisk_monthly_national.png>]
-<figures/global_trend_top3_nature_mix.png, id=446, 712.46175pt x 351.714pt>
+<figures/global_trend_top3_nature_mix.png, id=452, 712.46175pt x 351.714pt>
 File: figures/global_trend_top3_nature_mix.png Graphic file (type png)
 <use figures/global_trend_top3_nature_mix.png>
 Package pdftex.def Info: figures/global_trend_top3_nature_mix.png  used on inpu
@@ -1207,13 +1207,13 @@ LaTeX Font Info:    Font shape `T1/fvm/m/n' will be
 [23]
 
 [24]
-<figures/pi_ridge_m3_no_exg.png, id=486, 568.524pt x 315.579pt>
+<figures/pi_ridge_m3_no_exg.png, id=492, 568.524pt x 315.579pt>
 File: figures/pi_ridge_m3_no_exg.png Graphic file (type png)
 <use figures/pi_ridge_m3_no_exg.png>
 Package pdftex.def Info: figures/pi_ridge_m3_no_exg.png  used on input line 579
 .
 (pdftex.def)             Requested size: 172.08073pt x 95.5171pt.
-<figures/pi_catboost_m3_no_exg.png, id=487, 568.524pt x 315.579pt>
+<figures/pi_catboost_m3_no_exg.png, id=493, 568.524pt x 315.579pt>
 File: figures/pi_catboost_m3_no_exg.png Graphic file (type png)
 <use figures/pi_catboost_m3_no_exg.png>
 Package pdftex.def Info: figures/pi_catboost_m3_no_exg.png  used on input line 
@@ -1222,7 +1222,7 @@ Package pdftex.def Info: figures/pi_catboost_m3_no_exg.png  used on input line
 
 
 [25 <./figures/pi_ridge_m3_no_exg.png> <./figures/pi_catboost_m3_no_exg.png>]
-<figures/scatter_resid_lasso_m3.png, id=498, 349.90726pt x 351.714pt>
+<figures/scatter_resid_lasso_m3.png, id=504, 349.90726pt x 351.714pt>
 File: figures/scatter_resid_lasso_m3.png Graphic file (type png)
 <use figures/scatter_resid_lasso_m3.png>
 Package pdftex.def Info: figures/scatter_resid_lasso_m3.png  used on input line
@@ -1231,7 +1231,7 @@ Package pdftex.def Info: figures/scatter_resid_lasso_m3.png  used on input line
 
 
 [26]
-<figures/lightgbm_national_m1_5.png, id=507, 713.064pt x 279.444pt>
+<figures/lightgbm_national_m1_5.png, id=513, 713.064pt x 279.444pt>
 File: figures/lightgbm_national_m1_5.png Graphic file (type png)
 <use figures/lightgbm_national_m1_5.png>
 Package pdftex.def Info: figures/lightgbm_national_m1_5.png  used on input line
@@ -1240,19 +1240,19 @@ Package pdftex.def Info: figures/lightgbm_national_m1_5.png  used on input line
 
 
 [27 <./figures/scatter_resid_lasso_m3.png>]
-<figures/lasso_national_m1_5.png, id=515, 713.064pt x 279.444pt>
+<figures/lasso_national_m1_5.png, id=521, 713.064pt x 279.444pt>
 File: figures/lasso_national_m1_5.png Graphic file (type png)
 <use figures/lasso_national_m1_5.png>
 Package pdftex.def Info: figures/lasso_national_m1_5.png  used on input line 63
 8.
 (pdftex.def)             Requested size: 340.57838pt x 133.47495pt.
-<figures/lightgbm_montana_m1_5.png, id=517, 713.064pt x 279.444pt>
+<figures/lightgbm_montana_m1_5.png, id=523, 713.064pt x 279.444pt>
 File: figures/lightgbm_montana_m1_5.png Graphic file (type png)
 <use figures/lightgbm_montana_m1_5.png>
 Package pdftex.def Info: figures/lightgbm_montana_m1_5.png  used on input line 
 654.
 (pdftex.def)             Requested size: 340.57838pt x 133.47495pt.
-<figures/lightgbm_texas_m1_5.png, id=518, 713.064pt x 279.444pt>
+<figures/lightgbm_texas_m1_5.png, id=524, 713.064pt x 279.444pt>
 File: figures/lightgbm_texas_m1_5.png Graphic file (type png)
 <use figures/lightgbm_texas_m1_5.png>
 Package pdftex.def Info: figures/lightgbm_texas_m1_5.png  used on input line 66
@@ -1269,12 +1269,12 @@ Overfull \hbox (1.43425pt too wide) in paragraph at lines 674--675
 -nous fea-tures (NAICS
  []
 
-<figures/pi_ridge_m3_exg.png, id=535, 568.524pt x 315.579pt>
+<figures/pi_ridge_m3_exg.png, id=541, 568.524pt x 315.579pt>
 File: figures/pi_ridge_m3_exg.png Graphic file (type png)
 <use figures/pi_ridge_m3_exg.png>
 Package pdftex.def Info: figures/pi_ridge_m3_exg.png  used on input line 702.
 (pdftex.def)             Requested size: 179.25237pt x 99.49939pt.
-<figures/pi_catboost_m3_exg.png, id=536, 568.524pt x 315.579pt>
+<figures/pi_catboost_m3_exg.png, id=542, 568.524pt x 315.579pt>
 File: figures/pi_catboost_m3_exg.png Graphic file (type png)
 <use figures/pi_catboost_m3_exg.png>
 Package pdftex.def Info: figures/pi_catboost_m3_exg.png  used on input line 708
@@ -1287,13 +1287,13 @@ File: ts1pplj.fd 2004/09/06 font definitions for TS1/pplj.
 )
 
 [30 <./figures/pi_ridge_m3_exg.png> <./figures/pi_catboost_m3_exg.png>]
-<figures/local_rmse_per_fold_h3.png, id=547, 713.064pt x 279.444pt>
+<figures/local_rmse_per_fold_h3.png, id=553, 713.064pt x 279.444pt>
 File: figures/local_rmse_per_fold_h3.png Graphic file (type png)
 <use figures/local_rmse_per_fold_h3.png>
 Package pdftex.def Info: figures/local_rmse_per_fold_h3.png  used on input line
  743.
 (pdftex.def)             Requested size: 354.92165pt x 139.09485pt.
-<figures/texas_local_vs_global_m6_5.png, id=548, 713.064pt x 279.444pt>
+<figures/texas_local_vs_global_m6_5.png, id=554, 713.064pt x 279.444pt>
 File: figures/texas_local_vs_global_m6_5.png Graphic file (type png)
 <use figures/texas_local_vs_global_m6_5.png>
 Package pdftex.def Info: figures/texas_local_vs_global_m6_5.png  used on input 
@@ -1302,7 +1302,7 @@ line 752.
 
 
 [31 <./figures/local_rmse_per_fold_h3.png>]
-<figures/alabama_local_vs_global_m3_1.png, id=555, 713.064pt x 279.444pt>
+<figures/alabama_local_vs_global_m3_1.png, id=561, 713.064pt x 279.444pt>
 File: figures/alabama_local_vs_global_m3_1.png Graphic file (type png)
 <use figures/alabama_local_vs_global_m3_1.png>
 Package pdftex.def Info: figures/alabama_local_vs_global_m3_1.png  used on inpu
@@ -1363,10 +1363,37 @@ Underfull \hbox (badness 2253) in paragraph at lines 871--874
 [43
 
 ]
+<figures/NAICS_distribution.png, id=720, 686.565pt x 477.58424pt>
+File: figures/NAICS_distribution.png Graphic file (type png)
+<use figures/NAICS_distribution.png>
+Package pdftex.def Info: figures/NAICS_distribution.png  used on input line 920
+.
+(pdftex.def)             Requested size: 354.92165pt x 246.88776pt.
+
 
 [44
 
-] (main.aux)
+]
+<figures/weekday_injuries_2024.png, id=726, 512.51476pt x 325.81725pt>
+File: figures/weekday_injuries_2024.png Graphic file (type png)
+<use figures/weekday_injuries_2024.png>
+Package pdftex.def Info: figures/weekday_injuries_2024.png  used on input line 
+929.
+(pdftex.def)             Requested size: 354.92165pt x 225.63443pt.
+
+
+[45 <./figures/NAICS_distribution.png> <./figures/weekday_injuries_2024.png>]
+<figures/monthly_injuries_2024.png, id=734, 506.49225pt x 287.8755pt>
+File: figures/monthly_injuries_2024.png Graphic file (type png)
+<use figures/monthly_injuries_2024.png>
+Package pdftex.def Info: figures/monthly_injuries_2024.png  used on input line 
+938.
+(pdftex.def)             Requested size: 354.92165pt x 201.73549pt.
+
+
+[46
+
+ <./figures/monthly_injuries_2024.png>] (main.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
@@ -1376,13 +1403,13 @@ L3 programming layer <2025-09-02>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: E72CB7633EF128E5706922AA98AEB8D1;4521.
+(rerunfilecheck)             Checksum: 9E5E1B5C26FC44DE746319352A37214D;4694.
  ) 
 Here is how much of TeX's memory you used:
- 20062 strings out of 468130
- 355681 string characters out of 5430633
- 851373 words of memory out of 5000000
- 47538 multiletter control sequences out of 15000+600000
+ 20097 strings out of 468130
+ 356705 string characters out of 5430633
+ 851636 words of memory out of 5000000
+ 47567 multiletter control sequences out of 15000+600000
  791621 words of font info for 659 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  123i,23n,121p,1054b,720s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1397,9 +1424,9 @@ onts/type1/bera/fvmr8a.pfb><C:/Users/esper/AppData/Local/Programs/MiKTeX/fonts/
 type1/urw/palatino/uplb8a.pfb><C:/Users/esper/AppData/Local/Programs/MiKTeX/fon
 ts/type1/urw/palatino/uplr8a.pfb><C:/Users/esper/AppData/Local/Programs/MiKTeX/
 fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on main.pdf (46 pages, 1985887 bytes).
+Output written on main.pdf (48 pages, 2091428 bytes).
 PDF statistics:
- 797 PDF objects out of 1000 (max. 8388607)
- 149 named destinations out of 1000 (max. 500000)
- 158541 words of extra memory for PDF output out of 184870 (max. 10000000)
+ 820 PDF objects out of 1000 (max. 8388607)
+ 155 named destinations out of 1000 (max. 500000)
+ 158564 words of extra memory for PDF output out of 184870 (max. 10000000)
 
