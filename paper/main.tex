@@ -34,19 +34,16 @@
 \def\yourprogramme{Data Science \& Society}                         % OR (remove this)
 % \def\yourprogramme{Cognitive Science \& Artificial Intelligence}    % uncomment this
 \def\yourstudentnumber{547014}                                      % ANR (or u-number)
-\def\finalmonth{December}
-\def\finalyear{2025}
+\def\finalmonth{January}
+\def\finalyear{2026}
 \def\supervisor{dr. Stijn Rotman}
 \def\committee{dr. Travis Wiltshire}
-\def\wordcount{8475}
+\def\wordcount{8742}
 
 \def\acknowledgments{I would like to thank the previous students in the program, whose theses were a great source of inspiration while writing this work. 
 
-My wife, Elisabeth, helped me train on real-life 'family spikes', while my daughter, Emilia, continually tested my ability to capture unpredictable behavior. 
-
-Wienand delivered an impromptu Sunday data science masterclass, reminding me that machine learning models ultimately have to be deployed. 
-
-Finally, my supervisor, Stijn Rotman, provided insightful feedback following the first submission.} 
+I am grateful to my wife, Elisabeth, who lovely smoothed out real-life "family spikes", and to my daughter, Emilia, who continually tested my ability to capture unpredictable behavior. I also thank Wienand for delivering a high-end data science masterclass on a cold Sunday, covering both academic reasoning and real-world deployment.
+Finally, I am grateful to my supervisor, Stijn Rotman, for his insightful feedback following the first submission.} 
  \DeclareUnicodeCharacter{202F}{FIX ME!!!!}
 % METADATA
 
@@ -91,8 +88,7 @@ The results show that all machine learning models consistently outperform season
 
 The OSHA's SIR dataset is publicly available at \href{https://www.osha.gov/severe-injury-reports}{Severe Injury Dashboard | Occupational Safety and Health Administration}. The data is anonymised. Work on this thesis did not involve collecting data from human participants or animals. The original owner of the data and code used in this thesis retains ownership of the data and code during and after the completion of this thesis. 
 
-All the figures belong to the author. In terms of writing, a generative language model, OpenAI's ChatGPT 5.1, was used to improve the author's original content, for
-paraphrasing, spell checking and grammar, and help debug LaTex syntax. The same model assisted in writing and documenting the code, included the function to fetch data from the U.S. Bureau of Statistics. Supplementary results and the thesis code are made publicly available at this \href{https://github.com/cocomazzi/severe_injury_forecasting_thesis/tree/main}{GitHub repository}. Other typesetting tools or services are listed in Appendix~\ref{app:a}.
+All the figures belong to the author. In terms of writing, a generative language model, OpenAI's ChatGPT 5.1, was used to improve the author's original content, for paraphrasing, spell checking and grammar, and help debug LaTex syntax. The same model assisted in writing and documenting the code, included the function to fetch data from the U.S. Bureau of Statistics. Supplementary results and the thesis code are made publicly available at this \href{https://github.com/cocomazzi/severe_injury_forecasting_thesis/tree/main}{GitHub repository}. Other typesetting tools or services are listed in Appendix~\ref{app:requirements}.
 %TC:endignore
 
 \section{Problem statement \& Research Goal \label{sec:introduction}}
@@ -137,7 +133,7 @@ Finally, the sample size and a low-dimensional feature matrix allowed us to comp
 We extend the initial setup to include three exogenous features, aptly aggregated to fit our forecasting task. The purpose of this subquestion is to assess whether the accuracy of the models is mostly driven by autoregressive features or whether selected exogenous variables can account for part of the variability in the forecasts.
 
 \vspace{1em}
-\hspace{2em}\textbf{RQ2:} \textit{How does the predictive accuracy change when estimated as a Global Forecasting Model (across all states jointly) rather than as a Local Forecasting Model (state-specific), for both monthly and weekly temporal resolutions?}
+\hspace{2em}\textbf{RQ2:} \textit{How does the predictive accuracy change when estimated as a Global Forecasting Model (across all states jointly) rather than as a Local Forecasting Model (state-specific), for monthly temporal resolution?}
 \vspace{1em}
 
 With this question we evaluate whether pooling information across states enhances the predictive performance relative to modeling each state independently. A global model may exploit shared temporal knowledge and increase the available sample size, while a local model may better capture state-specific patterns. This question is closely related to the literature on panel data discussed in Section~\ref{subs:DataUnderstanding}.
@@ -159,6 +155,7 @@ To the best of our knowledge, this is the first study to comparatively assess gl
 
 
 \section{Related Work}
+\label{sec:related_work}
 
 In this section, we present the relevant literature with a particular focus on studies that inform the design choice. To structure the review, we use the CRISP-DM framework as a conceptual reference. The CRISP-DM framework is a widely adopted process methodology that illustrates the main stages in the data mining workflow \citep{kurgan_survey_2006}.
 
@@ -421,7 +418,7 @@ Rolling features
   3-, 6-, 12-month exponential weighted mean: \texttt{ewm3}, \texttt{ewm6}, \texttt{ewm12}.\\[4pt]
 
 Exogenous variables 
-& \texttt{State} (categorical identifier, one-hot encoded in the models);
+& \texttt{State} (categorical identifier);
 top k NAICS 2-digit industry: \texttt{NAICSmix};
 top 3 Nature categories: \texttt{share\_nature};
 top 3 Event categories: \texttt{share\_event}. \\
@@ -494,23 +491,20 @@ For the weekly resolution, we adopted the same experimental setup with some chan
 
 We decided not to fit an ETS model for the weekly aggregation after inspecting the STL decomposition and performing an error analysis on the fitted models. Since the weekly national time series shows sharp weekly spikes and high volatility, the assumptions underlying exponential smoothing models are defied.
 
-
-TO WRITE: ets; difference global and local strategy implementations; permutation importance; state encoding; yaojohnson transf.
-
+The local implementation to address RQ2 follows the same pipeline as that adopted for RQ1. The main change is in the construction of the training loop, which is adapted to fit a separate model to each indivual time series. The analysis is limited to the monthly aggregated panel data, but the code provides a reusable function to perform the weekly local experiment as well.
 
 
 \section{Results}
 
-This section presents the results from three experiments. The same metrics, namely RMSE, MAE, and MASE are used to evaluate all the experiments.
-1. aggregate metrics for the monthly panel data, globally pooled, against the weekly panel data
-2. aggregate metrics for the monthly panel data with exogenous variables
-3. aggregate metrics for the monthly panel data locally estimated
+This section presents the results of three experiments: globally pooled estimates without exogenous features; globally pooled estimates with exogenous features; and locally estimated models. All experiments are evaluated using the same set of metrics -- namely RMSE, MAE, and MASE.
 
-A visual analysis of the errors and a comparison of the models performance will follow. The feature permutation will be the last step.
-The final results from the monthly panel data, aggregated across six folds, are summarized in Table~\ref{tab:monthly_global_noexog_h1} for the short-term (1 month), in Table~\ref{tab:monthly_global_noexog_h3} for the medium-term (3 months) and in Table~\ref{tab:monthly_global_noexog_h6}. As it is clear from a quick inspection, all models performed similarly, with no significant difference across linear and tree-based families.
+The results are reported and discussed in three stages: first, a quantitative comparison based on tabulated performance metrics; second, an analysis of feature importance using permutation-based measures; and third, a qualitative visual inspection of selected time series.
+
+The final results from the globally pooled monthly panel data, aggregated across six folds, and without exogenous variables, are summarized in Table~\ref{tab:monthly_global_noexog_h1} for the short-term (1 month), in Table~\ref{tab:monthly_global_noexog_h3} for the medium-term (3 months) and in Table~\ref{tab:monthly_global_noexog_h6} for the long-term horizon (6 months). Scores are reported as mean $\pm$ standard deviation across prequential test folds. A preliminary inspection of those tables indicates that all models performed similarly, with no significant differences between linear and tree-based families.
+
 \begin{table}[!htbp]
 \centering
-\caption{Monthly experiment (globally pooled, no exogenous features). Forecast horizon $h=1$. Scores are reported as mean $\pm$ standard deviation across prequential test folds.}
+\caption{Forecast horizon $h=1$.}
 \label{tab:monthly_global_noexog_h1}
 \begin{tabular}{lccc}
 \toprule
@@ -530,7 +524,7 @@ XGBoost & 0.289 $\pm$ 0.025 & 0.210 $\pm$ 0.024 & 0.728 $\pm$ 0.083 \\
 
 \begin{table}[!htbp]
 \centering
-\caption{Monthly experiment (globally pooled, no exogenous features). Forecast horizon $h=3$. Scores are reported as mean $\pm$ standard deviation across prequential test folds.}
+\caption{ Forecast horizon $h=3$.}
 \label{tab:monthly_global_noexog_h3}
 \begin{tabular}{lccc}
 \toprule
@@ -550,7 +544,7 @@ XGBoost & 0.290 $\pm$ 0.034 & 0.209 $\pm$ 0.030 & 0.730 $\pm$ 0.101 \\
 
 \begin{table}[!htbp]
 \centering
-\caption{Monthly experiment (globally pooled, no exogenous features). Forecast horizon $h=6$. Scores are reported as mean $\pm$ standard deviation across prequential test folds.}
+\caption{ Forecast horizon $h=6$.}
 \label{tab:monthly_global_noexog_h6}
 \begin{tabular}{lccc}
 \toprule
@@ -568,12 +562,11 @@ XGBoost & 0.294 $\pm$ 0.032 & 0.213 $\pm$ 0.030 & 0.738 $\pm$ 0.109 \\
 \end{tabular}
 \end{table}
 
+Across the three forecast horizons, all models show stable performance as measured by RMSE, MAE, and MASE, and consistently outperform the seasonal baseline. At the long-term horizon, performance relative to the baseline deteriorates slightly for all models, suggesting either increased forecast uncertainty or a slightly more predictable seasonal component captured by the baseline. While average errors stay comparable across models, the standard deviation of the error metrics is higher for XGBoost and LightGBM, a potential sign of greater variability across the test folds and a tendency toward overfitting. Because the MAE does not vary across the models, the MASE values show limited variation. This may indicate that model choice has only a marginal impact on forecast accuracy once seasonality and autoregressive structure are taken into account.
 
-Across the three forecast horizons, all models show stable performance as measured by RMSE, MAE, and MASE. In all cases, the evaluated models outperform the seasonal baseline. On the long-term horizon, performance relative to the baseline deteriorates slightly for all models, indicating either increased forecast uncertainty or a slightly more predictable seasonal trend in the baseline. While average errors stay comparable across models, the standard deviation of the error metrics is higher for XGBoost and LightGBM, a potential sign of greater variability across the test folds and a tendency toward overfitting. Because the MAE does not vary across the models, the MASE values show limited variation. This may indicate that model choice has only a marginal impact on forecast accuracy once seasonality and autoregressive structure are accounted for.
+The results for the weekly aggregation are reported in the Appendix~\ref{app:weekly_metrics} because they do not reveal any significant difference compared to the monthly setting. Error metrics are only marginally more stable across folds, suggesting that more observations do not benefit one model above the other ones. 
 
-The results for the weekly aggregation are reported in the Appendix~\ref{app:a} because they do not reveal any significant difference compared to the monthly setting. Error metrics are only slightly more stable across folds, suggesting that more observations did not benefit one model above the others. 
-
-These findings suggest that all models learn from similar patterns in the data, and that forecast accuracy is largely driven by a small number of dominant features. To answer this question, permutation importance was computed and stored for each model. Permutation importance quantifies the increase in forecast error when the values of a feature are shuffled. This measurement is model-agnostic \citep{fisher_all_2019} and therefore more suitable for comparing models that carry different assumptions, such as linear and tree-based ones. Figure~\ref{fig:pi_h3} illustrates the permutation importance at horizon $h = 3$ for two representative models.
+Taken together, these findings suggest that all models learn from similar patterns in the data, and that forecast accuracy is largely driven by a small number of dominant features. To further investigate this point, permutation importance was computed and stored for each model. Permutation importance quantifies the increase in forecast error when the values of a feature are shuffled. This measurement is model-agnostic \citep{fisher_all_2019} and therefore more suitable for comparing models that carry different assumptions, such as linear and tree-based ones. Figure~\ref{fig:pi_h3} illustrates the permutation importance at forecast horizon $h = 3$ for two representative models.
 
 \begin{figure}[!htbp]
 \centering
@@ -593,9 +586,9 @@ These findings suggest that all models learn from similar patterns in the data, 
 \label{fig:pi_h3}
 \end{figure}
 
-The 12-month rolling mean is clearly the dominant predictor across all models. Permuting this features leads to a deterioration in forecast accuracy, confirming that long-term trend information is the driver of predictive performance. This may also explain the stability in error metrics across short-, medium-, and long-term horizons. For the Ridge regressor, permuting the 12-month rolling mean increases RMSE by approximately 0.16, whereas for CatBoost the increase is about 0.04. This may suggest that linear models rely more heavily on this single feature. However, since rolling means and exponentially weighted moving averages are correlated autoregressive features and they also rank among the most important features for the CatBoost model, the apparent difference may be much smaller.  
+The 12-month rolling mean emerges as the dominant predictor across all models. Permuting this features leads to a deterioration in forecast accuracy, confirming that long-term trend information is the driver of predictive performance. This may also explain the stability in error metrics across short-, medium-, and long-term horizons. For the Ridge regressor, permuting the 12-month rolling mean increases RMSE by approximately 0.16, whereas for CatBoost the increase is about 0.04. This may suggest that linear models rely more heavily on this single feature. However, since rolling means and exponentially weighted moving averages are correlated autoregressive features and they also rank among the most important features for the CatBoost model, the apparent difference may be much smaller.  
 
-To test whether machine learning models may perform any better compared to classical statistical models, an additive ETS model was fitted separately on each single state time series and forecasts were aggregated across states. Results for the monthly panel data, reported in Table~\ref{tab:ets_monthly}, indicate that the ETS benchmark has higher RMSE and MAE than all machine learning models, with the exception of the seasonal baseline. 
+To test whether machine learning models offer advantages over classical statistical models, an additive ETS model was fitted separately to each state-level time series and forecasts were aggregated across states. Results for the monthly panel data, reported in Table~\ref{tab:ets_monthly}, show that the ETS benchmark has higher RMSE and MAE than all machine learning models, with the exception of the seasonal baseline. 
 
 \begin{table}[!htbp]
 \centering
@@ -612,9 +605,9 @@ ETS ($h=6$) & 0.325 $\pm$ 0.045 & 0.231 $\pm$ 0.035 \\
 \end{tabular}
 \end{table}
 
-After performing Wilcoxon signed-rank tests on fold-level RMSE values. For example, we found a statistically significant difference ($p=0.03$) between CatBoost and the ETS benchmark at each forecast horizon. While providing evidence that machine learning models tend to outperform a default ETS, this result should be interpreted with caution, given the small number of test folds and the mild dependence induced by rolling-origin evaluation.
+After performing Wilcoxon signed-rank tests on fold-level RMSE values, we found a statistically significant difference ($p=0.03$) between CatBoost and the ETS benchmark at each forecast horizon. While providing evidence that machine learning models tend to outperform a default ETS, this result should be interpreted with caution, given the small number of test folds and the mild dependence induced by rolling-origin evaluation.
 
-The error analysis of the residuals for a Lasso model (again, the results are very similar across all models) in Figure~\ref{fig:scatter_resid_lasso_m3} shows a regression-to-the-mean behavior, systematically underestimating high values and overestimating low values.
+The residual error analysis for the Lasso model, shown in Figure~\ref{fig:scatter_resid_lasso_m3} and representative of all models, reveals a clear regression-to-the-mean behavior, systematically underestimating high values and overestimating low values.
 
 \begin{figure}[ht]
     \centering
@@ -625,7 +618,7 @@ The error analysis of the residuals for a Lasso model (again, the results are ve
 
 \FloatBarrier
 
-More pronounced differences emerge when a time series aggregated across the 30 states included in the dataset is visualized as the line plot shown in Figure~\ref{fig:lightgbm_national_m1_5} and Figure~\ref{fig:lasso_national_m1_5}.
+More pronounced differences emerge when the time series aggregated across the 30 states included in the dataset is visualized, as shown in the line plots in Figure~\ref{fig:lightgbm_national_m1_5} and Figure~\ref{fig:lasso_national_m1_5}.
 
 \begin{figure}[ht]
     \centering
@@ -741,14 +734,7 @@ XGBoost        & 0.292 ± 0.162 & 0.243 ± 0.138 & 0.845 ± 0.278 \\
 Three main findings can be highlighted. First, LightGBM achieves the best performance among all local models, outperforming the second-best competitor, CatBoost, with a statistically significant margin according to a Wilcoxon signed-rank test ($p = 0.02$). Second, the local LightGBM significantly outperform the global counterpart, indicating that state-specific fitting can be beneficial at longer horizons. Third, the standard deviation of forecast errors is markedly higher under the local approach than under the global approach.
 This increased dispersion suggests that while local models can produce better median performance, their gains are less stable across time, highlighting a trade-off between accuracy and robustness.
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.99\textwidth]{figures/local_rmse_per_fold_h3.png}
-    \caption{RMSE values for the locally fitted models across six splits, $h = 3$.}
-    \label{fig:local_rmse_per_fold_h3}
-\end{figure}
-
-\FloatBarrier
+Figures~\ref{fig:texas_local_vs_global_m6_5} and\ref{fig:alabama_local_vs_global_m3_1} illustrate this finding for Texas and Alabama.
 
 \begin{figure}[ht]
     \centering
@@ -768,11 +754,24 @@ This increased dispersion suggests that while local models can produce better me
 
 \FloatBarrier
 
+When comparing fold-level RMSE values for each local model, as shown in Figure~\ref{fig:local_rmse_per_fold_h3}, ensemble models appear more sensitive to the structural change induced by the COVID-19 pandemic, as they yield higher errors in 2020. In contrast, linear models show greater robustness during this period. 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.99\textwidth]{figures/local_rmse_per_fold_h3.png}
+    \caption{RMSE values for the locally fitted models across six splits, $h = 3$.}
+    \label{fig:local_rmse_per_fold_h3}
+\end{figure}
+
+\FloatBarrier
+
+Performance between linear and ensemble models diverges again in 2023 and 2024, following a general contraction in high hospitalization risks. It is likely that regularized models are able to mitigate the impact of more extreme observations in small states through coefficient shrinkage.
 
 \section{Discussion}
 
-\subsection{Answering Research Questions}
+In this section, the findings of this study are discussed in relation to the most relevant studies presented in Section~\ref{sec:related_work}. We then outline potential design improvements and adress key limitations of the dataset. Suggestions for future research are also provided.
 
+\subsection{Answering Research Questions}
 
 \vspace{1em}
 \hspace{2em}\textbf{RQ1}: \textit{How does the forecasting performance of a set of linear and tree-based ensemble models vary at two temporal aggregations (monthly and weekly) in multi-step forecasting of severe injuries risk, as evaluated by RMSE, MAE and MASE?}
@@ -780,8 +779,8 @@ This increased dispersion suggests that while local models can produce better me
 Overall, the forecasting performance of linear models (ElasticNet, Lasso, PLS, and Ridge) and tree-based ensemble models (CatBoost, LightGBM, and XGBoost) is similar, both at monthly and weekly resolutions, and across the three forecasting horizons considered. The increased sample size in the weekly setting led the models converge to even more stable predictions. While \citet{cerqua_dead_2024} found PLS to be the best performing algorithm in terms of Mean Squared Forecast Error, its performance in our study was comparable with the other algorithms. Direct comparison with their results should be made with caution, as their analysis relied on a wide set of covariates to model fatalities at a finer geographical granularity.
 
 Although the performance metrics did not show significant differences between linear and tree-based ensemble models, visual inspection of the fitted training values highlighted a tendency for tree-based ensembles to overfit more strongly. This behavior is consistent with previous findings.
-\vspace{1em}
 
+\vspace{1em}
 
 \vspace{1em}
 \hspace{2em}\textit{SQ1.1: How does the inclusion of exogenous categorical variables affect the forecasts of the ML models?}
@@ -796,7 +795,7 @@ From a computational point of view, the resulting models are more complex and, a
 \hspace{2em}\textbf{RQ2:} \textit{How does the predictive accuracy change when estimated as a Global Forecasting Model (across all states jointly) rather than as a Local Forecasting Model (state-specific), for both monthly and weekly temporal resolutions?}
 \vspace{1em}
 
-We did find only small evidence of LightGBM yielding lower RMSE on the locally fitted approach compared to the global one at longer monthly forecasting horizons ($h = 6$).
+We did find only small evidence of LightGBM yielding lower RMSE on the locally fitted approach compared to the global one at longer monthly forecasting horizons ($h = 6$). In all other cases, globally and locally fitted models perform similarly after aggregating the result metrics. \citet{montero-manso_principles_2021} show, in a substantially more extensive theoretical and empirical study, that global models tend to outperform local ones across a wide range of datasets, while also emphasizing that performance depends on the context. In particular, datasets comprising many heterogeneous time series and strong nonlinearities are more likely to benefit from pooling across units, whereas datasets with fewer series or lower intrinsic volatility may not show substantial differences between global and local modeling strategies, especially when autoregressive features dominate the predictions.
 
 
 \subsection{Limitations and further research}
@@ -918,6 +917,7 @@ xgboost & 3.1.2 \\
 \clearpage
 
 \section{Weekly metrics}
+\label{app:weekly_metrics}
 The following tables summarize the globally pooled, weekly metrics without exogenous features. Scores are reported as mean $\pm$ standard deviation across prequential test folds.
 \begin{table}[!htbp]
 \centering
@@ -958,6 +958,7 @@ XGBoost & 0.127 $\pm$ 0.010 & 0.091 $\pm$ 0.008 & 0.705 $\pm$ 0.053 \\
 \bottomrule
 \end{tabular}
 \end{table}
+\clearpage
 
 \section{Additional visualizations}
 \label{app:viz}
