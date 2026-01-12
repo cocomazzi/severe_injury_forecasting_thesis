@@ -19,11 +19,15 @@
 % Your packages here
 % \usepackage{...}                                                  % some info, maybe
 \usepackage{placeins}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{subcaption}
+
 
 
 % !!! PLEASE CHANGE THESE VARIABLES TO MATCH YOUR INFORMATION !!!
 
-\def\thesistitle{Time series forecasting of occupational injury risk}                      % title
+\def\thesistitle{Time-series forecasting of occupational injury risk}                      % title
 \def\subtitle{}             % subtitle
     % ^if there is no subtitle, replace by \def\subtitle{}  
 \def\yourname{Giuseppe Cocomazzi}                                                                       % ^first and last name
@@ -34,8 +38,15 @@
 \def\finalyear{2025}
 \def\supervisor{dr. Stijn Rotman}
 \def\committee{dr. Travis Wiltshire}
-\def\wordcount{4782}
-\def\acknowledgments{} 
+\def\wordcount{8475}
+
+\def\acknowledgments{I would like to thank the previous students in the program, whose theses were a great source of inspiration while writing this work. 
+
+My wife, Elisabeth, helped me train on real-life 'family spikes', while my daughter, Emilia, continually tested my ability to capture unpredictable behavior. 
+
+Wienand delivered an impromptu Sunday data science masterclass, reminding me that machine learning models ultimately have to be deployed. 
+
+Finally, my supervisor, Stijn Rotman, provided insightful feedback following the first submission.} 
  \DeclareUnicodeCharacter{202F}{FIX ME!!!!}
 % METADATA
 
@@ -58,6 +69,7 @@
 \bibliographystyle{apacite}                                         % 'cause APA
 
 
+
 % !!! ------------------------------------------------------ !!!
 
 \begin{document}
@@ -66,14 +78,20 @@
 % --- start writing below:
 
 \begin{abstract}
+Forecasting the temporal evolution of severe occupational injuries can potentially provide valuable insights for safety management stakeholders to adopt proactive measures and allocate preventive resources more effectively. While previous work in the occupational safety literature has mainly focused on descriptive analyses and classification tasks, this thesis addresses this gap by framing severe injury risk as a multi-step time series forecasting problem. The analysis is conducted using the Occupational Safety and Health Administration's Severe Injury Report (SIR) dataset, which is structured as panel data, raising the methodological question of how to best pool information across grouping factors. 
+
+Therefore, we investigate how the forecasting performance of linear models (Ridge, Lasso, Elastic Net, and Partial Least Squares) and tree-based ensemble models (CatBoost, XGBoost, and LightGBM) varies across two temporal aggregations (monthly and weekly), multiple forecast horizons, and the inclusion of exogenous features. 
+
+The results show that all machine learning models consistently outperform seasonal and statistical baselines, with similar forecasting performance across model families. Forecast accuracy, as measured by RMSE, MAE, and MASE, is largely driven by autoregressive features rather than by model complexity. Pooling information across states does not substantially improve average forecasting accuracy but reduces forecast variability.
+
 
 \end{abstract}
 \section{Data source, Ethics, Code, and Technology Statement}
 
-The SIR OSHA dataset is publicly available at \href{https://www.osha.gov/severe-injury-reports}{Severe Injury Dashboard | Occupational Safety and Health Administration}. The data is anonymised. Work on this thesis did not involve collecting data from human participants or animals. The original owner of the data and code used in this thesis retains ownership of the data and code during and after the completion of this thesis. 
+The OSHA's SIR dataset is publicly available at \href{https://www.osha.gov/severe-injury-reports}{Severe Injury Dashboard | Occupational Safety and Health Administration}. The data is anonymised. Work on this thesis did not involve collecting data from human participants or animals. The original owner of the data and code used in this thesis retains ownership of the data and code during and after the completion of this thesis. 
 
 All the figures belong to the author. In terms of writing, a generative language model, OpenAI's ChatGPT 5.1, was used to improve the author's original content, for
-paraphrasing, spell checking and grammar, and help debug LaTex syntax. The same model assisted in writing and documenting the code, included the function to fetch data from the U.S. Bureau of Statistics. No other typesetting tools or services were used.
+paraphrasing, spell checking and grammar, and help debug LaTex syntax. The same model assisted in writing and documenting the code, included the function to fetch data from the U.S. Bureau of Statistics. Other typesetting tools or services are listed in Appendix~\ref{app:a}.
 
 \section{Problem statement \& Research Goal \label{sec:introduction}}
 
@@ -89,41 +107,40 @@ Traditional prevention measures to reduce occupational injury risk include compl
 
 For these reasons, real-time responsiveness has become crucial to further mitigate workplace injury risks. The integration of the Internet of Things technologies into the workplace allows for a continuous streaming of data coming from sensors, wearables, and smart equipment, supporting constant monitoring of safety conditions and triggering timely preventive actions \citep{michaels_osha_2025}.
 
-From a scientific point of view, this complex data flow may pose a challenge to traditional time series methods such as Error, Trend, Seasonal models (ETS), autoregressive integrated moving average (ARIMA) and its seasonal extension (SARIMA), which have long served as standard baselines for forecasting tasks in the public-health domain. These models provide statistically grounded forecasts that often perform well in settings with clear seasonal structure and relatively smooth temporal dynamics \citep{spiliotis_time_2023}. On the other hand, Machine learning (ML) methods can leverage rich and dynamical data sources to capture complex, non-linear patterns, thereby marking a shift from a reactive to a proactive safety management strategy \citep{masini_machine_2023, kontopoulou_review_2023}. Because the temporal factor will be the main leading axis in our analysis, we will first explore the data to extract components such as trend and seasonality to guide our model selection. Additionally, we will explore the geographical distribution as well to test whether encoding states at different levels can enhance the interpretability of the models and improve the forecasts both at the local and the global level (respectively, state and national level).
+From a scientific point of view, this complex data flow may pose a challenge to traditional time series methods such as Error, Trend, Seasonal models (ETS), autoregressive integrated moving average (ARIMA) and its seasonal extension (SARIMA), which have long served as standard baselines for forecasting tasks in the public-health domain. These models provide statistically grounded forecasts that often perform well in settings with clear seasonal structure and relatively smooth temporal dynamics \citep{spiliotis_time_2023}. On the other hand, Machine learning (ML) methods can leverage rich and dynamical data sources to capture complex, non-linear patterns, thereby marking a shift from a reactive to a proactive safety management strategy \citep{masini_machine_2023, kontopoulou_review_2023}. Because the temporal factor will be the main leading axis in our analysis, we will first explore the data to extract components such as trend and seasonality to guide our model selection. 
 
 While most studies have focused on classification tasks, the area of time series forecasting for occupational injury prevention remains still underexplored, despite its potential to anticipate future risk patterns and support more targeted interventions.
 
 
 \subsection{Research strategy}
 
-As outlined in subsection \ref{subs:context}, knowing \textit{when} an intervention may be required is crucial for increasing the likelihood of alleviating workers' exposure to severe injuries. If meaningful patterns in historical data can be reliably captured by forecasting algorithms, stakeholders can make more informed decisions about how to prioritize preventive resources, and about which types of data need continuous monitoring. As different temporal granularities can impact the accuracy of the generated forecasts \citep{rostami-tabar_forecasting_2023}, the first question we aim to explore is to what extent different levels of temporal resolution can help smooth out an intermitting time series at the original lead time. Moreover, this question gains a further dimension when the data is organised according to a grouping factor, such as having time series across multiple states \citep{qu_comparing_2024}. The model choice will take into account the explainability of the models.  
+As outlined in subsection \ref{subs:context}, knowing \textit{when} an intervention may be required is crucial for increasing the likelihood of alleviating workers' exposure to severe injuries. If meaningful patterns in historical data can be reliably captured by forecasting algorithms, stakeholders can make more informed decisions about how to prioritize preventive resources, and about which types of data need continuous monitoring. As different temporal granularities can impact the accuracy of the generated forecasts \citep{rostami-tabar_forecasting_2023}, the first question we aim to explore is to what extent different levels of temporal resolution can help smooth out an intermitting time series at the original lead time. Moreover, this question gains a further dimension when the data is organised according to a grouping factor, such as having time series across multiple states \citep{qu_comparing_2024}. The model choice will additionally take into account the explainability of the models.  
 
 \vspace{1em}
-\hspace{2em}\textbf{RQ1}: \textit{How does the forecasting performance of a set of classical statistical models (Holt-Winter method, ARIMA, and SARIMA) and ML models (divided into two main families: linear and tree-based ensemble models) at two temporal aggregations (monthly vs. weekly) in one-step-ahead forecasting of severe injuries risk across a twelve-month horizon, as evaluated by RMSE and MAE?}
+\hspace{2em}\textbf{RQ1}: \textit{How does the forecasting performance of a set of linear and tree-based ensemble models vary at two temporal aggregations (monthly and weekly) in multi-step forecasting of severe injuries risk, as evaluated by RMSE, MAE and MASE?}
 
 \vspace{1em}
-This question addresses to what extent the temporal resolution affects the model performance when data are aggregated at a national level, yeilding a single time series. Weekly aggregation increases the number of observations but it may introduce noise and variability, while monthly aggregation may produce coarser predictions. Understanding this trade-off is essential for designing reliable predictive pipelines \citep{julian_assessing_2025}. 
+Weekly aggregation increases the number of observations but it may introduce noise and variability, while monthly aggregation may produce coarser predictions. Understanding this trade-off is essential for designing reliable predictive pipelines \citep{julian_assessing_2025}. 
 
-Given the absence of a comparable supervised regression setting in prior work on occupational injury forecasting, we will train different families of regressors based on the exploratory initial step and on the main findings from related datasets. The choice for linear models with penalty terms (Ridge, Lasso, ElasticNet) allows us to assess how regularization can affect feature selection in a strongly seasonal data structure across a balanced panel \citep{han_optimized_2025}. Among tree-based ensemble models, CatBoost is deemed particularly suited for our panel data, as it can handle categorical features \citep{hall_survey_2025}. XGBoost and LightGBM appears to consistently be the most accurate models in recent forecasting benchmarks and machine-learning competitions \citep{makridakis_m5_2022}. The sample size and a low-dimensional feature matrix allowed us to compare a wide variety of models with negligible computational cost.
+Given the absence of a comparable supervised regression setting in prior work on occupational injury forecasting, we will train two different families of regressors based on the exploratory initial step and on the main findings from related datasets. The choice for linear models with penalty terms (Ridge, Lasso, Elastic Net) allows us to assess how regularization can affect feature selection in a strongly seasonal data structure across a balanced panel \citep{han_optimized_2025}. Among tree-based ensemble models, CatBoost is deemed particularly suited for our panel data, as it can handle categorical features \citep{hall_survey_2025}. XGBoost and LightGBM appear to consistently be the most accurate models in recent forecasting benchmarks and machine-learning competitions \citep{makridakis_m5_2022}. 
+
+Evaluation metrics will be compared against a naive seasonal baseline and a stronger statistical model, namely the additive Holt-Winters exponential smoothing method (ETS). As stated by \citet{makridakis_statistical_2018}, this classical statistical method still shows remarkable accuracy.
+
+Finally, the sample size and a low-dimensional feature matrix allowed us to compare a wide variety of models with negligible computational cost.
+
+\vspace{1em}
+\hspace{2em}\textit{SQ1.1: How does the inclusion of exogenous categorical variables affect the forecasts of the ML models?}
+\vspace{1em}
+
+We extend the initial setup to include three exogenous features, aptly aggregated to fit our forecasting task. The purpose of this subquestion is to assess whether the accuracy of the models is mostly driven by autoregressive features or whether selected exogenous variables can account for part of the variability in the forecasts.
 
 \vspace{1em}
 \hspace{2em}\textbf{RQ2:} \textit{How does the predictive accuracy change when estimated as a Global Forecasting Model (across all states jointly) rather than as a Local Forecasting Model (state-specific), for both monthly and weekly temporal resolutions?}
 \vspace{1em}
 
-With this question we evaluate whether pooling information across states enhances the predictive performance relative to modeling each state independently. A global model may exploit shared temporal knowledge and increase the available sample size, while a local model may better capture state-specific patterns. This question is closely related to the literature on panel data discussed in \ref{subs:Theory}.
+With this question we evaluate whether pooling information across states enhances the predictive performance relative to modeling each state independently. A global model may exploit shared temporal knowledge and increase the available sample size, while a local model may better capture state-specific patterns. This question is closely related to the literature on panel data discussed in Section~\ref{subs:DataUnderstanding}.
 
-\vspace{1em}
-\hspace{2em}\textit{SQ2.1: How does the inclusion of an exogenous categorical variable, namely the industry code, affect the forecasts of the ML models?}
-
-\vspace{1em}
-
-Some industry sectors may explain better a given amount of the variability in the distribution of hospitalizations, as severe injuries occur more often in e.g. construction sites. To answer this question, we will explore feature importances to quantify how much each feature contributes to the predictive power of the model.
-
-\vspace{1em}
-\hspace{2em}\textbf{RQ3:}\textit{How sensitive are the forecasting results when cross-validated on different training and test splits?}
-
-\vspace{1em}
-Forecasting performance estimates can be highly sensitive to the validation design, particularly in time-series settings where temporal dependence violates the assumptions of standard cross-validation. To assess the robustness of the results, we conduct a sensitivity analysis based on a rolling-origin cross-validation scheme. 
+For example, some industry sectors may explain better a given amount of the variability in the distribution of hospitalizations, as severe injuries occur more often in e.g. construction sites. To answer this question, we will explore feature permutation to quantify how much each feature contributes to the predictive power of the model.
 
 
 \subsection{Societal Relevance}
@@ -141,60 +158,130 @@ To the best of our knowledge, this is the first study to comparatively assess gl
 
 \section{Related Work}
 
+In this section, we present the relevant literature with a particular focus on studies that inform the design choice. To structure the review, we use the CRISP-DM framework as a conceptual reference. The CRISP-DM framework is a widely adopted process methodology that illustrates the main stages in the data mining workflow \citep{kurgan_survey_2006}.
+
+To make the review more readable, Table~\ref{tab:data_process_design} maps the most relevant studies to each step in the CRISP-DM framework and to the generated design choice specific to this study. 
+
+\begin{table}[htb!]
+\centering
+\caption{Mapping data processing stages to related literature and design choices.}
+\label{tab:data_process_design}
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{p{3cm} p{4.2cm} p{4.2cm}}
+\toprule
+\textbf{Data process} & \textbf{Related work} & \textbf{Design choice} \\
+\midrule
+
+Business understanding
+& \citet{vivian_comprehensive_2025}; \citet{cerqua_dead_2024}
+& Identify research gap; frame as regression task; define forecasting objective.  \\[4pt]
+
+Data understanding
+& \citet{gomes_time_2023}; \citet{williams_traumatic_2024}; 
+\citet{coulombe_panel_2025}; \citet{montero-manso_principles_2021}; \citet{rostami-tabar_forecasting_2023}
+& Model seasonality; normalize the target variable; treat the dataset as panel data; aggregation strategy. \\[4pt]
+
+Data Preparation
+& \citet{taieb_review_2011}
+& Multi-step forecasting strategy. \\[4pt]
+
+Modeling
+& \citet{makridakis_m5_2022};  \citet{khairuddin_occupational_2022}
+& Identify state of the art; select relevant exogenous features. \\[4pt]
+
+Evaluation
+& \citet{hewamalage_global_2022}; \citet{cerqueira_evaluating_2020}
+& Select RMSE, MAE and MASE; choose out-of-sample approach. \\[4pt]
+
+Deployment
+& \citet{michaels_osha_2025}
+& Inform discussion section. \\
+
+\bottomrule
+\end{tabular}
+\end{table}
+
 \subsection{Occupation Injury Risk Prediction}
 
-The field of occupation injury risk prediction using ML models has been largely dominated by classification tasks. In their comprehensive survey, \citet{vivian_comprehensive_2025} identified three main research directions: (i) identifying workplace injury risk factors, (ii) predicting return-to-work rates, and (iii) analyzing sociodemographic features across different worker populations. Most studies rely on business-level datasets or focus on specific injury types such as traumatic brain injuries or foot and ankle injuries.
+The field of occupation injury risk prediction using ML models has been largely dominated by classification tasks. In their comprehensive survey, \citet{vivian_comprehensive_2025} identified three main research directions: (i) identifying workplace injury risk factors, (ii) predicting return-to-work rates, and (iii) analyzing sociodemographic features across different worker populations. Most studies rely on business-level datasets or focus on specific injury types such as traumatic brain injuries \citep{van_deynse_predicting_2023} or foot and ankle injuries.
 
-The ML models most frequently used in this field are selected for their ability to capture patterns in heterogeneous sets of categorical variables. While no single model clearly outperforms the others, Random Forest, Support Vector Machines, Decision Trees, and Linear Regression have achieved the best results across evaluation metrics such as accuracy, sensitivity, and F-1 score, underscoring the importance of tailoring model selection to data characteristics. However, regression-based approaches that model the temporal evolution of occupational risk remain virtually absent from the literature. NOTE: should I find some references in a related field?
+The ML models most frequently used in this field are selected for their ability to capture patterns in heterogeneous sets of categorical variables. While no single model clearly outperforms the others, Random Forest, Support Vector Machines, Decision Trees, and Linear Regression have achieved the best results across evaluation metrics such as accuracy, sensitivity, and F-1 score, underscoring the importance of tailoring model selection to data characteristics \citep{yuan_predicting_2023, vivian_comprehensive_2025}. However, regression-based approaches that model the temporal evolution of occupational risk remain virtually absent from the literature.
 
 The work most closely aligned with our research is \citet{cerqua_dead_2024}. The authors develop a supervised regression framing for the time-series forecasting of workplace fatalities in Italy, focusing on spatial heterogeneity and ex-ante allocation of regulatory interventions. The methodology explicitly addresses how to apply machine learning pipelines to panel data, implementing a rolling forecasting origin approach for hyperparameter tuning, and evaluating model performance on a one-year hold-out test set. They selected a mix of models: linear, tree-based, and the Long Short-Term Memory neural network, ultimately identifying Partial Least Squares (PLS) as the best performing model across different sets of predictors.
 
-\subsection{Studies on OSHA's SIR dataset}
+\subsection{Studies on OSHA's SIR dataset}\label{subs:OSHA}
+Data mining applications on the OSHA's SIR dataset are limited to four studies.
 
-A notable study examining the temporal aspects of occupational injury data is \citet{gomes_time_2023}. The authors analysed the Severe Injury Report (SIR) dataset provided by the Occupational Safety and Health Administration (OSHA), using time series decomposition models to uncover seasonal effects and general trends. Moreover, they evaluated industry and injury-type breakdowns, revealing that manufacturing and construction are the most affected industries. Importantly, they identified systematic temporal patterns in the occupational injuries, such as the predominance of injuries on weekdays compared to weekends, and a higher injury incidence in the summer months. While their analysis provided valuable descriptive insights into the temporal features of the SIR data, it did not extend to predictive or regression-based modeling. We will use these findings to inform model selection
+On the descriptive side, a notable study examining the temporal aspects of occupational injury data is \citet{gomes_time_2023}. The authors analysed the Severe Injury Report (SIR) dataset provided by the Occupational Safety and Health Administration (OSHA), using time series decomposition models to uncover seasonal effects and general trends. Moreover, they evaluated industry and injury-type breakdowns, revealing that manufacturing and construction are the most affected industries.
 
-On the classification side, \citet{khairuddin_occupational_2022} trained five machine learning models on the same SIR dataset to predict hospitalization and amputation outcomes, finding that Random Forest achieved the highest performance on metrics such as accuracy and F1-score. Building on this work, \citet{hasan_khalleefah_hassan_work_2025} evaluated a different set of machine learning models, and reported that the AdaBoost Classifier showed the best performance on accuracy and F1-score. As both studies aimed to categorize past events, their results and model selection can not serve as a benchmark for our work, but only as a point of reference. In fact, a regression-based forecasting approach applied to SIR data is still absent from the current literature. NOTE: maybe I should make clear that the experimental setup and the model selection for this project is based on the theoretical findings in the section below, much more than on the empirical ones on this specific dataset.
+Importantly, they identified systematic temporal patterns in the occupational injuries, such as the predominance of injuries on weekdays compared to weekends, and a higher injury incidence in the summer months. However, \citet{williams_traumatic_2024} did not find a statistically significant difference between cold and warm seasons (p = 0.09). Their study introduced population adjustments for normalizing injury counts by industry employment size, using 2-digit NAICS codes to compute injuries per 100,000 workers. 
 
-\subsection{Theoretical Framework}\label{subs:Theory}
+We adopt a similar adjustment for the number of hospitalization, accounting only for state workforce size. In this way, we predict the incidence of new hospitalized employees over a specific time and at the stale level.  While both studies provided valuable descriptive insights into the temporal features of the SIR data, they did not extend to predictive or regression-based modeling. 
 
-When observations are collected over time from multiple entities—such as states, firms, or individuals—the resulting structure is referred to as \textit{time-series cross-sectional data}, or more simply, \textit{panel data}.
-Panel data can be \textit{balanced}, when all variables are observed over the same time span for every unit, or \textit{unbalanced}, when at least one unit (i.e., grouping factor) has missing observations for at least one time period.
+On the classification side, \citet{khairuddin_occupational_2022} trained five machine learning models on the SIR dataset to predict hospitalization and amputation outcomes, finding that Random Forest achieved the highest performance on metrics such as accuracy and F1-score. After inspecting the feature importance, they found Nature of Injury and Type of Event to be the two most relevant variables. Based on this finding, we encode those two variables to fit our regression problem (see Section~\ref{subs:FeatureEngineering}). 
 
-A further, core distinction concerns how the model accounts for unit-specific, time-invariant components (in this study, the U.S. states included in the SIR dataset). In a \textit{fixed-effects} model, each unit is assigned a fixed intercept that captures all characteristics that do not vary over time. In this framework, unobserved heterogeneity across units is not explicitly modeled; in other words, the effects of time-invariant variables—such as structural differences between states—are not estimated.
-Conversely, a \textit{mixed-effects} (or \textit{random-effects}) model treats unit-specific effects as random variables drawn from a common normal distribution. This allows the model to estimate their variance, thereby capturing how the time-invariant characteristics of one unit relate to those of others. Both approaches can be integrated within a \textit{Hierarchical Linear Modeling} (HLM) framework, where fixed effects represent the average impact of predictors across the entire population, and random effects account for unit-specific deviations from this overall trend \citep{elliott_chapter_2013, chen_introduction_2021}.
+Building on this work, \citet{hasan_khalleefah_hassan_work_2025} evaluated a different set of machine learning models, and reported that the AdaBoost Classifier showed the best performance on accuracy and F1-score. 
 
-In our study, we aggregate monthly relative risks across all units to estimate the overall risk of hospitalization and amputation, while still allowing for state-level deviations by computing relative risks relative to each state’s population rather than the national total. Although hierarchical modeling provides a more flexible framework, explicitly modeling between-state variation falls beyond the scope of the present research.
+Both studies exploit the industry-wide properties of the OSHA's SIR dataset to develop a model that may better capture patterns across heterogeneous industries. We follow their approach with the supplementary motivation that increasing the observations across state-level time series may benefit a global approach to our regression task. Similarly, we employ a broad comparative approach by evaluating different models. However, as both studies aimed to categorize past events, their results and model selection can not serve as a benchmark for our work, but only as a point of reference. 
 
-The question whether to implement a global as opposed to a local forecasting model has been extensively addressed by \citet{montero-manso_principles_2021}. In their study, they found that global methods show good results not only in groups of similar time series, but even in heterogeneous groups. When a large number of time series is available, global models may generalize better with fewer parameters. Importantly, global models can afford much larger memory in terms of lags, being able to capture long-memory patterns that local models could learn only if manually engineered. We empirically test these findings by training different models, both linear and nonlinear ones, locally – fitting a single function to each cross-sectional time-series – and globally – by pooling all state-level series into a single learning problem.
+\subsection{Data Understanding}\label{subs:DataUnderstanding}
+When observations are collected over time for multiple entities—such as states, firms, or individuals—the resulting structure is referred to as \textit{time-series cross-sectional data}, or more simply, \textit{panel data}. Since the SIR dataset includes reports from multiple U.S. states across the same time period, a crucial question concerns how to model panel data, in particular the time-invariant components. In their theoretical review, \citet{elliott_chapter_2013} summarize several studies in which macroeconomic panel data are modeled using fixed-effects, mixed-effects, or random-effects specifications to forecast continuous outcomes at multiple horizons, with performance evaluated on RMSE.
 
-Such a global model strategy raises the question of how panel data should be pooled. Panels can be combined on both the temporal as the time-invariant dimension, or along each axis separately. Appropriate handling of the panel structure during the temporal split of the data into a train and a test set can help prevent a wide range of potential data leakage \citep{cerqua_misuse_2024}.
+In a \textit{fixed-effects} model, each unit is assigned a fixed intercept that captures all characteristics that do not vary over time. In this framework, unobserved heterogeneity across units is not explicitly modeled; in other words, the effects of time-invariant variables—such as structural differences between states—are not estimated.
+Conversely, a \textit{mixed-effects} (or \textit{random-effects}) model treats unit-specific effects as random variables drawn from a common normal distribution. This allows the model to estimate the variance of these effects, thereby capturing how the time-invariant characteristics of one unit relate to other units. Both approaches can be integrated within a \textit{Hierarchical Linear Modeling} (HLM) framework, where fixed effects represent the average impact of predictors across the entire population, and random effects account for unit-specific deviations from this overall trend \citep{elliott_chapter_2013, chen_introduction_2021}.
 
-Finally, hierarchical forecasting methods are designed to produce forecasts at multiple levels of aggregation. In our case, we could forecast total hospitalizations at a national and a state level, and with enough data at a county level. Hierarchical approaches reconcile forecasts so that the sum of the disaggregated predictions equal the aggregate forecast. However, we excluded these methods because the target variables are relative risks, which are not additive across hierarchical levels \citep{hyndman_forecasting_2018}.
+In this study, monthly relative risks are aggregated across all states to estimate the overall risk of hospitalization, while still allowing for state-level deviations by computing risks relative to each state’s workforce rather than the national total. Although hierarchical modeling provides a more flexible framework, explicitly modeling between-state variation falls beyond the scope of the present research.
+
+Exploratory analysis of the SIR dataset reveals substantial heterogeneity in hospitalization risk across OSHA states, with smaller states exhibiting higher volatility. In such settings, model choice and the treatment of cross-sectional information become critical. \citet{coulombe_panel_2025} show that, for a panel of U.S. state-level fiscal variables, forecasting performance improves when flexible models are combined with cross-sectional pooling, even in the presence of pronounced heterogeneity. Their study compares a range of machine learning models—including Ridge, Lasso, Sparse-Group Lasso, Random Forests, Boosted Trees, and Neural Networks—under alternative panel structures, namely no pooling, local estimation, global pooling, and clustered pooling. The results indicate that nonlinear models are especially effective at forecasting volatile outcomes and at capturing cross-sectional nonlinearities, while pooling substantially stabilizes predictions relative to purely local approaches.
+
+We adopt a similar modeling perspective. However, because our application does not involve mixed-frequency predictors and relies on a more limited set of covariates, we retain regularized linear models alongside nonlinear alternatives. In this context, cross-sectional pooling is expected to benefit linear models as well, by reducing estimation variance and improving generalization across states.
+
+The question whether to implement a global as opposed to a local forecasting model has been extensively addressed by \citet{montero-manso_principles_2021}. In their study, they found that global methods show good results not only in groups of similar time series, but even in heterogeneous groups. When a large number of time series is available, global models may generalize better with fewer parameters. Importantly, global models can afford much larger memory in terms of lags, being able to capture long-memory patterns that local models could learn only if manually engineered. We empirically test these findings by training different models locally – fitting a single function to each cross-sectional time-series – and globally – by pooling all state-level series into a single learning problem.
+
+As shown by \citet{wilms_combining_2018}, incorporating exogenous variables can particularly benefit forecasting settings where nonlinear interactions are present. While the SIR dataset includes several categorical features, many are either not relevant to the forecasting task or must be treated as compositional data. In particular, the variables Nature and Type of Event can not be fed into the models as they are, but they must be transformed into numerical values that respect the compositional constraint that category shares sum to one.
+
+A further design choice involves the aggregation of observations that are collected at a higher frequency than that used for modeling. As the exploratory data analysis (EDA) shows, maintaining the daily resolution of the SIR dataset results in a too sparse feature space. 
+
+As argued by \citet{rostami-tabar_forecasting_2023}, aggregation choices are often forced by data availability, and the temporal resolution of the data frequently aligns with the resolution at which forecasts are required. In this study, we evaluate both monthly and weekly aggregations, and later justify why a monthly resolution may be preferable for deployment. 
+
+A more specific design choice is whether to aggregate in such a way that data are divided into separate buckets (non-overlapping approach) or to create a temporal aggregation by sliding a moving window that equals the aggregation level (overlapping approach). We adopt a non-overlapping approach, as it simplifies the handling of compositional features during data preparation.
+
+\subsection{Data Preparation}\label{subs:DataPreparation}
+
+When preparing the data for forecasting, an important consideration is to choose a forecasting strategy. In their seminal review, \citet{taieb_review_2011} formalized five strategies commonly used for multi-step forecasting: (i) recursive, (ii) direct, (iii) direct-recursive hybrids, (iv) multi-input multi-output, and (v) direct multi-output. 
+
+Under the recursive strategy, a model generates a one-step ahead forecast which is fed back to the historical window, and used to recompute all the features, before the model can generate a new one-step ahead forecast. This process is repeated until the final time point in the horizon is reached. under the direct approach, a separate model is independently trained to predict a single output for each horizon. For instance, forecasting three horizons (e.g., $h = 1, 3, 6$) requires fitting three separate models, one per horizon. Unlike the recursive strategy, the direct approach does not use forecasts as inputs in the historical window. As a consequence, errors do not compound at each next step, overcoming the risk of bias accumulation over longer horizons. 
+
+The most relevant strategy for answering our research questions is the direct strategy. Because our models are built under different assumptions - linear, tree-based, and artificial networks - the direct approach allows for comparability by deploying the same pipeline under the same evaluation paradigm. 
+
+\subsection{Modeling}\label{subs:Modeling}
+
+As outlined in the Context section, a major shift from statistical to machine learning models has led to the adoption of machine learning algorithms in recent competitions on time series forecasts. In particular, \citet{makridakis_m5_2022} reviewed the winning methods for the M5 competition, noting that the many of the best submissions use gradient boosted trees as implemented in LightGBM for its ability to handle multiple features of various types. Another tree-based ensemble method, XGBoost, is regarded as state of the art algorithm in time series forecasting \citep{fang_application_2022, obasi_machine_2026}.
+
+Models based on neural networks, such as Long Short-Term Memory (LSTM) architectures, and ensemble forecasting approaches are increasingly common in the recent forecasting literature. These methods are particularly effective in settings characterized by high-dimensional inputs and large training samples, where complex nonlinear dynamics and long-range temporal dependencies can be learned directly from the data \citep{spiliotis_time_2023}. 
+
+In the context of the SIR dataset, the available time series are relatively short and show heterogeneous dynamics across states, especially for smaller states with sparse observations. Under such conditions, highly parameterized neural network models risk overfitting and may offer limited gains over simpler approaches. We confirmed the exclusion of approaches based on Recurrent Neural Network after evaluating the results from the experiments conducted to answer Research Question 1.
+
+\subsection{Evaluation}\label{subs:Evaluation}
+
+As discussed in Section~\ref{subs:DataUnderstanding}, the most commonly used evaluation metrics in time-series forecasting are the Root Mean Squared Error (RMSE) and the Mean Absolute Error (MAE), followed by scale-dependent alternatives such as the Mean Absolute Percentage Error (MAPE) and the Mean Absolute Scaled Error (MASE). These metrics are widely adopted in both statistical and machine-learning–based forecasting studies due to their interpretability and robustness across a broad range of applications \citep{hewamalage_global_2022}.
+
+Because our models are evaluated at two different temporal resolutions, we rely on MASE to facilitate meaningful performance comparisons across frequencies. MASE scales the mean absolute forecast error by the in-sample mean absolute error of a naive (typically seasonal) benchmark \citep{hyndman_another_2006}. Values of MASE below one indicate that a model outperforms the seasonal naive forecast, while values above one imply inferior performance. This property makes MASE suitable for panel and multi-frequency forecasting settings, where scale differences and aggregation effects can otherwise confound error comparisons.
+
+To test for out-of-sample generalizability in time series, appropriate handling of the panel structure during the temporal split of the data into a train and a test set can help prevent a wide range of potential data leakage \citep{cerqua_misuse_2024}. Because in a time series observations are temporally correlated with each other, the i.i.d assumption is violated and common cross-validation strategies are not applicable. In this study we use a prequential approach, where the time series is divided into sequential folds. In the first iteration, the first n folders are used to train the model, and the subsequent folder for testing. In the following iterations, the testing folder is merged with the training blocks, and the next folder is now used for testing, until all blocks are tested. Results from \citet{cerqueira_evaluating_2020} suggest that out-of-sample and prequential approaches show the best performance in non-stationary series.
 
 \subsection{Literature Gaps \& Contribution}
 
-From the above review we can conclude that the SIR dataset has been used to gain descriptive insights into the temporal dimension of the injury report as well as to classify injury severity based on multiple categorical features. However, much remains unanswered when it comes to how severe injuries evolve over time and across states from a forecasting perspective. A truly forecasting framing is thus worthy of being developed, as it could improve risk monitoring and enable decision makers on a proactive management of prevention resources. Moreover, we contribute to the discussion in the forecasting community about global versus local modelling of panel data by providing an empirical comparison of both approaches in a novel domain, using a unified feature set and consistent evaluation metrics.
+From the above review we can conclude that the SIR dataset has been used to gain descriptive insights into the temporal dimension of the injury report as well as to classify injury severity based on multiple categorical features. However, much remains unanswered when it comes to how severe injuries evolve over time and across states from a forecasting perspective. A truly forecasting framing is thus worthy of being developed, as it could improve risk monitoring and enable decision makers on a proactive management of prevention resources. Moreover, we contribute to the discussion in the forecasting community about global versus local modeling of panel data by providing an empirical comparison of both approaches in a novel domain, using a unified feature set and consistent evaluation metrics.
 
-
+\clearpage
 
 \section{Methods} \label{sec:Method}
-NOTE: \textit{I basically removed all features in the dataset, with the exception of: date and state, and for sq2.1, i feature engineered the naics mix. The target is Hospitalization (repeating the same experiments for Amputation is tedious). All other input features are autoregressive features (we need these to frame the problem as a supervised regression for ML regressors) and calendar features. Maybe we could better use our dataset???}
+Figure~\ref{fig:workflow} provides a pictorial overview of the workflow adopted in this study, which is more extensively detailed in the present section.
 
-As discussed in subsection \ref{subs:Theory}, a crucial methodological consideration for panel time-series data is whether to fit a single function to all series or to repeatedly fit a function to each series. In panel data, grouping factors are referred to as \textit{cross-sectional units}. In this study, each state is observed over the same time span and shares the same features as the remaining units. Therefore, in the SIR dataset a single time series at a state level is a cross-sectional unit.
-
-In a Global Forecasting Model cross-sectional units are assumed to be generated from the same data-generating process. In a Local Forecasting Model each time series is independent \citep{hewamalage_global_2022}. In the following subsections, we illustrate how we constructed the dataset in a way suitable to both time-series forecasting frameworks.
-
-Another key distinction concerns the forecasting strategy. Traditionally, most researchers compared statistical methods against a one-step ahead forecast horizon, where the forecaster predicts the next step in a time series. Moreover, classical models such as ARIMA and Vector Autoregression (VAR) are able to generate recursive multi-step forecasts natively, thereby lowering the need to target the multi-step task with dedicated forecasting strategies. With the advent of machine learning methods for time series forecasting, researchers must design explicit forecasting strategies, as those models lack the built-in capacity to roll forward recursive predictions. Under the recursive strategy, a model generates a one-step ahead forecast which is fed back to the historical window, and used to recompute all the features, before the model can generate a new one-step ahead forecast. This process is repeated until the final time point in the horizon is reached.
-
-In their seminal review, \citet{taieb_review_2011} formalized five strategies commonly used for multi-step forecasting: (i) recursive, (ii) direct, (iii) direct-recursive hybrids, (iv) multi-input multi-output, and (v) direct multi-output. The most relevant strategy for answering our research questions is the direct strategy. Because our models are built under different assumptions - linear, tree-based, and artificial networks - the direct approach allows for comparability by deploying the same pipeline under the same evaluation paradigm. 
-
-In fact, under the direct approach, a separate model is independently trained to predict a single output for each horizon. For instance, forecasting four horizons (e.g., $h = 1, 3, 6, 12$) requires fitting four separate models, one per horizon. Unlike the recursive strategy, the direct approach does not use forecasts as inputs in the historical window. As a consequence, errors do not compound at each next step, overcoming the risk of bias accumulation over longer horizons. 
-
-As a further motivation, the data complexity of the SIR data set is estimated to be sufficiently low to run separate models at a reasonable computation time. One of the drawbacks of the direct approach is the computational burden, since a separate model has to be fitted for every forecast horizon.
-experimental setup is missing: models configuration; train-test split; possibly, cv strategy,
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.95\textwidth]{figures/workflow.jpg}
+    \includegraphics[width=0.95\textwidth]{figures/workflow_thesis.jpg}
     \caption{Workflow}
     \label{fig:workflow}
 \end{figure}
@@ -202,59 +289,122 @@ experimental setup is missing: models configuration; train-test split; possibly,
 \FloatBarrier
 
 \subsection{Dataset Description}\label{subs:DatasetDescription}
-The dataset is publicly available through the OSHA Severe Injury Dashbord \footnote{\url{https://www.osha.gov/severe-injury-reports}. The dataset was retrieved on August 28, 2025.}. OSHA collects reports about severe injuries occurred within U.S. states under its jurisdiction. There reports form the Severe Injury Reports (SIR) dataset. There are 34 states with a federal plan under OSHA jurisdiction, although the SIR dataset also contains reports from non-federal-plan states when the injured employees are federal workers. In addition, seven states have state plans covering only state and local government workers, while private-sector workers are covered by federal plans.
+The dataset is publicly available through the OSHA Severe Injury Dashbord \footnote{\url{https://www.osha.gov/severe-injury-reports}. The dataset was retrieved on August 28, 2025.}. OSHA collects reports about severe injuries occurred within U.S. states under its jurisdiction. These reports form the Severe Injury Reports (SIR) dataset. There are 34 states with a federal plan under OSHA jurisdiction, although the SIR dataset also contains reports from non-federal-plan states when the injured employees are federal workers. In addition, seven states have state plans covering only state and local government workers, while private-sector workers are covered by federal plans.
 To ensure a fair comparison between states, we included only states operating under a federal OSHA jurisdiction, together with the seven states mentioned above, as all reports from those states are collected from the private sector. 
 
-The dataset contains 98,801 entries, spanning from January 1, 2015 to February 28, 2025. Each entry represents a report submitted by an employer. A single report may mention multiple severe injuries (e.g. one hospitalization and one amputation), as employers are required to specify \textit{"the number of employees who suffered a fatality, in-patient hospitalization, amputation, or loss of an eye"}\footnote{\url{https://www.osha.gov/laws-regs/regulations/standardnumber/1904/1904.39}}. This means that the features used to construct the target series (Hospitalization and Amputation) are count variables, not binary encodings, and that we can not aggregate the data at the report level.
-The dataset provides 26 attributes, ranging from geographical information about the city, the address, and the state where the accident occurred, to details about the nature of the injury, the body part affected, the employer, and the business sector. Only variables required to construct state-level monthly injury counts and relative risks were retained.
+The dataset contains 98,801 entries, spanning from January 1, 2015 to February 28, 2025. Each entry represents a report submitted by an employer. A single report may mention multiple severe injuries (e.g. one hospitalization and one amputation), as employers are required to specify \textit{"the number of employees who suffered a fatality, in-patient hospitalization, amputation, or loss of an eye"}\footnote{\url{https://www.osha.gov/laws-regs/regulations/standardnumber/1904/1904.39}}. This means that the feature used to construct the target series (Hospitalization) is a count variable, and that we can not aggregate the data at the report level.
+  
+To validate the target feature, we cross-tabulated Hospitalization and Amputation counts in Table~\ref{tab:hosp_amp_crosstab} and we performed a qualitative analysis of some edge cases. In particular, we studied the \textit{Final Narrative} feature for a sample of accidents where the employer reported both an amputation and a hospitalization. Even in these cases, the record involves only one employee; whereas accidents with multiple hospitalizations do refer to multiple employees. Even if this reporting inconsistency does not significantly impact the hospitalization size, we have to explicitly define our outcome variable as the \textit{incidence of reported inpatient hospitalizations}.
 
---- I DROPPED THIS PART: \textit{adjusting for population makes it actually harder to interpret the forecasts. For example, what does a 0.22 RMSE mean on the target Hospitalization per 100000 employees per month/week? I switched to counts of hospitalizations (e.g., a 3.5 RMSE means the model is off by 3.5 hospitalizations per month/week)}
+\begin{table}[htbp]
+\centering
+\caption{Cross-tabulation of hospitalization and amputation indicators}
+\label{tab:hosp_amp_crosstab}
+\begin{tabular}{lrrrrrrr}
+\toprule
+\textbf{Amputation} & \multicolumn{7}{c}{\textbf{Hospitalized}} \\
+\cmidrule(lr){2-8}
+ & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+\midrule
+0 & 41    & 70{,}152 & 550 & 11 & 2 & 2 & 2 \\
+1 & 18{,}448 & 7{,}154  & 6   & 0  & 1 & 0 & 0 \\
+2 & 6     & 5      & 6   & 0  & 0 & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-To make our model more transparent for decision makers, we derived two new target variables from the two attributes Hospitalization and Amputation. Since these two attributes represent only absolute numbers, they may vary depending on the worker population. More populated states will probably report a larger number of severe injuries than states with a small workforce. Even within the same state, workforce trends over time can enormously impact the number of accidents. As an example, the COVID period saw a dramatic shrinking of the workforce, possibly leading to a number of severe injuries much lower than in any other period. 
+The dataset provides 26 features, ranging from geographical information about the city, the address, and the state where the accident occurred, to details about the nature of the injury, the body part affected, the employer, and the business sector. 
+
+To make our model more transparent for decision makers, we derived a new target variable from the feature Hospitalization. As explained in Section~\ref{subs:OSHA}, we normalize the raw count of hospitalization with the workforce for each state and for each month included in the dataset.
 
 To achieve interstate comparability, data from the Bureau of Labor Statistics (BLS) were fetched about seasonally adjusted, monthly employment at a state level. Employment is estimated on nonfarm, payroll jobs by the Current Employment Statistics (CES) survey. The covered time period spans from January 1, 2015 to December 31, 2024. Three states, namely American Samoa, Guam, and Northern Mariana Islands, were excluded from the panel since they are not covered by the BLS. After inspecting the testing set, one more U.S. territory, Virgin Islands, was excluded because of few data points.
-The ratio of both target features over the monthly employment was separatedly computed for each state. Therefore, the target to be predicted is not the absolute count of injuries per state, but the relative risk of getting either hospitalized or amputated per 100,000 state employees. 
------------------------------
 
 \subsection{Data Cleaning and Preparation}\label{subs:CleaningPreparation}
 
-The main preparation step involved aggregating both hospitalization and amputation risks at the monthly level to ensure a consistent merge with the monthly state employment statistics from the Bureau of Labor Statistics (BLS). After merging the two datasets, some missing values originated from a mismatch between the SIR time period (ending in February 2025) and the BLS time period (ending in December 2024). These entries were removed from the panel.
+To evaluate for forecastability, we computed the percentage of days with no reports over the total temporal range for each state (mean value across all states=0,62). Given the data sparsity at the daily level, we aggregated the data to two lower resolutions using a non-overlapping approach.
+After merging the two datasets, some missing values originated from a mismatch between the SIR time period (ending in February 2025) and the BLS time period (ending in December 2024). These entries were removed from the panel.
 
-For the weekly forecasting task, the state employment data were upsampled from monthly to weekly frequency using a hybrid strategy. Missing weekly values were interpolated with the exception of the period from March to September 2020. During this interval, the COVID-19 pandemic caused an abrupt drop in employment that the interpolation method was not able to capture properly. For this particular period, each initial monthly value was forward-filled until the next observed monthly value. Upsampling monthly employment data to weekly frequency assumes relatively smooth workforce trends within each month.
+For the weekly forecasting task, the state employment data are upsampled from monthly to weekly frequency using a hybrid strategy. Missing weekly values are interpolated with the exception of the period from March to September 2020. During this interval, the COVID-19 pandemic caused an abrupt drop in employment that the interpolation method was not able to capture properly. For this particular period, each initial monthly value was forward-filled until the next observed monthly value. Upsampling monthly employment data to weekly frequency assumes relatively smooth workforce trends within each month.
+
+After the merging step, we validate the resulting dataset and enforce a balanced panel structure by explicitly filling missing state–date combinations with zeros. These zero values represent structural zeros, corresponding to dates on which no hospitalizations were reported for a given state, rather than missing observations.
+
+No additional missing values were identified in the features used for modeling. We visually checked for inconsistencies introduced during the merging process, such as abnormal spikes that could indicate outliers, and no irregular patterns were found.
 
 \subsection{Exploratory Data Analysis}\label{subs:EDA}
 
-A skewed data distribution of the target feature may lead to poor generalization, as the time series can be sensitive to extreme values. 
-
+A skewed data distribution of the target feature may lead to poor generalization, as the time series can be sensitive to extreme values. Figure~\ref{fig:target_distribution} shows the counts of hospitalization and amputation before adjusting for the workforce size. The hospitalization distribution is slightly positively skewed. 
 
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.95\textwidth]{figures/target_distribution.png}
-    \caption{Distributions of targets}
+    \caption{Distributions of hospitalizations and amputations (raw counts)}
     \label{fig:target_distribution}
 \end{figure}
 
 \FloatBarrier
-Since both hospitalization and amputation risk show a right-skewed distribution, we initially standardized these features using a log transformation. To test whether this transformation improved predictive accuracy, we trained a Ridge regressor on the log-transformed targets and compared the performance to the model trained on targets on the original scale. As the accuracy deteriorated, it is likely that the transformation removed structural components that the regressor could have exploited. Since we normalized the targets by adjusting for the monthly employment population for each state, further standardization offered no additional benefit. 
 
-We also experimented with differencing the global mean time series – monthly aggregation across all states – before generating lagged features. In fact, after conducting an Augmented Dickey-Fuller test on each state-level series to check for stationarity, we found that some series are stationary, while others are not. Similar to the log transformation, the differentiation increased both RMSE and MAE on the one-step-ahead twelve-month forecast. Since modern machine-learning models do not strictly require stationarity assumptions, we preferred to inform the models using lagged values, rolling means, and differentiations of lagged values on the original scale.
+After adjusting for the workforce, the hospitalization risk distribution is shown in Figure~\ref{fig:hosprisk_distribution} and its normality was assessed with a Shapiro-Wilk test, which rejected the null hypothesis of normality (W = 0.96, p < 0.001).
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/distribution_hosprisk.png}
+    \caption{Distribution of hospitalizations adjusted for state workforce}
+    \label{fig:hosprisk_distribution}
+\end{figure}
+
+\FloatBarrier
+
+A common approach to normalize a skewed distribution is to apply a log transformation to the target feature. However, because our target is already normalized by workforce size and because the target naturally included zero values, we do not apply further transformations to our target \citep{benatia_dealing_2025}.
+
+To assess time-series components, we first visually inspect the mean monthly time series for hospitalization risk across all states in the panel. Figure~\ref{fig:monthly_mean_hosprisk} shows seasonal fluctuations, with regular upwards trends in the summer and a general decline after the COVID-19 period.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/monthly_mean_hosprisk.png}
+    \caption{Monthly mean hospitalization risk}
+    \label{fig:monthly_mean_hosprisk}
+\end{figure}
+
+\FloatBarrier
+
+A visual inspection further confirms the seasonal components of the time series at a state level, with higher volatility when states with a lower workforce are interested by occasional spikes, as it is clear from Figure~\ref{fig:three_states_ts}, which shows three states selected according to their relative workforce size.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/three_states_ts.png}
+    \caption{Monthly hospitalization risk for Texas, Colorado, and Montana}
+    \label{fig:three_states_ts}
+\end{figure}
+
+\FloatBarrier
+
+A more formal test for temporal components is provided by the seasonal-trend decomposition (STL) shown in Figure~\ref{fig:stl_monthly}. 
+ 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/stl_decomposition_hosprisk_monthly_national.png}
+    \caption{STL decomposition for monthly hospitalization risk at national level}
+    \label{fig:stl_monthly}
+\end{figure}
+
+\FloatBarrier
 
 \subsection{Feature Engineering}\label{subs:FeatureEngineering}
 
-In this crucial step, each time series was provided with exogenous variables. Although it is not strictly necessary for a ML model to be explicitly informed about data patterns, exogenous variables can still benefit the model’s capabilities to predict temporal values. This is a viable option when the data complexity is low, the data are likely to be properly fitted by a linear model, and seasonal patterns can be detected from a visual inspection of the time series. 
-The exogenous variables are divided into four categories:
+Besides deriving a new target feature, some additional steps are necessary to allow machine learning models to learn from temporally ordered data. Table~\ref{tab:feature_engineering} summarizes the autoregressive features needed to frame a time series into a supervised regression problem, next to calendar and exogenous variables.
+
 \begin{table}[htb!]
 \centering
 \caption{Overview of target variables, autoregressive features, and exogenous features used in the monthly forecasting models.}
+\label{tab:feature_engineering}
 \begin{tabular}{p{4cm} p{8cm}}
 \toprule
 \textbf{Category} & \textbf{Variables} \\
 \midrule
 
 Target variable 
-& \texttt{Hospitalization}: sum of hospitalizations for each state at a monthly frequency.\\[4pt]
+& \texttt{HospRisk}: hospitalization risk per 100,000 employees.\\[4pt]
 
 Calendar and seasonal features 
 & \texttt{Year}, \texttt{Month}, \texttt{Quarter}, \texttt{Week of the Year}.\\[4pt]
@@ -269,8 +419,10 @@ Rolling features
   3-, 6-, 12-month exponential weighted mean: \texttt{ewm3}, \texttt{ewm6}, \texttt{ewm12}.\\[4pt]
 
 Exogenous variables 
-& \texttt{State} (categorical identifier, one-hot encoded in the models),
-top k NAICS 2-digit industry: \texttt{NAICSmix} \\
+& \texttt{State} (categorical identifier, one-hot encoded in the models);
+top k NAICS 2-digit industry: \texttt{NAICSmix};
+top 3 Nature categories: \texttt{share\_nature};
+top 3 Event categories: \texttt{share\_event}. \\
 
 \bottomrule
 \end{tabular}
@@ -278,26 +430,418 @@ top k NAICS 2-digit industry: \texttt{NAICSmix} \\
 
 \FloatBarrier
 
+As explained in Section~\ref{subs:OSHA}, the categorical variables \texttt{Nature} and \texttt{Event} describe, respectively, the nature of injury and the event leading to injury for each reported incident. To incorporate information from these high-cardinality categorical variables into the forecasting models, we constructed aggregate mix features, denoted \texttt{share\_nature} and \texttt{share\_event}, which summarize the distribution of category levels within each state–time period. 
+
+Specifically, individual category levels (e.g., fractures, falls, transportation incidents) were first mapped to a reduced set of higher-level categories. Because the coding scheme for the \texttt{Nature} variable was changed in 2024, causing a strong distortion in the temporal evolution of some category levels visible in Figure~\ref{fig:nature}, the retained levels were selected based on their empirical frequency using data up to the end of 2023. 
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/global_trend_top3_nature_mix.png}
+    \caption{Monthly national trend for the top three levels in the variable \texttt{Nature}}
+    \label{fig:nature}
+\end{figure}
+
+\FloatBarrier
+
+For each variable, only the three most frequent category levels were retained, while all remaining levels were grouped into a residual \emph{Other} category. Based on seasonal–trend decomposition, the dominant categorical mix features showed moderate seasonal structure. These features were therefore encoded using lagged 12-period rolling means.
+
+\subsection{Experimental setup}\label{subs:ExperimentalSetup}
+In this subsection, we describe the experimental setup adopted in each experiment for reproducibility purposes. 
+For the monthly aggregation, each original time series was reframed as a supervised regression problem by constructing a matrix composed of the autoregressive and temporal features summarized in Table~\ref{tab:feature_engineering}. Importantly, the exogenous features were used only for answering SQ1.1.
+
+Each observation is identified by a group index (State) and a timestamp corresponding to the beginning of the month. 
+To prevent data leakage, predictors at time $t$ never use information from time $t+h$ or later. 
+This constraint is enforced by shifting the autoregressive features according to the forecasting horizon. 
+The correctness of the temporal split is further validated by explicitly checking the alignment between each train end and the corresponding test start date.
+
+We adopt a prequential validation strategy to obtain robust estimates of out-of-sample predictive performance. 
+Since model accuracy may depend on the specific choice of the training period, evaluating models using a single train--test split could lead to results that are overly sensitive to a particular time window.  
+In each split, the training set includes all observations up to a given train end date, while the test set consists of the subsequent 12 months only. 
+
+Table~\ref{tab:rolling_splits} reports an overview of the resulting splits. 
+\begin{table}[htbp]
+\centering
+\caption{Rolling-origin training and test splits (monthly frequency)}
+\label{tab:rolling_splits}
+\begin{tabular}{l l l r r}
+\toprule
+Train end & Test start & Test end & Train weeks & Train rows \\
+\midrule
+2016-12-01 & 2017-01-01 & 2017-12-01 & 12 & 360  \\
+2017-12-01 & 2018-01-01 & 2018-12-01 & 24 & 720  \\
+2018-12-01 & 2019-01-01 & 2019-12-01 & 36 & 1080 \\
+2019-12-01 & 2020-01-01 & 2020-12-01 & 48 & 1440 \\
+2020-12-01 & 2021-01-01 & 2021-12-01 & 60 & 1800 \\
+2021-12-01 & 2022-01-01 & 2022-12-01 & 72 & 2160 \\
+2022-12-01 & 2023-01-01 & 2023-12-01 & 84 & 2520 \\
+2023-12-01 & 2024-01-01 & 2024-12-01 & 96 & 2880 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+To ensure that each model is trained on a sufficiently long historical window, we discard early splits with limited training data and retain the six train ends corresponding to the years 2018--2023. 
+Each split therefore represents an independent forecasting experiment, in which models are trained using information available up to year $t$ and evaluated on year $t+1$.
+
+An overview of each model’s hyperparameters can be found in Appendix~\ref{app:a}. Linear models use default settings, while tree-based ensemble models share a common set of fixed hyperparameters chosen using simple heuristics rather than formal tuning. In particular, shallow trees, low learning rates, moderate ensemble sizes, and mild subsampling were adopted to account for short training windows and predominantly autoregressive features, favoring stable and comparable performance across rolling-origin splits.
+
+All models are tested on one year of data and evaluated at three forecasting horizons (\(h = 1, 3, 6\)) using a direct multi-step strategy.
+
+Models are compared against a Seasonal Naive baseline, which generates forecasts by repeating the observed value from the same calendar month in the previous year. This constitutes a strong benchmark in our setting, as the exploratory data analysis and time-series decomposition revealed pronounced annual seasonality and a relatively smooth underlying trend, implying that a large fraction of the predictable variation can already be captured by seasonal persistence alone. After training and testing all models, we implemented an ETS model based on the Holt-Winters method to define a stronger baseline and to assess to what extent such a model could capture level, trend, and seasonal components. Since it is not possible to fit an ETS model to a panel data, a separate ETS model was fitted for each state using the same rolling-origin splits as the machine learning models.
+
+For the weekly resolution, we adopted the same experimental setup with some changes to accommodate a weekly aggregation. In particular, each period is defined to end on Mondays, and employment data were upsampled using the hybrid technique described in section~\ref{subs:CleaningPreparation}. All models are evaluated at three forecasting horizons (\(h = 1, 4, 13\)) corresponding to one week, one month and one quarter ahead. Autoregressive features are generated with weekly periods. 
+
+We decided not to fit an ETS model for the weekly aggregation after inspecting the STL decomposition and performing an error analysis on the fitted models. Since the weekly national time series shows sharp weekly spikes and high volatility, the assumptions underlying exponential smoothing models are defied.
+
+
+TO WRITE: ets; difference global and local strategy implementations; permutation importance; state encoding; yaojohnson transf.
+
+
+
 \section{Results}
 
+This section presents the results from three experiments. The same metrics, namely RMSE, MAE, and MASE are used to evaluate all the experiments.
+1. aggregate metrics for the monthly panel data, globally pooled, against the weekly panel data
+2. aggregate metrics for the monthly panel data with exogenous variables
+3. aggregate metrics for the monthly panel data locally estimated
+
+A visual analysis of the errors and a comparison of the models performance will follow. The feature permutation will be the last step.
+The final results from the monthly panel data, aggregated across six folds, are summarized in Table~\ref{tab:monthly_global_noexog_h1} for the short-term (1 month), in Table~\ref{tab:monthly_global_noexog_h3} for the medium-term (3 months) and in Table~\ref{tab:monthly_global_noexog_h6}. As it is clear from a quick inspection, all models performed similarly, with no significant difference across linear and tree-based families.
+\begin{table}[!htbp]
+\centering
+\caption{Monthly experiment (globally pooled, no exogenous features). Forecast horizon $h=1$. Scores are reported as mean $\pm$ standard deviation across prequential test folds.}
+\label{tab:monthly_global_noexog_h1}
+\begin{tabular}{lccc}
+\toprule
+Model & RMSE & MAE & MASE \\
+\midrule
+CatBoost & 0.283 $\pm$ 0.022 & 0.206 $\pm$ 0.022 & 0.716 $\pm$ 0.082 \\
+ElasticNet & 0.283 $\pm$ 0.022 & 0.207 $\pm$ 0.019 & 0.721 $\pm$ 0.065 \\
+Lasso & 0.283 $\pm$ 0.021 & 0.207 $\pm$ 0.019 & 0.720 $\pm$ 0.065 \\
+LightGBM & 0.284 $\pm$ 0.022 & 0.208 $\pm$ 0.022 & 0.724 $\pm$ 0.081 \\
+PLS & 0.284 $\pm$ 0.022 & 0.208 $\pm$ 0.020 & 0.724 $\pm$ 0.067 \\
+Ridge & 0.284 $\pm$ 0.022 & 0.207 $\pm$ 0.019 & 0.721 $\pm$ 0.065 \\
+Seasonal Naive & 0.390 $\pm$ 0.037 & 0.276 $\pm$ 0.027 & 0.941 $\pm$ 0.083 \\
+XGBoost & 0.289 $\pm$ 0.025 & 0.210 $\pm$ 0.024 & 0.728 $\pm$ 0.083 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{Monthly experiment (globally pooled, no exogenous features). Forecast horizon $h=3$. Scores are reported as mean $\pm$ standard deviation across prequential test folds.}
+\label{tab:monthly_global_noexog_h3}
+\begin{tabular}{lccc}
+\toprule
+Model & RMSE & MAE & MASE \\
+\midrule
+CatBoost & 0.282 $\pm$ 0.027 & 0.205 $\pm$ 0.026 & 0.713 $\pm$ 0.090 \\
+ElasticNet & 0.282 $\pm$ 0.023 & 0.205 $\pm$ 0.019 & 0.715 $\pm$ 0.060 \\
+Lasso & 0.282 $\pm$ 0.022 & 0.204 $\pm$ 0.019 & 0.713 $\pm$ 0.061 \\
+LightGBM & 0.287 $\pm$ 0.029 & 0.209 $\pm$ 0.028 & 0.727 $\pm$ 0.095 \\
+PLS & 0.283 $\pm$ 0.023 & 0.205 $\pm$ 0.019 & 0.718 $\pm$ 0.061 \\
+Ridge & 0.283 $\pm$ 0.023 & 0.205 $\pm$ 0.019 & 0.718 $\pm$ 0.058 \\
+Seasonal Naive & 0.388 $\pm$ 0.036 & 0.275 $\pm$ 0.027 & 0.938 $\pm$ 0.088 \\
+XGBoost & 0.290 $\pm$ 0.034 & 0.209 $\pm$ 0.030 & 0.730 $\pm$ 0.101 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[!htbp]
+\centering
+\caption{Monthly experiment (globally pooled, no exogenous features). Forecast horizon $h=6$. Scores are reported as mean $\pm$ standard deviation across prequential test folds.}
+\label{tab:monthly_global_noexog_h6}
+\begin{tabular}{lccc}
+\toprule
+Model & RMSE & MAE & MASE \\
+\midrule
+CatBoost & 0.350 $\pm$ 0.028 & 0.254 $\pm$ 0.025 & 0.772 $\pm$ 0.058 \\
+ElasticNet & 0.350 $\pm$ 0.028 & 0.254 $\pm$ 0.025 & 0.772 $\pm$ 0.058 \\
+Lasso & 0.350 $\pm$ 0.028 & 0.254 $\pm$ 0.025 & 0.772 $\pm$ 0.058 \\
+LightGBM & 0.351 $\pm$ 0.029 & 0.255 $\pm$ 0.026 & 0.775 $\pm$ 0.062 \\
+PLS & 0.350 $\pm$ 0.028 & 0.254 $\pm$ 0.025 & 0.772 $\pm$ 0.058 \\
+Ridge & 0.350 $\pm$ 0.028 & 0.254 $\pm$ 0.025 & 0.772 $\pm$ 0.058 \\
+Seasonal Naive & 0.397 $\pm$ 0.040 & 0.279 $\pm$ 0.029 & 0.873 $\pm$ 0.066 \\
+XGBoost & 0.357 $\pm$ 0.031 & 0.259 $\pm$ 0.028 & 0.789 $\pm$ 0.066 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Across the three forecast horizons, all models show stable performance as measured by RMSE, MAE, and MASE. In all cases, the evaluated models outperform the seasonal baseline. On the long-term horizon, performance relative to the baseline deteriorates slightly for all models, indicating either increased forecast uncertainty or a slightly more predictable seasonal trend in the baseline. While average errors stay comparable across models, the standard deviation of the error metrics is higher for XGBoost and LightGBM, a potential sign of greater variability across the test folds and a tendency toward overfitting. Because the MAE does not vary across the models, the MASE values show limited variation. This may indicate that model choice has only a marginal impact on forecast accuracy once seasonality and autoregressive structure are accounted for.
+
+The results for the weekly aggregation are reported in the Appendix~\ref{app:a} because they do not reveal any significant difference compared to the monthly setting. Error metrics are only slightly more stable across folds, suggesting that more observations did not benefit one model above the others. 
+
+These findings suggest that all models learn from similar patterns in the data, and that forecast accuracy is largely driven by a small number of dominant features. To answer this question, permutation importance was computed and stored for each model. Permutation importance quantifies the increase in forecast error when the values of a feature are shuffled. This measurement is model-agnostic \citep{fisher_all_2019} and therefore more suitable for comparing models that carry different assumptions, such as linear and tree-based ones. Figure~\ref{fig:pi_h3} illustrates the permutation importance at horizon $h = 3$ for two representative models.
+
+\begin{figure}[!htbp]
+\centering
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/pi_ridge_m3_no_exg.png}
+    \caption{Ridge}
+    \label{fig:pi_ridge_h3}
+\end{subfigure}\hfill
+\begin{subfigure}{0.48\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/pi_catboost_m3_no_exg.png}
+    \caption{CatBoost}
+    \label{fig:pi_catboost_h3}
+\end{subfigure}
+\caption{Permutation importance for Ridge (left) and CatBoost (right) for horizon $h=3$. Results are aggregated across prequential test folds.}
+\label{fig:pi_h3}
+\end{figure}
+
+The 12-month rolling mean is clearly the dominant predictor across all models. Permuting this features leads to a deterioration in forecast accuracy, confirming that long-term trend information is the driver of predictive performance. This may also explain the stability in error metrics across short-, medium-, and long-term horizons. For the Ridge regressor, permuting the 12-month rolling mean increases RMSE by approximately 0.16, whereas for CatBoost the increase is about 0.04. This may suggest that linear models rely more heavily on this single feature. However, since rolling means and exponentially weighted moving averages are correlated autoregressive features and they also rank among the most important features for the CatBoost model, the apparent difference may be much smaller.  
+
+To test whether machine learning models may perform any better compared to classical statistical models, an additive ETS model was fitted separately on each single state time series and forecasts were aggregated across states. Results for the monthly panel data, reported in Table~\ref{tab:ets_monthly}, indicate that the ETS benchmark has higher RMSE and MAE than all machine learning models, with the exception of the seasonal baseline. 
+
+\begin{table}[!htbp]
+\centering
+\caption{Performance of the ETS model after aggregating state-level predictions. Results are reported as mean $\pm$ standard deviation across prequential test folds.}
+\label{tab:ets_monthly}
+\begin{tabular}{lcc}
+\toprule
+Model & RMSE & MAE \\
+\midrule
+ETS ($h=1$) & 0.314 $\pm$ 0.030 & 0.225 $\pm$ 0.024 \\
+ETS ($h=3$) & 0.319 $\pm$ 0.037 & 0.228 $\pm$ 0.030 \\
+ETS ($h=6$) & 0.325 $\pm$ 0.045 & 0.231 $\pm$ 0.035 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+After performing Wilcoxon signed-rank tests on fold-level RMSE values. For example, we found a statistically significant difference ($p=0.03$) between CatBoost and the ETS benchmark at each forecast horizon. While providing evidence that machine learning models tend to outperform a default ETS, this result should be interpreted with caution, given the small number of test folds and the mild dependence induced by rolling-origin evaluation.
+
+The error analysis of the residuals for a Lasso model (again, the results are very similar across all models) in Figure~\ref{fig:scatter_resid_lasso_m3} shows a regression-to-the-mean behavior, systematically underestimating high values and overestimating low values.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{figures/scatter_resid_lasso_m3.png}
+    \caption{Scatter plot of predicted against true values for a Lasso model, $h = 3$}
+    \label{fig:scatter_resid_lasso_m3}
+\end{figure}
+
+\FloatBarrier
+
+More pronounced differences emerge when a time series aggregated across the 30 states included in the dataset is visualized as the line plot shown in Figure~\ref{fig:lightgbm_national_m1_5} and Figure~\ref{fig:lasso_national_m1_5}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/lightgbm_national_m1_5.png}
+    \caption{Fitted and predicted values against true values for a LightGBM model, $h=1$, monthly mean across all selected states}
+    \label{fig:lightgbm_national_m1_5}
+\end{figure}
+
+\FloatBarrier
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/lasso_national_m1_5.png}
+    \caption{Fitted and predicted values against true values for a Lasso model, $h=1$, monthly mean across all selected states}
+    \label{fig:lasso_national_m1_5}
+\end{figure}
+
+\FloatBarrier
+
+LightGBM, as a representative tree-based ensemble model, is able to capture some of the spikes in the training set, but shows reduced generalization capacity on the test set, suggesting overfitting. In contrast, the Lasso model, representing linear approaches, produces smoother fitted values that dampen such spikes, while achieving comparable accuracy on the test set. Both models appear to struggle in capturing downward spikes.
+
+When zooming in on individual states, heterogeneity in hospitalization risk values becomes evident. States with a smaller workforce tend to show more volatile and less predictable trajectories. While LightGBM yields fitted and forecasted paths for Texas that are broadly consistent with the cross-state average, it is less able to capture the high variability observed in a small state such as Montana, as shown in Figure~\ref{fig:lightgbm_examples}.
+
+\begin{figure}[!htbp]
+\centering
+
+\begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/lightgbm_montana_m1_5.png}
+    \caption{Montana}
+    \label{fig:lightgbm_montana}
+\end{subfigure}
+
+\vspace{0.5em}
+
+\begin{subfigure}{\textwidth}
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/lightgbm_texas_m1_5.png}
+    \caption{Texas}
+    \label{fig:lightgbm_texas}
+\end{subfigure}
+
+\caption{Observed values, fitted values on the training set, and one-step-ahead forecasts for the LightGBM model ($h=1$).}
+\label{fig:lightgbm_examples}
+\end{figure}
+
+\FloatBarrier
+
+Moving to the feature matrix expanded with exogenous features (NAICS industry mix, Event mix, and Nature mix), Table~\ref{tab:monthly_exog} summarizes the metrics for $h = 3$. 
+
+\begin{table}[!htbp]
+\centering
+\caption{Forecasting performance of models with exogenous variables. Results are reported as mean $\pm$ standard deviation across prequential test folds.}
+\label{tab:monthly_exog}
+\begin{tabular}{lccc}
+\toprule
+Model & RMSE & MAE & MASE \\
+\midrule
+CatBoost & 0.289 $\pm$ 0.030 & 0.211 $\pm$ 0.027 & 0.732 $\pm$ 0.091 \\
+ElasticNet & 0.286 $\pm$ 0.025 & 0.209 $\pm$ 0.021 & 0.729 $\pm$ 0.067 \\
+Lasso & 0.285 $\pm$ 0.025 & 0.208 $\pm$ 0.021 & 0.724 $\pm$ 0.067 \\
+LightGBM & 0.293 $\pm$ 0.030 & 0.215 $\pm$ 0.029 & 0.753 $\pm$ 0.104 \\
+PLS & 0.286 $\pm$ 0.026 & 0.209 $\pm$ 0.022 & 0.730 $\pm$ 0.072 \\
+Ridge & 0.287 $\pm$ 0.026 & 0.210 $\pm$ 0.022 & 0.735 $\pm$ 0.068 \\
+Seasonal Naive & 0.396 $\pm$ 0.035 & 0.280 $\pm$ 0.027 & 0.951 $\pm$ 0.091 \\
+XGBoost & 0.296 $\pm$ 0.032 & 0.216 $\pm$ 0.029 & 0.751 $\pm$ 0.100 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+While all metrics show a pattern similar to the one for the feature matrix without the exogenous features, the general performance seems to be slightly deteriorated. The compositional exogenous features do barely appear in the permutation importance of the Ridge model and are absent from the CatBoost, as shown in Figure~\ref{fig:pi_h3_exg}.
+
+\begin{figure}[!htbp]
+\centering
+\begin{subfigure}{0.5\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/pi_ridge_m3_exg.png}
+    \caption{Ridge}
+    \label{fig:pi_ridge_h3_exg}
+\end{subfigure}\hfill
+\begin{subfigure}{0.5\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{figures/pi_catboost_m3_exg.png}
+    \caption{CatBoost}
+    \label{fig:pi_catboost_h3_exg}
+\end{subfigure}
+\caption{Permutation importance for Ridge (left) and CatBoost (right) for horizon $h=3$, with exogenous variables. Results are aggregated across prequential test folds.}
+\label{fig:pi_h3_exg}
+\end{figure}
+
+Finally, we compare the forecast metrics of the global models with that of the locally fitted ones. Table~\ref{tab:local_h6} reports the metrics for the local strategy at horizon $h = 6$, where some major differences are visible both across models within the local framework and when contrasting local and global strategies.
+
+\begin{table}[ht]
+\centering
+\caption{Local forecasting performance (horizon $h=6$). Values are mean $\pm$ std across rolling-origin splits.}
+\label{tab:local_h6}
+\begin{tabular}{lccc}
+\toprule
+Model & RMSE & MAE & MASE \\
+\midrule
+CatBoost       & 0.283 ± 0.158 & 0.235 ± 0.133 & 0.810 ± 0.244 \\
+ElasticNet     & 0.300 ± 0.194 & 0.249 ± 0.167 & 0.843 ± 0.361 \\
+Lasso          & 0.297 ± 0.193 & 0.247 ± 0.167 & 0.833 ± 0.355 \\
+LightGBM       & 0.278 ± 0.159 & 0.229 ± 0.134 & 0.784 ± 0.229 \\
+PLS            & 0.301 ± 0.194 & 0.250 ± 0.168 & 0.853 ± 0.381 \\
+Ridge          & 0.289 ± 0.181 & 0.240 ± 0.154 & 0.818 ± 0.331 \\
+Seasonal Naive & 0.337 ± 0.192 & 0.272 ± 0.154 & 0.926 ± 0.266 \\
+XGBoost        & 0.292 ± 0.162 & 0.243 ± 0.138 & 0.845 ± 0.278 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three main findings can be highlighted. First, LightGBM achieves the best performance among all local models, outperforming the second-best competitor, CatBoost, with a statistically significant margin according to a Wilcoxon signed-rank test ($p = 0.02$). Second, the local LightGBM significantly outperform the global counterpart, indicating that state-specific fitting can be beneficial at longer horizons. Third, the standard deviation of forecast errors is markedly higher under the local approach than under the global approach.
+This increased dispersion suggests that while local models can produce better median performance, their gains are less stable across time, highlighting a trade-off between accuracy and robustness.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.99\textwidth]{figures/local_rmse_per_fold_h3.png}
+    \caption{RMSE values for the locally fitted models across six splits, $h = 3$.}
+    \label{fig:local_rmse_per_fold_h3}
+\end{figure}
+
+\FloatBarrier
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.99\textwidth]{figures/texas_local_vs_global_m6_5.png}
+    \caption{Fitted and predicted values against true values for a LightGBM model, $h=1$, local (green line) against global model (red line), Texas.}
+    \label{fig:texas_local_vs_global_m6_5}
+\end{figure}
+
+\FloatBarrier
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.99\textwidth]{figures/alabama_local_vs_global_m3_1.png}
+    \caption{Fitted and predicted values against true values for a LightGBM model, $h=3$, local (green line) against global model (red line), Alabama.}
+    \label{fig:alabama_local_vs_global_m3_1}
+\end{figure}
+
+\FloatBarrier
 
 
 \section{Discussion}
 
 \subsection{Answering Research Questions}
 
+RQ1
 
+\vspace{1em}
+\hspace{2em}\textbf{RQ1}: \textit{How does the forecasting performance of a set of linear and tree-based ensemble models vary at two temporal aggregations (monthly and weekly) in multi-step forecasting of severe injuries risk, as evaluated by RMSE, MAE and MASE?}
 
+Overall, the forecasting performance of linear models (ElasticNet, Lasso, PLS, and Ridge) and tree-based ensemble models (CatBoost, LightGBM, and XGBoost) is similar, both at monthly and weekly resolutions, and across the three forecasting horizons considered. The increased sample size in the weekly setting led the models converge to even more stable predictions. While \citet{cerqua_dead_2024} found PLS to be the best performing algorithm in terms of Mean Squared Forecast Error, its performance in our study was comparable with the other algorithms. Direct comparison with their results should be made with caution, as their analysis relied on a wide set of covariates to model fatalities at a finer geographical granularity.
+
+Although the performance metrics did not show significant differences between linear and tree-based ensemble models, visual inspection of the fitted training values highlighted a tendency for tree-based ensembles to overfit more strongly. This behavior is consistent with previous findings.
+\vspace{1em}
+
+SQ1.1
+
+\vspace{1em}
+\hspace{2em}\textit{SQ1.1: How does the inclusion of exogenous categorical variables affect the forecasts of the ML models?}
+\vspace{1em}
+
+The inclusion of exogenous categorical variables slightly deteriorated the performance metrics and did not benefit the interpretability of the features. Quantitatively, this finding somehow reflect the finding of \citet{cerqua_dead_2024}, who found that models performed better on a smaller set of covariates. 
+
+RQ2
+
+\vspace{1em}
+\hspace{2em}\textbf{RQ2:} \textit{How does the predictive accuracy change when estimated as a Global Forecasting Model (across all states jointly) rather than as a Local Forecasting Model (state-specific), for both monthly and weekly temporal resolutions?}
+\vspace{1em}
+
+We did find only small evidence of LightGBM yielding lower RMSE on the locally fitted approach compared to the global one at longer monthly forecasting horizons ($h = 6$).
 \subsection{Limitations and further research}
+
+This study presents two main kinds of limitations: those arising from modeling and design choices, and those inherent to the nature of the dataset and to the way reports are collected.
+
+\subsubsection{Design limitations}
+
+A key empirical finding was that forecasts are mainly driven by autoregressive features across all models, namely the rolling means. Including compositional exogenous variables did not improve the model's ability to capture volatility. The assumption that higher hospitalization risks in small states may be associated with specific industrial sectors is not reflected in the recorded nature and event classifications leading to hospitalization. The compositional features were encoded in a simplex space, with values bounded in the [0, 1] interval. Although alternative transformations exist that map compositional data to an unbounded space (e.g., \citet{zhang_review_2024} review several log-ratio transformations), the limited contribution of those features suggests that the effect will probably be negligible, potentially improving interpretability rather than performance.
+
+Temporal aggregation to coarser resolutions was necessary to reduce the sparsity present at the daily frequency. However, these aggregations constrained the potential richness of the dataset, in particular in terms of the set of usable covariates. As a result, potentially informative features (such as the \texttt{Final Narrative}) were excluded. Again, it is possible to argue that including more features could lead to marginal improvements in performance at the cost of interpretability. Moreover, complex, customized preprocessing pipelines are prone to implementation mistakes.
+
+A structure change following the COVID-19 pandemic may have had the effect of stabilizing the hospitalization risk. After an initial adjustment phase, forecasting performance generally improved from 2021 onward. However, this improvement may be simply due to longer train periods rather than to an increased capacity of the models to capture structural patterns. The rolling-origin evaluation approach, while standard in the forecasting literature, makes it difficult to disentangle performance gains due to longer training sets from those resulting from a genuine capacity of generalizing on out-of-sample test data. Future research could address this limitation by adopting an alternative evaluation strategy -- such as fixed-length rolling windows -- to better isolate structural effects from sample-size effects \citep{cerqueira_evaluating_2020}.
+
+Finally, while our design choice included some basic calendar features --such as month, quarter, and year-- integrating other calendar features is still possible. In particular, encoding of public holidays may help models better capture intra-seasonal downward spikes (around the end of the year). Additionally, indicators of policy changes may provide some guidance in modeling unexplained shifts in hospitalization risks.
+
+\subsubsection{Dataset limitations}
+
+As highlighted in Section~\ref{subs:DatasetDescription}, inconsistent reporting schemes make it harder to encode the hospitalization risk. Moreover, changes in the categorization of the \textit{Nature} variable limited the forecasting analysis to data up to 2023, unless one can reliably relabel the category levels.
+
+More importantly, as \citet{cerqua_dead_2024} argued in their discussion of target selection, occupational injury reports suffer from underreporting, which is the systematic omission of injury events from official records. Consequently, the true number of severe injuries may be higher than what it is observed in the SIR dataset. 
+
+Two broader limitations concern the nature of the target variable. 
+First, hospitalization risk is a lagging indicator, and as such it can only be computed \textit{after} an accident has occurred. In contrast, leading indicators --such as near-miss reports and safety inspections --- are more proactive safety measures \citep{yapi_new_2025} and can provide early signals of hazardous conditions. Future research could augment the SIR dataset with complementary sources reporting on these leading indications, such as the OSHA Enforcement Data. 
+
+Second, severe injuries are extremely rare events. Since few positive events at higher resolutions occur, it becomes hard to distinguish signal from noise. As it is clear from the standard deviation values in RMSE, the global panel approach mitigated the fluctuations relying on smoothing features learned across the states, such as the rolling mean. However, framing the problem as a continuous regression task may not be optimal in the presence of rare events. 
+
+An alternative modeling strategy would be to explicitly account for the discrete nature of severe injuries by first forecasting the probability that at least one severe injury occurs within a given period, and then modeling the expected number of occurrences conditional on an event. This approach leads to a two-stage modeling framework, combining a classification component for event occurrence with a count regression model for event intensity. A similar approach can be found in the binary time series modeling proposed by \citet{yapi_new_2025}.
+
+Finally, the relevance of hierarchical and panel-based forecasting structures in current forecasting research is illustrated by the design of the M5 Forecasting Competition, where participants were required to generate forecasts across multiple aggregation levels of sales data \citep{makridakis_m5_2022}. Although a common geographical framework was preferred in our study, geostatistical approaches may reveal a more effective clustering structures of the states included in the SIR dataset. Identifying regional clusters and combining them with hierarchical forecasts may improve performance while still preserving model interpretability \citep{wickramasuriya_optimal_2019}.  
+
 
 \section{Conclusion}
 
+This study helped bridge a research gap in the current literature on forecasting severe occupational injuries by comparing a set of linear and tree-based ensemble models to forecast the hospitalization risk across selected U.S. states. Models performed similarly at different temporal resolutions, and across three chosen forecasting horizons. All models consistently outperformed seasonal and statistical baselines, showing that a machine learning approach yields lower prediction errors even with a small sample size. 
 
+Since model interpretability is crucial for actionable insights, inspecting the permutation importance highlighted that rolling means played a fundamental role in stabilizing the predictions, with linear models achieving more robust predictions in terms of standard deviations. These findings suggest that, in panel settings with rare events, pooling strategies and feature design may be more influential than model complexity.
+
+Overall, this work contributes some empirical evidence that simple, interpretable machine learning models can provide reliable forecasts of severe injury risk when combined with appropriate aggregation and pooling strategies. Future research may extend these results by integrating leading indicators, exploring hierarchical forecasting structures, and assessing generalizability across related occupational safety datasets.
 
 \bibliography{workplaceinjuryforecasting}
 
-\section*{Appendix A} \label{app:a}
+\clearpage
+\appendix
 
+\section{Appendix}
+\label{app:a}
+
+TO ADD: daily resolution; weekly metrics tables; plots of extra states; squarified naics mix viz
 \begin{table}[htbp]
 \centering
 \caption{Hyperparameter configurations for all models}
@@ -335,8 +879,38 @@ loss\_function = RMSE, random\_state = 0, verbose = False \\
 \end{tabular}
 \end{table}
 
- (page~\pageref{app:a}).
+\clearpage
+\section{Requirements}
+\label{app:requirements}
 
+\begin{table}[!htbp]
+\centering
+\caption{Software environment and library requirements}
+\label{tab:software_requirements}
+\begin{tabular}{ll}
+\toprule
+\textbf{Component} & \textbf{Version} \\
+\midrule
+Python & 3.13.5 \\
+Visual Studio Code & 1.107.0 \\
+Zotero & 7.0.30 \\
+TeXworks & 0.6.10 \\
+\midrule
+catboost & 1.2.8 \\
+ipython & 9.4.0 \\
+lightgbm & 4.6.0 \\
+matplotlib & 3.10.8 \\
+numpy & 2.4.0 \\
+pandas & 2.3.3 \\
+requests & 2.32.5 \\
+scikit-learn & 1.8.0 \\
+scipy & 1.16.3 \\
+seaborn & 0.13.2 \\
+statsmodels & 0.14.6 \\
+xgboost & 3.1.2 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 
 \end{document}

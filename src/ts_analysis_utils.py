@@ -300,116 +300,140 @@ def _normality_tests(series: pd.Series) -> dict:
     }
 
 
+import math
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 def plot_target_histograms(
     df: pd.DataFrame,
     date_col: str = "EventDate",
-    targets: Iterable[str] = ("Hospitalized", "Amputation"),
-    agg_level: str = "monthly",
+    targets: tuple[str, ...] = ("Hospitalized", "Amputation"),
+    agg_level: str | None = "monthly",   # if None -> assume already aggregated
     agg: str = "sum",
     per_state: bool = False,
     state_col: str = "State",
     bins: int = 30,
 ) -> None:
     """
-    Plot side-by-side histograms with KDE for aggregated target values
-    (e.g., monthly or weekly counts of Hospitalized / Amputation).
+    Plot histograms (with KDE) for target variables.
+
+    Supports two modes:
+    1) Event-level mode (default): resamples by time (and optionally by state).
+       - Provide agg_level ('monthly' or 'weekly'), agg ('sum', 'mean', etc.)
+    2) Aggregated-panel mode: if agg_level is None, assumes df already has one row
+       per (state, period) or per period; no resampling is performed.
 
     Parameters
     ----------
     df : pd.DataFrame
-        Input dataset with datetime and target columns.
-    date_col : str, default="EventDate"
+        Input dataset.
+    date_col : str
         Name of datetime column.
-    targets : iterable of str, default=("Hospitalized", "Amputation")
-    agg_level : str, default="monthly"
-        'monthly' or 'weekly'.
-    agg : str, default="sum"
-        Aggregation function for resampling.
-    per_state : bool, default=False
-        If True, histogram across all (state, period) values.
-    state_col : str, default="State"
-        State column for per_state mode.
-    bins : int, default=30
+    targets : tuple[str, ...]
+        One or more target columns to plot (e.g., ("HospRisk",)).
+    agg_level : {"monthly","weekly"} or None
+        If None, skip resampling and plot the given columns as-is.
+    agg : str
+        Aggregation function if resampling is used.
+    per_state : bool
+        If True and resampling is used, aggregates within each state then pools values.
+        If agg_level is None, per_state just means "pool all rows" (no effect).
+    state_col : str
+        State column name.
+    bins : int
         Histogram bins.
     """
-    freq = _resolve_freq(agg_level)
+    # ----------------------------
+    # Validate inputs
+    # ----------------------------
+    if isinstance(targets, (list, set)):
+        targets = tuple(targets)
+
+    missing_targets = [t for t in targets if t not in df.columns]
+    if missing_targets:
+        raise KeyError(f"Missing target columns: {missing_targets}")
 
     df_ = df.copy()
-    df_[date_col] = pd.to_datetime(df_[date_col])
-    df_.set_index(date_col, inplace=True)
 
-    # ------------------------------------------------------------------
-    # Aggregate
-    # ------------------------------------------------------------------
-    if not per_state:
-        agg_df = (
-            df_[list(targets)]
-            .resample(freq)
-            .agg(agg)
-        )
+    # ----------------------------
+    # Build agg_df
+    # ----------------------------
+    if agg_level is None:
+        # Already aggregated: use as-is
+        agg_df = df_[list(targets)].copy()
+
     else:
-        if state_col not in df_.columns:
-            raise KeyError(f"state_col '{state_col}' not found in DataFrame.")
+        freq = _resolve_freq(agg_level)
 
-        agg_df = (
-            df_
-            .groupby(state_col)[list(targets)]
-            .resample(freq)
-            .agg(agg)
-            .reset_index()
-        )
+        if date_col not in df_.columns:
+            raise KeyError(f"date_col '{date_col}' not found in DataFrame.")
 
-    # ------------------------------------------------------------------
-    # Plot + Normality tests
-    # ------------------------------------------------------------------
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+        df_[date_col] = pd.to_datetime(df_[date_col])
+        df_.set_index(date_col, inplace=True)
 
-    color_map = {
-        targets[0]: "#006094",
-        targets[1]: "#946110",
-    }
+        if not per_state:
+            agg_df = df_[list(targets)].resample(freq).agg(agg)
+        else:
+            if state_col not in df_.columns:
+                raise KeyError(f"state_col '{state_col}' not found in DataFrame.")
+            agg_df = (
+                df_
+                .groupby(state_col)[list(targets)]
+                .resample(freq)
+                .agg(agg)
+                .reset_index()
+            )
 
-    for ax, target in zip(axes, targets):
+    # ----------------------------
+    # Plot layout (any #targets)
+    # ----------------------------
+    n = len(targets)
+    ncols = 2 if n > 1 else 1
+    nrows = math.ceil(n / ncols)
 
-        # Histogram
-        sns.histplot(
-            agg_df[target].dropna(),
-            bins=bins,
-            kde=True,
-            ax=ax,
-            color=color_map[target],
-        )
+    fig, axes = plt.subplots(nrows, ncols, figsize=(6 * ncols, 4 * nrows))
+    axes = [axes] if n == 1 else axes.flatten()
+
+    for i, target in enumerate(targets):
+        ax = axes[i]
+
+        series = agg_df[target].dropna()
+
+        sns.histplot(series, bins=bins, kde=True, ax=ax)
         ax.set_title(f"Distribution of {target}", fontsize=13)
-        ax.set_xlabel(f"{target} (aggregated counts)")
+
+        xlabel = f"{target}"
+        if agg_level is not None:
+            xlabel += f" ({agg_level} aggregated, {agg})"
+        ax.set_xlabel(xlabel)
+
         ax.set_ylabel("Frequency")
         ax.grid(alpha=0.3)
 
-        # --------------------------
-        # NORMALITY TEST
-        # --------------------------
-        results = _normality_tests(agg_df[target])
+        # Normality tests (optional: keep for HospRisk, but note it's usually non-normal)
+        results = _normality_tests(series)
 
         print("\n" + "=" * 60)
         print(f"Normality tests for: {target}")
         print("=" * 60)
         print(f"Shapiro-Wilk W = {results['shapiro_W']:.4f}, p = {results['shapiro_p']:.4f}")
-
-        if results['shapiro_p'] < 0.05:
-            print("→ Reject normality (p < 0.05)")
-        else:
-            print("→ Fail to reject normality (p ≥ 0.05)")
-
+        print("→ Reject normality (p < 0.05)" if results["shapiro_p"] < 0.05 else "→ Fail to reject normality (p ≥ 0.05)")
         print("\nAnderson-Darling statistic =", f"{results['anderson_stat']:.4f}")
         print("Critical values (sig_level %, critical_value):")
         for sig, crit in results["anderson_crit"]:
             print(f"  {sig}%  →  {crit:.4f}")
-
         print("\nSkewness  =", f"{results['skewness']:.4f}")
         print("Kurtosis =", f"{results['kurtosis']:.4f}")
         print("=" * 60)
 
+    # Turn off unused axes if n is odd
+    for j in range(n, len(axes)):
+        axes[j].axis("off")
+
     plt.tight_layout()
     plt.show()
+
 
 
 # -------------------------------------------------------------------

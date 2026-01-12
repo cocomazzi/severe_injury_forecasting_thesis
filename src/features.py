@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from typing import Literal
 
+import numpy as np
 import pandas as pd
 
 def compute_naics_mix(
@@ -123,6 +124,142 @@ def compute_naics_mix(
 
     return mix
 
+def compute_label_mix(
+    df: pd.DataFrame,
+    label_col: str,
+    date_col: str = "EventDate",
+    state_col: str = "State",
+    freq: str = "MS",
+    top_k: int = 10,
+    out_date_col: str = "Date",
+    prefix: str | None = None,
+    end_date: str | pd.Timestamp | None = None,   # <-- NEW
+) -> pd.DataFrame:
+    """
+    Compute share_<prefix>_<label> features per (state, period) based on ALL events.
+
+    Top-K label set is learned globally; if end_date is provided, top-K is
+    learned only from rows with date <= end_date (e.g., through 2023-12-31)
+    to avoid regime breaks / leakage. Shares are still computed for the full df.
+
+    Others + missing -> "Other".
+    """
+    if state_col not in df.columns:
+        raise KeyError(f"state_col '{state_col}' not found in df.")
+    if date_col not in df.columns:
+        raise KeyError(f"date_col '{date_col}' not found in df.")
+    if label_col not in df.columns:
+        raise KeyError(f"label_col '{label_col}' not found in df.")
+    if top_k <= 0:
+        raise ValueError("top_k must be a positive integer.")
+    if prefix is None:
+        prefix = label_col
+
+    data = df[[state_col, date_col, label_col]].copy()
+    data[date_col] = pd.to_datetime(data[date_col], errors="coerce")
+
+    # Aggregate timestamp aligned with panel frequency
+    if freq == "MS":
+        agg_date = data[date_col].dt.to_period("M").dt.to_timestamp()
+    else:
+        agg_date = data[date_col].dt.to_period(freq).dt.to_timestamp()
+    data[out_date_col] = agg_date
+
+    # --- learn top-K labels on restricted data (if end_date provided)
+    labels_all = data[label_col].astype("string").fillna("Other").str.strip()
+
+    if end_date is not None:
+        end_ts = pd.to_datetime(end_date)
+        labels_for_topk = labels_all[data[date_col].notna() & (data[date_col] <= end_ts)]
+    else:
+        labels_for_topk = labels_all
+
+    top_labels = (
+        labels_for_topk.value_counts(dropna=True)
+        .head(top_k)
+        .index
+        .tolist()
+    )
+
+    # Apply fixed category set to ALL rows
+    data["_label_reduced"] = labels_all.where(labels_all.isin(top_labels), other="Other")
+
+    # Counts per (state, period, label)
+    counts = (
+        data.groupby([state_col, out_date_col, "_label_reduced"], dropna=False)
+            .size()
+            .reset_index(name="n_events")
+    )
+
+    # Totals per (state, period)
+    totals = (
+        counts.groupby([state_col, out_date_col], dropna=False)["n_events"]
+              .sum()
+              .reset_index(name="total_events")
+    )
+
+    counts = counts.merge(totals, on=[state_col, out_date_col], how="left")
+    counts["share"] = counts["n_events"] / counts["total_events"].where(counts["total_events"] > 0, other=pd.NA)
+
+    counts["col_name"] = "share_" + prefix + "_" + counts["_label_reduced"].astype(str)
+
+    mix = (
+        counts.pivot_table(
+            index=[state_col, out_date_col],
+            columns="col_name",
+            values="share",
+            aggfunc="first",
+        )
+        .fillna(0.0)
+        .reset_index()
+    )
+    mix.columns.name = None
+    return mix
+
+FREQ_PRESETS = {
+    "MS": {
+        "lags": (1, 2, 3, 6, 12),
+        "rolling_windows": (3, 6, 12),
+        "ewm_spans": (3, 6, 12),
+        "add_month_cycle": True,
+        "add_week_cycle": False,
+        "include_weekofyear": False,  # optional (you can drop weekofyear entirely)
+    },
+    "W-MON": {
+        "lags": (1, 2, 4, 13, 26, 52),
+        "rolling_windows": (4, 13, 26, 52),
+        "ewm_spans": (4, 13, 26, 52),
+        "add_month_cycle": False,  # keep clean; can set True if you ever want both
+        "add_week_cycle": True,
+        "include_weekofyear": False,  # we’ll not keep raw weekofyear
+    },
+}
+
+
+
+def series_to_national_panel(
+    y: pd.Series,
+    target: str = "Hospitalized",
+    group_col: str = "State",
+    date_col: str = "Date",
+    group_value: str = "NATIONAL",
+) -> pd.DataFrame:
+    """
+    Convert a single national time series into the panel_df format expected by build_panel_features().
+    """
+    if not isinstance(y.index, pd.DatetimeIndex):
+        raise TypeError("y must have a DatetimeIndex.")
+    if y.name is None:
+        y = y.rename(target)
+
+    return pd.DataFrame(
+        {
+            group_col: group_value,
+            date_col: y.index,
+            target: y.to_numpy(dtype=float),
+        }
+    )
+
 def build_panel_features(
     panel_df: pd.DataFrame,
     target: str = "Hospitalized",
@@ -135,12 +272,14 @@ def build_panel_features(
     add_rolling: bool = True,
     add_ewm: bool = True,
     # autoregressive feature hyperparams
-    lags: Sequence[int] = (1, 2, 3, 6, 12),
-    rolling_windows: Sequence[int] = (3, 6, 12),
-    ewm_spans: Sequence[int] = (3, 6, 12),
+    lags: Sequence[int] | None = None,
+    rolling_windows: Sequence[int] | None = None,
+    ewm_spans: Sequence[int] | None = None,
+
     # categorical encodings
     state_encoding: Literal["none", "dummy"] = "none",
     naics_mix_cols: Sequence[str] | None = None,
+    label_mix_cols: Sequence[str] | None = None,
     dropna: bool = True,
 ) -> tuple[pd.DataFrame, pd.Series, pd.DataFrame]:
     """
@@ -219,6 +358,15 @@ def build_panel_features(
     # Feature container
     X = pd.DataFrame(index=df.index)
 
+    preset = FREQ_PRESETS.get(freq, FREQ_PRESETS["MS"])
+
+    if lags is None:
+        lags = preset["lags"]
+    if rolling_windows is None:
+        rolling_windows = preset["rolling_windows"]
+    if ewm_spans is None:
+        ewm_spans = preset["ewm_spans"]
+
     # ------------------------------------------------------------------
     # 1. Calendar features
     # ------------------------------------------------------------------
@@ -227,7 +375,18 @@ def build_panel_features(
         X["year"] = dt.year
         X["month"] = dt.month
         X["quarter"] = dt.quarter
-        X["weekofyear"] = dt.isocalendar().week.astype(int)
+
+        # Month cycle (monthly models)
+        if preset.get("add_month_cycle", True):
+            X["month_sin"] = np.sin(2 * np.pi * dt.month / 12)
+            X["month_cos"] = np.cos(2 * np.pi * dt.month / 12)
+
+        # Week-of-year cycle (weekly models)
+        if preset.get("add_week_cycle", False):
+            w = dt.isocalendar().week.astype(int).clip(upper=52)
+            X["week_sin"] = np.sin(2 * np.pi * w / 52)
+            X["week_cos"] = np.cos(2 * np.pi * w / 52)
+
 
     # ------------------------------------------------------------------
     # 2. Lag features
@@ -243,8 +402,12 @@ def build_panel_features(
     if add_rolling:
         for window in rolling_windows:
             col_name = f"{target}_rollmean{window}"
-            X[col_name] = df.groupby(group_col)[target].transform(
-                lambda s, w=window: s.shift(1).rolling(window=w, min_periods=w).mean()
+            s = df.groupby(group_col)[target].shift(1)
+            X[col_name] = (
+                s.groupby(df[group_col])
+                .rolling(window=window, min_periods=window)
+                .mean()
+                .reset_index(level=0, drop=True)
             )
 
     # ------------------------------------------------------------------
@@ -253,8 +416,12 @@ def build_panel_features(
     if add_ewm:
         for span in ewm_spans:
             col_name = f"{target}_ewm{span}"
-            X[col_name] = df.groupby(group_col)[target].transform(
-                lambda s, sp=span: s.ewm(span=sp, adjust=False).mean().shift(1)
+            s = df.groupby(group_col)[target].shift(1)
+            X[col_name] = (
+            s.groupby(df[group_col])
+            .ewm(span=span, adjust=False)
+            .mean()
+            .reset_index(level=0, drop=True)
             )
 
     # ------------------------------------------------------------------
@@ -279,6 +446,7 @@ def build_panel_features(
     # ------------------------------------------------------------------
     # 6. NAICS 2-digit dummy encoding
     # ------------------------------------------------------------------
+
     if naics_mix_cols is not None:
         for col in naics_mix_cols:
             if col not in df.columns:
@@ -286,8 +454,43 @@ def build_panel_features(
                     f"NAICS mix column '{col}' not found in panel_df. "
                     "Make sure to merge compute_naics_mix output first."
                 )
-            lag_col = f"{col}_lag1"
-            X[lag_col] = df.groupby(group_col)[col].shift(1)
+
+            # past-only series (exclude current t)
+            s = df.groupby(group_col)[col].shift(1)
+
+            # leakage-safe rolling mean over the previous 12 periods
+            X[f"{col}_rollmean12_lag1"] = (
+                s.groupby(df[group_col])
+                .rolling(window=12, min_periods=12)
+                .mean()
+                .reset_index(level=0, drop=True)
+            )
+
+            # optional: also keep the plain lag-1
+            # X[f"{col}_lag1"] = s
+
+
+    # ------------------------------------------------------------------
+    # 6b. Nature/Event mix shares 
+    # ------------------------------------------------------------------
+    if label_mix_cols is not None:
+        for col in label_mix_cols:
+            if col not in df.columns:
+                raise KeyError(
+                    f"Label mix column '{col}' not found in panel_df. "
+                    "Make sure to merge compute_label_mix output first."
+                )
+
+            s = df.groupby(group_col)[col].shift(1)
+
+            X[f"{col}_rollmean12_lag1"] = (
+                s.groupby(df[group_col])
+                .rolling(window=12, min_periods=12)
+                .mean()
+                .reset_index(level=0, drop=True)
+            )
+
+
     # ------------------------------------------------------------------
     # 7. Final checks and NA handling
     # ------------------------------------------------------------------

@@ -79,6 +79,40 @@ Barhrhouj, A.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Benatia%
+, Bellégo%
+\BCBL {}\ \BBA {} Pape%
+}{%
+Benatia%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2025}}%
+}]{%
+benatia_dealing_2025}
+\APACinsertmetastar {%
+benatia_dealing_2025}%
+\begin{APACrefauthors}%
+Benatia, D.%
+, Bellégo, C.%
+\BCBL {}\ \BBA {} Pape, L.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2025}{{\APACmonth{09}}}{}.
+\newblock
+\APACrefbtitle {Dealing with {Logs} and {Zeros} in {Regression} {Models}.}
+  {Dealing with {Logs} and {Zeros} in {Regression} {Models}.}
+\newblock
+\APACaddressPublisher{}{arXiv}.
+\newblock
+\begin{APACrefURL} [{2025-12-30}]\url{http://arxiv.org/abs/2203.11820}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{arXiv:2203.11820 [econ]}
+\newblock
+\begin{APACrefDOI} \doi{10.48550/arXiv.2203.11820} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Bojer%
 }{%
 Bojer%
@@ -181,6 +215,40 @@ Cerqua, A.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Cerqueira%
+, Torgo%
+\BCBL {}\ \BBA {} Mozetič%
+}{%
+Cerqueira%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2020}}%
+}]{%
+cerqueira_evaluating_2020}
+\APACinsertmetastar {%
+cerqueira_evaluating_2020}%
+\begin{APACrefauthors}%
+Cerqueira, V.%
+, Torgo, L.%
+\BCBL {}\ \BBA {} Mozetič, I.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2020}{{\APACmonth{11}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Evaluating time series forecasting models: an empirical
+  study on performance estimation methods} {Evaluating time series forecasting
+  models: an empirical study on performance estimation methods}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Machine Learning}{109}{11}{1997--2028}.
+\newblock
+\begin{APACrefURL}
+  [{2026-01-07}]\url{https://doi.org/10.1007/s10994-020-05910-7}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1007/s10994-020-05910-7} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Chen%
 }{%
 Chen%
@@ -212,6 +280,109 @@ Chen, J\BPBI M.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Coulombe%
+, Marcellino%
+\BCBL {}\ \BBA {} Stevanovic%
+}{%
+Coulombe%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2025}}%
+}]{%
+coulombe_panel_2025}
+\APACinsertmetastar {%
+coulombe_panel_2025}%
+\begin{APACrefauthors}%
+Coulombe, P\BPBI G.%
+, Marcellino, M.%
+\BCBL {}\ \BBA {} Stevanovic, D.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2025}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Panel {Machine} {Learning} with {Mixed}-{Frequency}
+  {Data}: {Monitoring} {State}-{Level} {Fiscal} {Variables}} {Panel {Machine}
+  {Learning} with {Mixed}-{Frequency} {Data}: {Monitoring} {State}-{Level}
+  {Fiscal} {Variables}}.{\BBCQ}
+\newblock
+
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Fang%
+, Yang%
+, Lv%
+, An%
+\BCBL {}\ \BBA {} Wu%
+}{%
+Fang%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2022}}%
+}]{%
+fang_application_2022}
+\APACinsertmetastar {%
+fang_application_2022}%
+\begin{APACrefauthors}%
+Fang, Z\BHBI g.%
+, Yang, S\BHBI q.%
+, Lv, C\BHBI x.%
+, An, S\BHBI y.%
+\BCBL {}\ \BBA {} Wu, W.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2022}{{\APACmonth{07}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Application of a data-driven {XGBoost} model for the
+  prediction of {COVID}-19 in the {USA}: a time-series study} {Application of a
+  data-driven {XGBoost} model for the prediction of {COVID}-19 in the {USA}: a
+  time-series study}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{BMJ Open}{12}{7}{e056685}.
+\newblock
+\begin{APACrefURL}
+  [{2026-01-06}]\url{https://bmjopen.bmj.com/lookup/doi/10.1136/bmjopen-2021-056685}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1136/bmjopen-2021-056685} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Fisher%
+, Rudin%
+\BCBL {}\ \BBA {} Dominici%
+}{%
+Fisher%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2019}}%
+}]{%
+fisher_all_2019}
+\APACinsertmetastar {%
+fisher_all_2019}%
+\begin{APACrefauthors}%
+Fisher, A.%
+, Rudin, C.%
+\BCBL {}\ \BBA {} Dominici, F.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2019}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {All {Models} are {Wrong}, but {Many} are {Useful}:
+  {Learning} a {Variable}’s {Importance} by {Studying} an {Entire} {Class} of
+  {Prediction} {Models} {Simultaneously}} {All {Models} are {Wrong}, but {Many}
+  are {Useful}: {Learning} a {Variable}’s {Importance} by {Studying} an
+  {Entire} {Class} of {Prediction} {Models} {Simultaneously}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of machine learning research :
+  JMLR}{20}{}{177}.
+\newblock
+\begin{APACrefURL}
+  [{2026-01-08}]\url{https://pmc.ncbi.nlm.nih.gov/articles/PMC8323609/}
+  \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Gomes%
 , Parasram%
 , Collins%
@@ -234,10 +405,10 @@ Gomes, H.%
 \newblock
 \APACrefYearMonthDay{2023}{{\APACmonth{09}}}{}.
 \newblock
-{\BBOQ}\APACrefatitle {Time series, seasonality and trend evaluation of
-  7 years (2015–2021) of {OSHA} severe injury data} {Time series,
-  seasonality and trend evaluation of 7 years (2015–2021) of {OSHA} severe
-  injury data}.{\BBCQ}
+{\BBOQ}\APACrefatitle {Time series, seasonality and trend evaluation of 7 years
+  (2015–2021) of {OSHA} severe injury data} {Time series, seasonality and
+  trend evaluation of 7 years (2015–2021) of {OSHA} severe injury
+  data}.{\BBCQ}
 \newblock
 \APACjournalVolNumPages{Journal of Safety Research}{86}{}{30--38}.
 \newblock
@@ -428,32 +599,34 @@ Howe, A\BPBI S.%
 
 \bibitem [\protect \citeauthoryear {%
 Hyndman%
-\ \BBA {} Athanasopoulos%
+\ \BBA {} Koehler%
 }{%
 Hyndman%
-\ \BBA {} Athanasopoulos%
+\ \BBA {} Koehler%
 }{%
-{\protect \APACyear {2018}}%
+{\protect \APACyear {2006}}%
 }]{%
-hyndman_forecasting_2018}
+hyndman_another_2006}
 \APACinsertmetastar {%
-hyndman_forecasting_2018}%
+hyndman_another_2006}%
 \begin{APACrefauthors}%
 Hyndman, R\BPBI J.%
-\BCBT {}\ \BBA {} Athanasopoulos, G.%
+\BCBT {}\ \BBA {} Koehler, A\BPBI B.%
 \end{APACrefauthors}%
 \unskip\
 \newblock
-\APACrefYearMonthDay{2018}{}{}.
+\APACrefYearMonthDay{2006}{{\APACmonth{10}}}{}.
 \newblock
-{\BBOQ}\APACrefatitle {Forecasting: {Principles} and {Practice}} {Forecasting:
-  {Principles} and {Practice}}.{\BBCQ}
+{\BBOQ}\APACrefatitle {Another look at measures of forecast accuracy} {Another
+  look at measures of forecast accuracy}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{International Journal of Forecasting}{22}{4}{679--688}.
 \newblock
 \begin{APACrefURL}
-  [{2025-11-29}]\url{https://research.monash.edu/en/publications/forecasting-principles-and-practice-2/}
+  [{2026-01-06}]\url{https://www.sciencedirect.com/science/article/pii/S0169207006000239}
   \end{APACrefURL}
 \newblock
-\APACrefnote{Publisher: OTexts}
+\begin{APACrefDOI} \doi{10.1016/j.ijforecast.2006.03.001} \end{APACrefDOI}
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
@@ -566,6 +739,75 @@ Kontopoulou, V\BPBI I.%
 \APACrefnote{Publisher: Multidisciplinary Digital Publishing Institute}
 \newblock
 \begin{APACrefDOI} \doi{10.3390/fi15080255} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Kurgan%
+\ \BBA {} Musilek%
+}{%
+Kurgan%
+\ \BBA {} Musilek%
+}{%
+{\protect \APACyear {2006}}%
+}]{%
+kurgan_survey_2006}
+\APACinsertmetastar {%
+kurgan_survey_2006}%
+\begin{APACrefauthors}%
+Kurgan, L\BPBI A.%
+\BCBT {}\ \BBA {} Musilek, P.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2006}{{\APACmonth{03}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {A survey of {Knowledge} {Discovery} and {Data} {Mining}
+  process models} {A survey of {Knowledge} {Discovery} and {Data} {Mining}
+  process models}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{The Knowledge Engineering Review}{21}{1}{1--24}.
+\newblock
+\begin{APACrefURL}
+  [{2026-01-10}]\url{https://www.cambridge.org/core/journals/knowledge-engineering-review/article/survey-of-knowledge-discovery-and-data-mining-process-models/368D6AFE435EB5E30378398D34D61C17}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1017/S0269888906000737} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Makridakis%
+, Spiliotis%
+\BCBL {}\ \BBA {} Assimakopoulos%
+}{%
+Makridakis%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2018}}%
+}]{%
+makridakis_statistical_2018}
+\APACinsertmetastar {%
+makridakis_statistical_2018}%
+\begin{APACrefauthors}%
+Makridakis, S.%
+, Spiliotis, E.%
+\BCBL {}\ \BBA {} Assimakopoulos, V.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2018}{{\APACmonth{03}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Statistical and {Machine} {Learning} forecasting
+  methods: {Concerns} and ways forward} {Statistical and {Machine} {Learning}
+  forecasting methods: {Concerns} and ways forward}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{PLOS ONE}{13}{3}{e0194889}.
+\newblock
+\begin{APACrefURL}
+  [{2025-12-24}]\url{https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0194889}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{Publisher: Public Library of Science}
+\newblock
+\begin{APACrefDOI} \doi{10.1371/journal.pone.0194889} \end{APACrefDOI}
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
@@ -703,6 +945,46 @@ Montero-Manso, P.%
 \APACrefnote{arXiv:2008.00444 [cs]}
 \newblock
 \begin{APACrefDOI} \doi{10.48550/arXiv.2008.00444} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Obasi%
+, Cheng%
+, Varianou-Mikellidou%
+, Dimopoulos%
+\BCBL {}\ \BBA {} Boustras%
+}{%
+Obasi%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2026}}%
+}]{%
+obasi_machine_2026}
+\APACinsertmetastar {%
+obasi_machine_2026}%
+\begin{APACrefauthors}%
+Obasi, I\BPBI C.%
+, Cheng, P.%
+, Varianou-Mikellidou, C.%
+, Dimopoulos, C.%
+\BCBL {}\ \BBA {} Boustras, G.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2026}{{\APACmonth{03}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Machine learning for occupational accident analysis:
+  {Applications}, challenges, and future directions} {Machine learning for
+  occupational accident analysis: {Applications}, challenges, and future
+  directions}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Safety Science and
+  Resilience}{7}{1}{100250}.
+\newblock
+\begin{APACrefURL}
+  [{2025-12-22}]\url{https://www.sciencedirect.com/science/article/pii/S2666449625000842}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.jnlssr.2025.100250} \end{APACrefDOI}
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
@@ -913,6 +1195,44 @@ Taieb, S\BPBI B.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Van~Deynse%
+\ \protect \BOthers {.}}{%
+Van~Deynse%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2023}}%
+}]{%
+van_deynse_predicting_2023}
+\APACinsertmetastar {%
+van_deynse_predicting_2023}%
+\begin{APACrefauthors}%
+Van~Deynse, H.%
+, Cools, W.%
+, De~Deken, V\BHBI J.%
+, Depreitere, B.%
+, Hubloue, I.%
+, Kimpe, E.%
+\BDBL {}Putman, K.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2023}{{\APACmonth{10}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Predicting return to work after traumatic brain injury
+  using machine learning and administrative data} {Predicting return to work
+  after traumatic brain injury using machine learning and administrative
+  data}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{International Journal of Medical
+  Informatics}{178}{}{105201}.
+\newblock
+\begin{APACrefURL}
+  [{2026-01-02}]\url{https://www.sciencedirect.com/science/article/pii/S1386505623002198}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.ijmedinf.2023.105201} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Vassiley%
 , Barratt%
 , Dayaram%
@@ -1017,6 +1337,234 @@ Vivian, G\BPBI A.%
   \end{APACrefURL}
 \newblock
 \begin{APACrefDOI} \doi{10.1186/s40537-025-01229-z} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Wickramasuriya%
+, Athanasopoulos%
+\BCBL {}\ \BBA {} Hyndman%
+}{%
+Wickramasuriya%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2019}}%
+}]{%
+wickramasuriya_optimal_2019}
+\APACinsertmetastar {%
+wickramasuriya_optimal_2019}%
+\begin{APACrefauthors}%
+Wickramasuriya, S\BPBI L.%
+, Athanasopoulos, G.%
+\BCBL {}\ \BBA {} Hyndman, R\BPBI J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2019}{{\APACmonth{04}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Optimal {Forecast} {Reconciliation} for {Hierarchical}
+  and {Grouped} {Time} {Series} {Through} {Trace} {Minimization}} {Optimal
+  {Forecast} {Reconciliation} for {Hierarchical} and {Grouped} {Time} {Series}
+  {Through} {Trace} {Minimization}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of the American Statistical
+  Association}{114}{526}{804--819}.
+\newblock
+\begin{APACrefURL}
+  [{2026-01-10}]\url{https://doi.org/10.1080/01621459.2018.1448825}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{Publisher: Taylor \& Francis \_eprint:
+  https://doi.org/10.1080/01621459.2018.1448825}
+\newblock
+\begin{APACrefDOI} \doi{10.1080/01621459.2018.1448825} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Williams%
+\ \BBA {} Marc%
+}{%
+Williams%
+\ \BBA {} Marc%
+}{%
+{\protect \APACyear {2024}}%
+}]{%
+williams_traumatic_2024}
+\APACinsertmetastar {%
+williams_traumatic_2024}%
+\begin{APACrefauthors}%
+Williams, A\BPBI A.%
+\BCBT {}\ \BBA {} Marc, J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2024}{{\APACmonth{12}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Traumatic workplace injuries: {A} cross-sectional
+  analysis of {OSHA} severe injury reports, including the impacts of
+  seasonality and {COVID}-19 from 2015 to 2022} {Traumatic workplace injuries:
+  {A} cross-sectional analysis of {OSHA} severe injury reports, including the
+  impacts of seasonality and {COVID}-19 from 2015 to 2022}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Safety Research}{91}{}{38--49}.
+\newblock
+\begin{APACrefURL}
+  [{2025-12-20}]\url{https://www.sciencedirect.com/science/article/pii/S0022437524000999}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.jsr.2024.08.004} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Wilms%
+, Cupelli%
+\BCBL {}\ \BBA {} Monti%
+}{%
+Wilms%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2018}}%
+}]{%
+wilms_combining_2018}
+\APACinsertmetastar {%
+wilms_combining_2018}%
+\begin{APACrefauthors}%
+Wilms, H.%
+, Cupelli, M.%
+\BCBL {}\ \BBA {} Monti, A.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2018}{{\APACmonth{07}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Combining auto-regression with exogenous variables in
+  sequence-to-sequence recurrent neural networks for short-term load
+  forecasting} {Combining auto-regression with exogenous variables in
+  sequence-to-sequence recurrent neural networks for short-term load
+  forecasting}.{\BBCQ}
+\newblock
+\BIn{} \APACrefbtitle {2018 {IEEE} 16th {International} {Conference} on
+  {Industrial} {Informatics} ({INDIN})} {2018 {IEEE} 16th {International}
+  {Conference} on {Industrial} {Informatics} ({INDIN})}\ (\BPGS\ 673--679).
+\newblock
+\APACaddressPublisher{Porto}{IEEE}.
+\newblock
+\begin{APACrefURL}
+  [{2025-11-07}]\url{https://ieeexplore.ieee.org/document/8471953/}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1109/INDIN.2018.8471953} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Yapi%
+, Latouche%
+, Guillin%
+\BCBL {}\ \BBA {} Bailly%
+}{%
+Yapi%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2025}}%
+}]{%
+yapi_new_2025}
+\APACinsertmetastar {%
+yapi_new_2025}%
+\begin{APACrefauthors}%
+Yapi, A.%
+, Latouche, P.%
+, Guillin, A.%
+\BCBL {}\ \BBA {} Bailly, Y.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2025}{{\APACmonth{06}}}{}.
+\newblock
+\APACrefbtitle {A new machine learning framework for occupational accidents
+  forecasting with safety inspections integration.} {A new machine learning
+  framework for occupational accidents forecasting with safety inspections
+  integration.}
+\newblock
+\APACaddressPublisher{}{arXiv}.
+\newblock
+\begin{APACrefURL} [{2025-11-06}]\url{http://arxiv.org/abs/2507.00089}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{arXiv:2507.00089 [cs]}
+\newblock
+\begin{APACrefDOI} \doi{10.48550/arXiv.2507.00089} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Yuan%
+, Varathan%
+, Suhaimi%
+\BCBL {}\ \BBA {} Ling%
+}{%
+Yuan%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2023}}%
+}]{%
+yuan_predicting_2023}
+\APACinsertmetastar {%
+yuan_predicting_2023}%
+\begin{APACrefauthors}%
+Yuan, C\BPBI J.%
+, Varathan, K\BPBI D.%
+, Suhaimi, A.%
+\BCBL {}\ \BBA {} Ling, L\BPBI W.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2023}{{\APACmonth{01}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {{PREDICTING} {RETURN} {TO} {WORK} {AFTER} {CARDIAC}
+  {REHABILITATION} {USING} {MACHINE} {LEARNING} {MODELS}} {{PREDICTING}
+  {RETURN} {TO} {WORK} {AFTER} {CARDIAC} {REHABILITATION} {USING} {MACHINE}
+  {LEARNING} {MODELS}}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Journal of Rehabilitation Medicine}{55}{}{2432}.
+\newblock
+\begin{APACrefURL}
+  [{2026-01-11}]\url{https://pmc.ncbi.nlm.nih.gov/articles/PMC9838562/}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.2340/jrm.v55.2432} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Zhang%
+\ \protect \BOthers {.}}{%
+Zhang%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2024}}%
+}]{%
+zhang_review_2024}
+\APACinsertmetastar {%
+zhang_review_2024}%
+\begin{APACrefauthors}%
+Zhang, Y.%
+, Schluter, J.%
+, Zhang, L.%
+, Cao, X.%
+, Jenq, R\BPBI R.%
+, Feng, H.%
+\BDBL {}Zhang, L.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2024}{{\APACmonth{12}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Review and revamp of compositional data transformation:
+  {A} new framework combining proportion conversion and contrast
+  transformation} {Review and revamp of compositional data transformation: {A}
+  new framework combining proportion conversion and contrast
+  transformation}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Computational and Structural Biotechnology
+  Journal}{23}{}{4088--4107}.
+\newblock
+\begin{APACrefURL}
+  [{2026-01-10}]\url{https://www.sciencedirect.com/science/article/pii/S200103702400374X}
+  \end{APACrefURL}
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.csbj.2024.11.003} \end{APACrefDOI}
 \PrintBackRefs{\CurrentBib}
 
 \end{thebibliography}
