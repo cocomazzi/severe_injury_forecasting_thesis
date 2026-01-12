@@ -1179,3 +1179,52 @@ Conclusions The XGBoost model can help improve prediction of COVID-19 cases in t
 }
 
 
+@misc{prokhorenkova_catboost_2019,
+	title = {{CatBoost}: unbiased boosting with categorical features},
+	shorttitle = {{CatBoost}},
+	url = {http://arxiv.org/abs/1706.09516},
+	doi = {10.48550/arXiv.1706.09516},
+	abstract = {This paper presents the key algorithmic techniques behind CatBoost, a new gradient boosting toolkit. Their combination leads to CatBoost outperforming other publicly available boosting implementations in terms of quality on a variety of datasets. Two critical algorithmic advances introduced in CatBoost are the implementation of ordered boosting, a permutation-driven alternative to the classic algorithm, and an innovative algorithm for processing categorical features. Both techniques were created to fight a prediction shift caused by a special kind of target leakage present in all currently existing implementations of gradient boosting algorithms. In this paper, we provide a detailed analysis of this problem and demonstrate that proposed algorithms solve it effectively, leading to excellent empirical results.},
+	urldate = {2026-01-12},
+	publisher = {arXiv},
+	author = {Prokhorenkova, Liudmila and Gusev, Gleb and Vorobev, Aleksandr and Dorogush, Anna Veronika and Gulin, Andrey},
+	month = jan,
+	year = {2019},
+	note = {arXiv:1706.09516 [cs]},
+	keywords = {Computer Science - Machine Learning},
+	file = {Preprint PDF:C\:\\Users\\esper\\Zotero\\storage\\2Z2R8JAC\\Prokhorenkova et al. - 2019 - CatBoost unbiased boosting with categorical features.pdf:application/pdf;Snapshot:C\:\\Users\\esper\\Zotero\\storage\\2WWEA7NE\\1706.html:text/html},
+}
+
+
+@inproceedings{chen_xgboost_2016,
+	title = {{XGBoost}: {A} {Scalable} {Tree} {Boosting} {System}},
+	shorttitle = {{XGBoost}},
+	url = {http://arxiv.org/abs/1603.02754},
+	doi = {10.1145/2939672.2939785},
+	abstract = {Tree boosting is a highly effective and widely used machine learning method. In this paper, we describe a scalable end-to-end tree boosting system called XGBoost, which is used widely by data scientists to achieve state-of-the-art results on many machine learning challenges. We propose a novel sparsity-aware algorithm for sparse data and weighted quantile sketch for approximate tree learning. More importantly, we provide insights on cache access patterns, data compression and sharding to build a scalable tree boosting system. By combining these insights, XGBoost scales beyond billions of examples using far fewer resources than existing systems.},
+	urldate = {2026-01-12},
+	booktitle = {Proceedings of the 22nd {ACM} {SIGKDD} {International} {Conference} on {Knowledge} {Discovery} and {Data} {Mining}},
+	author = {Chen, Tianqi and Guestrin, Carlos},
+	month = aug,
+	year = {2016},
+	note = {arXiv:1603.02754 [cs]},
+	keywords = {Computer Science - Machine Learning},
+	pages = {785--794},
+	annote = {Comment: KDD'16 changed all figures to type1},
+	file = {Preprint PDF:C\:\\Users\\esper\\Zotero\\storage\\TQ2F7DS3\\Chen and Guestrin - 2016 - XGBoost A Scalable Tree Boosting System.pdf:application/pdf;Snapshot:C\:\\Users\\esper\\Zotero\\storage\\V23JCCQ4\\1603.html:text/html},
+}
+
+
+
+@article{ke_lightgbm_2017,
+	title = {{LightGBM}: {A} {Highly} {Efﬁcient} {Gradient} {Boosting} {Decision} {Tree}},
+	abstract = {Gradient Boosting Decision Tree (GBDT) is a popular machine learning algorithm, and has quite a few effective implementations such as XGBoost and pGBRT. Although many engineering optimizations have been adopted in these implementations, the efﬁciency and scalability are still unsatisfactory when the feature dimension is high and data size is large. A major reason is that for each feature, they need to scan all the data instances to estimate the information gain of all possible split points, which is very time consuming. To tackle this problem, we propose two novel techniques: Gradient-based One-Side Sampling (GOSS) and Exclusive Feature Bundling (EFB). With GOSS, we exclude a signiﬁcant proportion of data instances with small gradients, and only use the rest to estimate the information gain. We prove that, since the data instances with larger gradients play a more important role in the computation of information gain, GOSS can obtain quite accurate estimation of the information gain with a much smaller data size. With EFB, we bundle mutually exclusive features (i.e., they rarely take nonzero values simultaneously), to reduce the number of features. We prove that ﬁnding the optimal bundling of exclusive features is NP-hard, but a greedy algorithm can achieve quite good approximation ratio (and thus can effectively reduce the number of features without hurting the accuracy of split point determination by much). We call our new GBDT implementation with GOSS and EFB LightGBM. Our experiments on multiple public datasets show that, LightGBM speeds up the training process of conventional GBDT by up to over 20 times while achieving almost the same accuracy.},
+	language = {en},
+	author = {Ke, Guolin and Meng, Qi and Finley, Thomas and Wang, Taifeng and Chen, Wei and Ma, Weidong and Ye, Qiwei and Liu, Tie-Yan},
+	year = {2017},
+	file = {PDF:C\:\\Users\\esper\\Zotero\\storage\\GNJZK597\\Ke et al. - LightGBM A Highly Efﬁcient Gradient Boosting Decision Tree.pdf:application/pdf},
+}
+
+
+
+

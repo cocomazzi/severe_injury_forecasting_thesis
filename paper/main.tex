@@ -80,7 +80,7 @@ Finally, my supervisor, Stijn Rotman, provided insightful feedback following the
 \begin{abstract}
 Forecasting the temporal evolution of severe occupational injuries can potentially provide valuable insights for safety management stakeholders to adopt proactive measures and allocate preventive resources more effectively. While previous work in the occupational safety literature has mainly focused on descriptive analyses and classification tasks, this thesis addresses this gap by framing severe injury risk as a multi-step time series forecasting problem. The analysis is conducted using the Occupational Safety and Health Administration's Severe Injury Report (SIR) dataset, which is structured as panel data, raising the methodological question of how to best pool information across grouping factors. 
 
-Therefore, we investigate how the forecasting performance of linear models (Ridge, Lasso, Elastic Net, and Partial Least Squares) and tree-based ensemble models (CatBoost, XGBoost, and LightGBM) varies across two temporal aggregations (monthly and weekly), multiple forecast horizons, and the inclusion of exogenous features. 
+Therefore, we investigate how the forecasting performance of linear models (Elastic Net, Lasso, Partial Least Squares, and Ridge) and tree-based ensemble models (CatBoost, LightGBM, and XGBoost) varies across two temporal aggregations (monthly and weekly), multiple forecast horizons, and the inclusion of exogenous features. 
 
 The results show that all machine learning models consistently outperform seasonal and statistical baselines, with similar forecasting performance across model families. Forecast accuracy, as measured by RMSE, MAE, and MASE, is largely driven by autoregressive features rather than by model complexity. Pooling information across states does not substantially improve average forecasting accuracy but reduces forecast variability.
 
@@ -92,7 +92,7 @@ The results show that all machine learning models consistently outperform season
 The OSHA's SIR dataset is publicly available at \href{https://www.osha.gov/severe-injury-reports}{Severe Injury Dashboard | Occupational Safety and Health Administration}. The data is anonymised. Work on this thesis did not involve collecting data from human participants or animals. The original owner of the data and code used in this thesis retains ownership of the data and code during and after the completion of this thesis. 
 
 All the figures belong to the author. In terms of writing, a generative language model, OpenAI's ChatGPT 5.1, was used to improve the author's original content, for
-paraphrasing, spell checking and grammar, and help debug LaTex syntax. The same model assisted in writing and documenting the code, included the function to fetch data from the U.S. Bureau of Statistics. Other typesetting tools or services are listed in Appendix~\ref{app:a}.
+paraphrasing, spell checking and grammar, and help debug LaTex syntax. The same model assisted in writing and documenting the code, included the function to fetch data from the U.S. Bureau of Statistics. Supplementary results and the thesis code are made publicly available at this \href{https://github.com/cocomazzi/severe_injury_forecasting_thesis/tree/main}{GitHub repository}. Other typesetting tools or services are listed in Appendix~\ref{app:a}.
 %TC:endignore
 
 \section{Problem statement \& Research Goal \label{sec:introduction}}
@@ -124,7 +124,7 @@ As outlined in subsection \ref{subs:context}, knowing \textit{when} an intervent
 \vspace{1em}
 Weekly aggregation increases the number of observations but it may introduce noise and variability, while monthly aggregation may produce coarser predictions. Understanding this trade-off is essential for designing reliable predictive pipelines \citep{julian_assessing_2025}. 
 
-Given the absence of a comparable supervised regression setting in prior work on occupational injury forecasting, we will train two different families of regressors based on the exploratory initial step and on the main findings from related datasets. The choice for linear models with penalty terms (Ridge, Lasso, Elastic Net) allows us to assess how regularization can affect feature selection in a strongly seasonal data structure across a balanced panel \citep{han_optimized_2025}. Among tree-based ensemble models, CatBoost is deemed particularly suited for our panel data, as it can handle categorical features \citep{hall_survey_2025}. XGBoost and LightGBM appear to consistently be the most accurate models in recent forecasting benchmarks and machine-learning competitions \citep{makridakis_m5_2022}. 
+Given the absence of a comparable supervised regression setting in prior work on occupational injury forecasting, we will train two different families of regressors based on the exploratory initial step and on the main findings from related datasets. The choice for linear models with penalty terms (Ridge, Lasso, Elastic Net) allows us to assess how regularization can affect feature selection in a strongly seasonal data structure across a balanced panel \citep{han_optimized_2025}. Among tree-based ensemble models, CatBoost is deemed particularly suited for our panel data, as it can handle categorical features \citep{prokhorenkova_catboost_2019, hall_survey_2025}. XGBoost and LightGBM appear to consistently be the most accurate models in recent forecasting benchmarks and machine-learning competitions \citep{chen_xgboost_2016, ke_lightgbm_2017, makridakis_m5_2022}. 
 
 Evaluation metrics will be compared against a naive seasonal baseline and a stronger statistical model, namely the additive Holt-Winters exponential smoothing method (ETS). As stated by \citet{makridakis_statistical_2018}, this classical statistical method still shows remarkable accuracy.
 
@@ -787,7 +787,9 @@ Although the performance metrics did not show significant differences between li
 \hspace{2em}\textit{SQ1.1: How does the inclusion of exogenous categorical variables affect the forecasts of the ML models?}
 \vspace{1em}
 
-The inclusion of exogenous categorical variables slightly deteriorated the performance metrics and did not benefit the interpretability of the features. Quantitatively, this finding somehow reflect the finding of \citet{cerqua_dead_2024}, who found that models performed better on a smaller set of covariates. Our study is in apparent contrast with the findings in \citet{wilms_combining_2018}, who found that a Recurrent Neural Network outperformed all the baselines when including exogenous features. However, they implemented a sequence-to-sequence deep learning architecture to forecast short-term electric load in a nonlinear feature space, while our setting was primary informed by autoregressive features that dominates over exogenous variables.
+The inclusion of exogenous categorical variables slightly deteriorated the performance metrics and did not improve the interpretability of the features. Quantitatively, this finding broadly reflects the results of \citet{cerqua_dead_2024}, who found that models performed better on a smaller set of covariates. Our study is in apparent contrast to the findings of \citet{wilms_combining_2018}, who showed that a Recurrent Neural Network outperformed all other chosen models when including exogenous features. However, they implemented a sequence-to-sequence deep learning architecture to forecast short-term electric load in a nonlinear feature space, while our setting is primarily informed by autoregressive features that dominateover exogenous variables.
+
+From a computational point of view, the resulting models are more complex and, although training times remain short, they are increased. Given the current setting, we find no evidence to support the inclusion of this particular set of exogenous variables, as encoded for the regression task, in the forecasting models.
 
 
 \vspace{1em}
@@ -795,6 +797,8 @@ The inclusion of exogenous categorical variables slightly deteriorated the perfo
 \vspace{1em}
 
 We did find only small evidence of LightGBM yielding lower RMSE on the locally fitted approach compared to the global one at longer monthly forecasting horizons ($h = 6$).
+
+
 \subsection{Limitations and further research}
 
 This study presents two main kinds of limitations: those arising from modeling and design choices, and those inherent to the nature of the dataset and to the way reports are collected.

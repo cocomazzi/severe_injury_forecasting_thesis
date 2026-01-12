@@ -16,45 +16,46 @@ Reallocating 'singl_function' (item size: 4) to 100 items.
 Database file #1: workplaceinjuryforecasting.bib
 apacite.bst [2013/07/21 v6.03 APA bibliography style]
 Warning--No journal in coulombe_panel_2025
-You've used 44 entries,
+Warning--No journal in ke_lightgbm_2017
+You've used 47 entries,
             6951 wiz_defined-function locations,
-            1644 strings with 25237 characters,
-and the built_in function-call counts, 104279 in all, are:
-= -- 12355
-> -- 870
-< -- 5682
-+ -- 5888
-- -- 88
-* -- 7504
-:= -- 20153
-add.period$ -- 186
-call.type$ -- 44
-change.case$ -- 824
+            1665 strings with 26079 characters,
+and the built_in function-call counts, 111257 in all, are:
+= -- 13210
+> -- 943
+< -- 5979
++ -- 6233
+- -- 94
+* -- 7943
+:= -- 21305
+add.period$ -- 200
+call.type$ -- 47
+change.case$ -- 880
 chr.to.int$ -- 0
-cite$ -- 89
-duplicate$ -- 2844
-empty$ -- 3823
-format.name$ -- 1513
-if$ -- 18755
+cite$ -- 96
+duplicate$ -- 3092
+empty$ -- 4100
+format.name$ -- 1653
+if$ -- 20086
 int.to.chr$ -- 0
-int.to.str$ -- 132
+int.to.str$ -- 141
 missing$ -- 0
-newline$ -- 1354
-num.names$ -- 358
-pop$ -- 1543
+newline$ -- 1449
+num.names$ -- 382
+pop$ -- 1717
 preamble$ -- 1
-purify$ -- 248
+purify$ -- 264
 quote$ -- 0
-skip$ -- 5749
+skip$ -- 6143
 stack$ -- 0
-substring$ -- 6332
-swap$ -- 1647
-text.length$ -- 191
+substring$ -- 6728
+swap$ -- 1774
+text.length$ -- 207
 text.prefix$ -- 0
 top$ -- 1
-type$ -- 3776
-warning$ -- 1
-while$ -- 605
+type$ -- 4080
+warning$ -- 2
+while$ -- 660
 width$ -- 0
-write$ -- 1723
-(There was 1 warning)
+write$ -- 1847
+(There were 2 warnings)

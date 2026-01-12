@@ -249,9 +249,9 @@ Cerqueira, V.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
-Chen%
+J\BPBI M.~Chen%
 }{%
-Chen%
+J\BPBI M.~Chen%
 }{%
 {\protect \APACyear {2021}}%
 }]{%
@@ -277,6 +277,42 @@ Chen, J\BPBI M.%
   \end{APACrefURL}
 \newblock
 \begin{APACrefDOI} \doi{10.1007/s11294-021-09815-6} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+T.~Chen%
+\ \BBA {} Guestrin%
+}{%
+T.~Chen%
+\ \BBA {} Guestrin%
+}{%
+{\protect \APACyear {2016}}%
+}]{%
+chen_xgboost_2016}
+\APACinsertmetastar {%
+chen_xgboost_2016}%
+\begin{APACrefauthors}%
+Chen, T.%
+\BCBT {}\ \BBA {} Guestrin, C.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2016}{{\APACmonth{08}}}{}.
+\newblock
+{\BBOQ}\APACrefatitle {{XGBoost}: {A} {Scalable} {Tree} {Boosting} {System}}
+  {{XGBoost}: {A} {Scalable} {Tree} {Boosting} {System}}.{\BBCQ}
+\newblock
+\BIn{} \APACrefbtitle {Proceedings of the 22nd {ACM} {SIGKDD} {International}
+  {Conference} on {Knowledge} {Discovery} and {Data} {Mining}} {Proceedings of
+  the 22nd {ACM} {SIGKDD} {International} {Conference} on {Knowledge}
+  {Discovery} and {Data} {Mining}}\ (\BPGS\ 785--794).
+\newblock
+\begin{APACrefURL} [{2026-01-12}]\url{http://arxiv.org/abs/1603.02754}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{arXiv:1603.02754 [cs]}
+\newblock
+\begin{APACrefDOI} \doi{10.1145/2939672.2939785} \end{APACrefDOI}
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
@@ -665,6 +701,36 @@ Johnson, M\BPBI S.%
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
+Ke%
+\ \protect \BOthers {.}}{%
+Ke%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2017}}%
+}]{%
+ke_lightgbm_2017}
+\APACinsertmetastar {%
+ke_lightgbm_2017}%
+\begin{APACrefauthors}%
+Ke, G.%
+, Meng, Q.%
+, Finley, T.%
+, Wang, T.%
+, Chen, W.%
+, Ma, W.%
+\BDBL {}Liu, T\BHBI Y.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2017}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {{LightGBM}: {A} {Highly} {Efﬁcient} {Gradient}
+  {Boosting} {Decision} {Tree}} {{LightGBM}: {A} {Highly} {Efﬁcient}
+  {Gradient} {Boosting} {Decision} {Tree}}.{\BBCQ}
+\newblock
+
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
 Khairuddin%
 \ \protect \BOthers {.}}{%
 Khairuddin%
@@ -1012,6 +1078,44 @@ Organization, I\BPBI L.%
 \begin{APACrefURL}
   [{2025-11-29}]\url{https://labordoc.ilo.org/discovery/fulldisplay/alma995108293102676/41ILO_INST:41ILO_V2}
   \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Prokhorenkova%
+, Gusev%
+, Vorobev%
+, Dorogush%
+\BCBL {}\ \BBA {} Gulin%
+}{%
+Prokhorenkova%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2019}}%
+}]{%
+prokhorenkova_catboost_2019}
+\APACinsertmetastar {%
+prokhorenkova_catboost_2019}%
+\begin{APACrefauthors}%
+Prokhorenkova, L.%
+, Gusev, G.%
+, Vorobev, A.%
+, Dorogush, A\BPBI V.%
+\BCBL {}\ \BBA {} Gulin, A.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2019}{{\APACmonth{01}}}{}.
+\newblock
+\APACrefbtitle {{CatBoost}: unbiased boosting with categorical features.}
+  {{CatBoost}: unbiased boosting with categorical features.}
+\newblock
+\APACaddressPublisher{}{arXiv}.
+\newblock
+\begin{APACrefURL} [{2026-01-12}]\url{http://arxiv.org/abs/1706.09516}
+  \end{APACrefURL}
+\newblock
+\APACrefnote{arXiv:1706.09516 [cs]}
+\newblock
+\begin{APACrefDOI} \doi{10.48550/arXiv.1706.09516} \end{APACrefDOI}
 \PrintBackRefs{\CurrentBib}
 
 \bibitem [\protect \citeauthoryear {%
