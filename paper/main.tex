@@ -38,7 +38,7 @@
 \def\finalyear{2026}
 \def\supervisor{dr. Stijn Rotman}
 \def\committee{dr. Travis Wiltshire}
-\def\wordcount{8742}
+\def\wordcount{8755}
 
 \def\acknowledgments{I would like to thank the previous students in the program, whose theses were a great source of inspiration while writing this work. 
 
@@ -491,7 +491,7 @@ For the weekly resolution, we adopted the same experimental setup with some chan
 
 We decided not to fit an ETS model for the weekly aggregation after inspecting the STL decomposition and performing an error analysis on the fitted models. Since the weekly national time series shows sharp weekly spikes and high volatility, the assumptions underlying exponential smoothing models are defied.
 
-The local implementation to address RQ2 follows the same pipeline as that adopted for RQ1. The main change is in the construction of the training loop, which is adapted to fit a separate model to each indivual time series. The analysis is limited to the monthly aggregated panel data, but the code provides a reusable function to perform the weekly local experiment as well.
+The local implementation to address RQ2 follows the same pipeline as that adopted for RQ1. The main change is in the construction of the training loop, which is adapted to fit a separate model to each individual time series. The analysis is limited to the monthly aggregated panel data, but the code provides a reusable function to perform the weekly local experiment as well.
 
 
 \section{Results}
@@ -769,7 +769,7 @@ Performance between linear and ensemble models diverges again in 2023 and 2024, 
 
 \section{Discussion}
 
-In this section, the findings of this study are discussed in relation to the most relevant studies presented in Section~\ref{sec:related_work}. We then outline potential design improvements and adress key limitations of the dataset. Suggestions for future research are also provided.
+In this section, the findings of this study are discussed in relation to the most relevant studies presented in Section~\ref{sec:related_work}. We then outline potential design improvements and address key limitations of the dataset. Suggestions for future research are also provided.
 
 \subsection{Answering Research Questions}
 
@@ -786,13 +786,13 @@ Although the performance metrics did not show significant differences between li
 \hspace{2em}\textit{SQ1.1: How does the inclusion of exogenous categorical variables affect the forecasts of the ML models?}
 \vspace{1em}
 
-The inclusion of exogenous categorical variables slightly deteriorated the performance metrics and did not improve the interpretability of the features. Quantitatively, this finding broadly reflects the results of \citet{cerqua_dead_2024}, who found that models performed better on a smaller set of covariates. Our study is in apparent contrast to the findings of \citet{wilms_combining_2018}, who showed that a Recurrent Neural Network outperformed all other chosen models when including exogenous features. However, they implemented a sequence-to-sequence deep learning architecture to forecast short-term electric load in a nonlinear feature space, while our setting is primarily informed by autoregressive features that dominateover exogenous variables.
+The inclusion of exogenous categorical variables slightly deteriorated the performance metrics and did not improve the interpretability of the features. Quantitatively, this finding broadly reflects the results of \citet{cerqua_dead_2024}, who found that models performed better on a smaller set of covariates. Our study is in apparent contrast to the findings of \citet{wilms_combining_2018}, who showed that a Recurrent Neural Network outperformed all other chosen models when including exogenous features. However, they implemented a sequence-to-sequence deep learning architecture to forecast short-term electric load in a nonlinear feature space, while our setting is primarily informed by autoregressive features that dominate over exogenous variables.
 
 From a computational point of view, the resulting models are more complex and, although training times remain short, they are increased. Given the current setting, we find no evidence to support the inclusion of this particular set of exogenous variables, as encoded for the regression task, in the forecasting models.
 
 
 \vspace{1em}
-\hspace{2em}\textbf{RQ2:} \textit{How does the predictive accuracy change when estimated as a Global Forecasting Model (across all states jointly) rather than as a Local Forecasting Model (state-specific), for both monthly and weekly temporal resolutions?}
+\hspace{2em}\textbf{RQ2:} \textit{How does the predictive accuracy change when estimated as a Global Forecasting Model (across all states jointly) rather than as a Local Forecasting Model (state-specific), for monthly temporal resolution?}
 \vspace{1em}
 
 We did find only small evidence of LightGBM yielding lower RMSE on the locally fitted approach compared to the global one at longer monthly forecasting horizons ($h = 6$). In all other cases, globally and locally fitted models perform similarly after aggregating the result metrics. \citet{montero-manso_principles_2021} show, in a substantially more extensive theoretical and empirical study, that global models tend to outperform local ones across a wide range of datasets, while also emphasizing that performance depends on the context. In particular, datasets comprising many heterogeneous time series and strong nonlinearities are more likely to benefit from pooling across units, whereas datasets with fewer series or lower intrinsic volatility may not show substantial differences between global and local modeling strategies, especially when autoregressive features dominate the predictions.
@@ -844,7 +844,6 @@ Overall, this work contributes some empirical evidence that simple, interpretabl
 \section{Appendix}
 \label{app:a}
 
-TO ADD:  plots of extra states; 
 \begin{table}[htbp]
 \centering
 \caption{Hyperparameter configurations for all models}
@@ -993,7 +992,7 @@ XGBoost & 0.127 $\pm$ 0.010 & 0.091 $\pm$ 0.008 & 0.705 $\pm$ 0.053 \\
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.99\textwidth]{figures/daily_hosp_3_states.png}
-    \caption{Daily hospitalizations for District of Columbia, Colorando, and Texas. States are selected based on their sample size. Daily aggregations result in a too sparse target space.}
+    \caption{Daily hospitalizations for District of Columbia, Colorado, and Texas. States are selected based on their sample size. Daily aggregations result in a too sparse target space.}
     \label{fig:daily_hosp_3_states}
 \end{figure}
 

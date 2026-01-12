@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.22)  12 JAN 2026 19:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.22)  12 JAN 2026 19:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1291,7 +1291,7 @@ t line 750.
 
 
 [31 <./figures/texas_local_vs_global_m6_5.png>]
-<figures/local_rmse_per_fold_h3.png, id=587, 713.064pt x 279.444pt>
+<figures/local_rmse_per_fold_h3.png, id=586, 713.064pt x 279.444pt>
 File: figures/local_rmse_per_fold_h3.png Graphic file (type png)
 <use figures/local_rmse_per_fold_h3.png>
 Package pdftex.def Info: figures/local_rmse_per_fold_h3.png  used on input line
@@ -1340,12 +1340,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 823--842
 [42])
 
 [43]
-Underfull \hbox (badness 2253) in paragraph at lines 869--872
+Underfull \hbox (badness 2253) in paragraph at lines 868--871
 []|\T1/pplj/m/n/10.95 (+20) n_estimators = 300, learn-ing_rate = 0.05,
  []
 
 
-Underfull \hbox (badness 2253) in paragraph at lines 874--877
+Underfull \hbox (badness 2253) in paragraph at lines 873--876
 []|\T1/pplj/m/n/10.95 (+20) n_estimators = 300, learn-ing_rate = 0.05,
  []
 
@@ -1362,38 +1362,38 @@ Underfull \hbox (badness 2253) in paragraph at lines 874--877
 [46
 
 ]
-<figures/NAICS_distribution.png, id=768, 686.565pt x 477.58424pt>
+<figures/NAICS_distribution.png, id=772, 686.565pt x 477.58424pt>
 File: figures/NAICS_distribution.png Graphic file (type png)
 <use figures/NAICS_distribution.png>
-Package pdftex.def Info: figures/NAICS_distribution.png  used on input line 968
+Package pdftex.def Info: figures/NAICS_distribution.png  used on input line 967
 .
 (pdftex.def)             Requested size: 354.92165pt x 246.88776pt.
-<figures/weekday_injuries_2024.png, id=769, 512.51476pt x 325.81725pt>
+<figures/weekday_injuries_2024.png, id=773, 512.51476pt x 325.81725pt>
 File: figures/weekday_injuries_2024.png Graphic file (type png)
 <use figures/weekday_injuries_2024.png>
 Package pdftex.def Info: figures/weekday_injuries_2024.png  used on input line 
-977.
+976.
 (pdftex.def)             Requested size: 354.92165pt x 225.63443pt.
 
 
 [47
 
  <./figures/NAICS_distribution.png>]
-<figures/monthly_injuries_2024.png, id=776, 506.49225pt x 287.8755pt>
+<figures/monthly_injuries_2024.png, id=780, 506.49225pt x 287.8755pt>
 File: figures/monthly_injuries_2024.png Graphic file (type png)
 <use figures/monthly_injuries_2024.png>
 Package pdftex.def Info: figures/monthly_injuries_2024.png  used on input line 
-986.
+985.
 (pdftex.def)             Requested size: 354.92165pt x 201.73549pt.
 
 
 [48 <./figures/weekday_injuries_2024.png> <./figures/monthly_injuries_2024.png>
 ]
-<figures/daily_hosp_3_states.png, id=783, 857.604pt x 568.524pt>
+<figures/daily_hosp_3_states.png, id=787, 857.604pt x 568.524pt>
 File: figures/daily_hosp_3_states.png Graphic file (type png)
 <use figures/daily_hosp_3_states.png>
 Package pdftex.def Info: figures/daily_hosp_3_states.png  used on input line 99
-5.
+4.
 (pdftex.def)             Requested size: 354.92165pt x 235.28244pt.
 
 
@@ -1412,11 +1412,11 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: A1DA0AABF3AAB0EC466C0B801A816DC3;4812.
  ) 
 Here is how much of TeX's memory you used:
- 20140 strings out of 468130
- 357657 string characters out of 5430633
+ 20135 strings out of 468130
+ 357617 string characters out of 5430633
  851881 words of memory out of 5000000
  47595 multiletter control sequences out of 15000+600000
- 791804 words of font info for 663 fonts, out of 8000000 for 9000
+ 791523 words of font info for 659 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  123i,23n,121p,1054b,726s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/esper/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/
@@ -1430,9 +1430,9 @@ onts/type1/bera/fvmr8a.pfb><C:/Users/esper/AppData/Local/Programs/MiKTeX/fonts/
 type1/urw/palatino/uplb8a.pfb><C:/Users/esper/AppData/Local/Programs/MiKTeX/fon
 ts/type1/urw/palatino/uplr8a.pfb><C:/Users/esper/AppData/Local/Programs/MiKTeX/
 fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on main.pdf (51 pages, 2274609 bytes).
+Output written on main.pdf (51 pages, 2275624 bytes).
 PDF statistics:
- 870 PDF objects out of 1000 (max. 8388607)
+ 874 PDF objects out of 1000 (max. 8388607)
  165 named destinations out of 1000 (max. 500000)
  158577 words of extra memory for PDF output out of 184870 (max. 10000000)
 
