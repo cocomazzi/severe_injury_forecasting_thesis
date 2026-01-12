@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any, Dict, Optional
 
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import Ridge, Lasso, ElasticNet
 from sklearn.cross_decomposition import PLSRegression
 
@@ -160,5 +162,13 @@ def instantiate_models(
     for name, cfg in model_configs.items():
         cls = cfg["cls"]
         init_kwargs = cfg.get("init", {})
-        models[name] = cls(**init_kwargs)
+        est = cls(**init_kwargs)
+
+        if isinstance(est, (Ridge, Lasso, ElasticNet, PLSRegression)):
+            # Wrap linear models in a pipeline with standardization
+            est = Pipeline([
+                ("scaler", StandardScaler()),
+                ("model", est),
+            ])
+        models[name] = est
     return models

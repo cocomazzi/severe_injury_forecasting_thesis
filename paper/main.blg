@@ -15,50 +15,46 @@ Reallocating 'wiz_functions' (item size: 4) to 9000 items.
 Reallocating 'singl_function' (item size: 4) to 100 items.
 Database file #1: workplaceinjuryforecasting.bib
 apacite.bst [2013/07/21 v6.03 APA bibliography style]
-Warning--No journal in hyndman_forecasting_2018
-ptr=1, stack=
-
----the literal stack isn't empty for entry hyndman_forecasting_2018
-while executing---line 5079 of file apacite.bst
-You've used 29 entries,
+Warning--No journal in coulombe_panel_2025
+You've used 44 entries,
             6951 wiz_defined-function locations,
-            1524 strings with 20164 characters,
-and the built_in function-call counts, 66425 in all, are:
-= -- 7933
-> -- 550
-< -- 3498
-+ -- 3641
-- -- 58
-* -- 4721
-:= -- 12627
-add.period$ -- 124
-call.type$ -- 29
-change.case$ -- 540
+            1644 strings with 25237 characters,
+and the built_in function-call counts, 104279 in all, are:
+= -- 12355
+> -- 870
+< -- 5682
++ -- 5888
+- -- 88
+* -- 7504
+:= -- 20153
+add.period$ -- 186
+call.type$ -- 44
+change.case$ -- 824
 chr.to.int$ -- 0
-cite$ -- 59
-duplicate$ -- 1822
-empty$ -- 2499
-format.name$ -- 943
-if$ -- 12095
+cite$ -- 89
+duplicate$ -- 2844
+empty$ -- 3823
+format.name$ -- 1513
+if$ -- 18755
 int.to.chr$ -- 0
-int.to.str$ -- 87
+int.to.str$ -- 132
 missing$ -- 0
-newline$ -- 884
-num.names$ -- 238
-pop$ -- 998
+newline$ -- 1354
+num.names$ -- 358
+pop$ -- 1543
 preamble$ -- 1
-purify$ -- 160
+purify$ -- 248
 quote$ -- 0
-skip$ -- 3775
+skip$ -- 5749
 stack$ -- 0
-substring$ -- 3946
-swap$ -- 1066
-text.length$ -- 127
+substring$ -- 6332
+swap$ -- 1647
+text.length$ -- 191
 text.prefix$ -- 0
 top$ -- 1
-type$ -- 2512
+type$ -- 3776
 warning$ -- 1
-while$ -- 380
+while$ -- 605
 width$ -- 0
-write$ -- 1110
-(There was 1 error message)
+write$ -- 1723
+(There was 1 warning)
